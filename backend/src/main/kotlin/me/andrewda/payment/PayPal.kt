@@ -4,6 +4,7 @@ import com.paypal.api.payments.*
 import com.paypal.base.rest.APIContext
 import com.paypal.base.rest.PayPalRESTException
 import com.paypal.api.payments.PaymentExecution
+import me.andrewda.utils.asCurrency
 
 object PayPal {
     /**
@@ -56,7 +57,10 @@ object PayPal {
             paymentMethod = "paypal"
         }
         transactions = listOf(
-            Transaction().apply { amount = Amount("USD", cost.toString()) }
+            Transaction().apply {
+                amount = Amount("USD", cost.asCurrency())
+                description = "${cost.asCurrency()} Spark Donation"
+            }
         )
         redirectUrls = RedirectUrls().apply {
             cancelUrl = "http://127.0.0.1:8080/api/payments/cancel"
