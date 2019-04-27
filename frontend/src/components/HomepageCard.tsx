@@ -4,11 +4,12 @@ import Typography from "@material-ui/core/es/Typography";
 import CardContent from "@material-ui/core/es/CardContent";
 import CardActionArea from "@material-ui/core/es/CardActionArea";
 import createStyles from "@material-ui/core/es/styles/createStyles";
-import {WithStyles} from "@material-ui/core/es";
 import CardMedia from '@material-ui/core/CardMedia';
 import logo from "../images/CIF+logo.png"
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import LinearProgress from "@material-ui/core/es/LinearProgress";
+import axios from "axios";
+
 
 const styles = createStyles({
     homepageCard: {
@@ -29,7 +30,6 @@ const styles = createStyles({
         fontSize: '3vh',
         fontWeight: 'bold',
         lineHeight: '1.2',
-        fontFamily: 'montserrat'
     },
 
     itemContainer: {
@@ -47,8 +47,28 @@ const styles = createStyles({
 
 });
 
-const HomepageCard = (props: WithStyles<typeof styles>) => {
+
+const HomepageCard = (props: any) => {
+    const [personData, setPerson] = React.useState({name: '', slug: '', bio: '', funds: 0, id: 1})
+
+    const getPersonData = async (slug: string) => {
+        console.log("requesting");
+        console.log(slug)
+        return await axios('http://localhost:8080/api/people/' + slug).then(response => {
+            setPerson(response.data.response)
+        })
+    }
     const {classes} = props;
+    // console.log("RUN BEFORE")
+    // console.log("RUN AFTER")
+
+    React.useEffect(() => {
+            getPersonData(props.slug)
+        }, []
+    )
+
+    console.log(personData)
+
     return (
         <>
             <Card className={classes.homepageCard}>
@@ -83,5 +103,13 @@ const HomepageCard = (props: WithStyles<typeof styles>) => {
         </>
     );
 };
+
+interface PersonData {
+    name: string,
+    slug: string,
+    bio: string,
+    fund: number,
+    id: number
+}
 
 export default withStyles(styles)(HomepageCard);
