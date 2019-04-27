@@ -5,7 +5,7 @@ jobs:
       - image: circleci/openjdk:8-jdk-node
     steps:
       - checkout
-      - run: npm install -g yarn
+      - run: sudo npm install -g yarn
       - run: ./gradlew build
       - persist_to_workspace:
           root: ./
