@@ -6,6 +6,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.receiveOrNull
 import io.ktor.routing.*
 import me.andrewda.authentication.AuthLevel
+import me.andrewda.authentication.JwtConfig
 import me.andrewda.controllers.UserController
 import me.andrewda.models.NewUser
 import me.andrewda.utils.*
@@ -22,7 +23,8 @@ fun Route.user() {
 
             if (newUser.isValid && newUser.isFormatted) {
                 val user = UserController.create(newUser)
-                call.respond(user.getApiResponse())
+                val token = JwtConfig.makeToken(user)
+                call.respond(mapOf("user" to user.getApiResponse(), "token" to token))
             } else {
                 throw MissingFields()
             }
