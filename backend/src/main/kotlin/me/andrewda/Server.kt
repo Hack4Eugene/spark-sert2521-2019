@@ -12,7 +12,6 @@ import io.ktor.features.StatusPages
 import io.ktor.gson.gson
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
-import io.ktor.response.respondRedirect
 import io.ktor.routing.get
 import io.ktor.routing.route
 import io.ktor.routing.routing
@@ -20,7 +19,6 @@ import me.andrewda.authentication.JwtConfig
 import me.andrewda.constants.Routes
 import me.andrewda.controllers.UserPrincipal
 import me.andrewda.handlers.*
-import me.andrewda.payment.PayPal
 import me.andrewda.utils.Database
 import me.andrewda.utils.ExceptionWithStatus
 import me.andrewda.utils.Status
@@ -28,8 +26,6 @@ import org.slf4j.event.Level
 
 fun Application.main() {
     Database.init()
-
-    PayPal.createPayment(1.53) ?: return
 
     install(Authentication) {
         jwt {
@@ -81,16 +77,9 @@ fun Application.main() {
             person()
             item()
             request()
+            payment()
 
             test()
-
-            get("/payments/return") {
-                val paymentId = call.request.queryParameters["paymentId"] ?: ""
-                val payerId = call.request.queryParameters["PayerID"] ?: ""
-                PayPal.executePayment(paymentId, payerId)
-
-                call.respondRedirect("/payment/success")
-            }
 
             // Route any unspecified API requests to 404
             get("{...}") {

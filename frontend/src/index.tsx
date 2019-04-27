@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-import * as serviceWorker from "./serviceWorker";
-import PersonForm from "./routes/PersonForm";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import * as serviceWorker from './serviceWorker';
+import PersonForm from './routes/PersonForm';
 
 function App() {
   return (
@@ -27,11 +27,11 @@ function About() {
   return <h2>About</h2>;
 }
 
-function Topic({ match }) {
+function Topic({ match }: { match: any }) {
   return <h3>Requested Param: {match.params.id}</h3>;
 }
 
-function Topics({ match }) {
+function Topics({ match }: { match: any }) {
   return (
     <div>
       <h2>Topics</h2>
@@ -74,7 +74,7 @@ function Header() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

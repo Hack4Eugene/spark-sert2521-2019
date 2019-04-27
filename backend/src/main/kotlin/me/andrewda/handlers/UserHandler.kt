@@ -5,7 +5,10 @@ import io.ktor.auth.authenticate
 import io.ktor.http.HttpStatusCode
 import io.ktor.request.receiveOrNull
 import io.ktor.routing.*
+import kotlinx.coroutines.ensureActive
 import me.andrewda.authentication.AuthLevel
+import me.andrewda.authentication.JwtConfig
+import me.andrewda.controllers.PaymentController
 import me.andrewda.controllers.UserController
 import me.andrewda.models.NewUser
 import me.andrewda.utils.*
@@ -22,7 +25,8 @@ fun Route.user() {
 
             if (newUser.isValid && newUser.isFormatted) {
                 val user = UserController.create(newUser)
-                call.respond(user.getApiResponse())
+                val token = JwtConfig.makeToken(user)
+                call.respond(mapOf("user" to user.getApiResponse(), "token" to token))
             } else {
                 throw MissingFields()
             }
@@ -49,6 +53,17 @@ fun Route.user() {
                 val user = UserController.patch(username, newUser) ?: throw NotFound()
 
                 call.respond(user.getApiResponse(AuthLevel.SELF))
+            }
+
+            get("/{username}/payments") {
+                val username = call.parameters["username"] ?: ""
+                val user = UserController.findByUsername(username) ?: throw NotFound()
+                call.ensureAuthLevel(AuthLevel.SELF, user = user)
+
+                val excluded = call.request.queryParameters.getAll("exclude") ?: emptyList()
+                val payments = PaymentController.findByUser(user)
+
+                call.respond(payments.map { it.getApiResponse(exclude = excluded) })
             }
         }
     }
