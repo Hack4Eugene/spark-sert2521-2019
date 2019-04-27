@@ -88,7 +88,7 @@ const PersonForm: React.SFC<{}> = () => {
             setSuccess('fail');
           }
         }}
-        render={({ setFieldValue, isSubmitting }) => (
+        render={({ setFieldValue, isSubmitting, isValid }) => (
           <Form
             style={{
               display: 'flex',
@@ -104,6 +104,7 @@ const PersonForm: React.SFC<{}> = () => {
               placeholder="John"
               type="text"
               component={TextField}
+              required
             />
 
             <InputLabel htmlFor="bio">Bio</InputLabel>
@@ -114,6 +115,7 @@ const PersonForm: React.SFC<{}> = () => {
               type="text"
               component={TextField}
               multiline
+              required
             />
 
             <InputLabel htmlFor="slug">Nickname</InputLabel>
@@ -123,6 +125,7 @@ const PersonForm: React.SFC<{}> = () => {
               placeholder="JimmyJohn"
               type="text"
               component={TextField}
+              required
             />
 
             <InputLabel htmlFor="requests">Requests</InputLabel>
@@ -136,10 +139,11 @@ const PersonForm: React.SFC<{}> = () => {
               onChange={(value: Array<any>) =>
                 setFieldValue('requests', value.map(v => v.value))
               }
+              required
             />
             <Button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isValid}
               style={{ display: 'block' }}
             >
               Submit

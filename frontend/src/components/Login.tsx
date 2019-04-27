@@ -11,7 +11,7 @@ interface LoginInfo {
   password: string;
 }
 
-const Login = () => {
+const Login: React.SFC<{}> = () => {
   return (
     <div className="loginForm">
       <h1>Login</h1>
@@ -34,7 +34,7 @@ const Login = () => {
               );
             });
         }}
-        render={() => (
+        render={({ isSubmitting, isValid }) => (
           <Form
             style={{
               display: 'flex',
@@ -50,6 +50,7 @@ const Login = () => {
               placeholder="username/email"
               type="text"
               component={TextField}
+              required
             />
             <InputLabel htmlFor="password">Password</InputLabel>
             <Field
@@ -58,8 +59,13 @@ const Login = () => {
               placeholder="username/email"
               type="password"
               component={TextField}
+              required
             />
-            <Button type="submit" style={{ display: 'block' }}>
+            <Button
+              type="submit"
+              disabled={isSubmitting || !isValid}
+              style={{ display: 'block' }}
+            >
               Login
             </Button>
           </Form>
