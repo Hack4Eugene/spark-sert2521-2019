@@ -10,6 +10,7 @@ import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.gson.gson
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import io.ktor.routing.get
@@ -44,7 +45,11 @@ fun Application.main() {
 
     install(CORS) {
         anyHost()
+
         header("Authorization")
+
+        method(HttpMethod.Patch)
+        method(HttpMethod.Delete)
     }
 
     install(StatusPages) {
