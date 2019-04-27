@@ -75,7 +75,7 @@ const PersonForm: React.SFC<{}> = () => {
               .then(response => console.log(response));
             await axios
               .post(
-                `http://localhost:8080/api/person/${slug}/requests`,
+                `http://localhost:8080/api/people/${slug}/requests`,
                 requests,
                 {
                   headers: getAuthHeader(),
