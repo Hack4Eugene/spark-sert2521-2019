@@ -11,7 +11,8 @@ data class NewPerson(
     @Expose val name: String?,
     @Expose val image: String?,
     @Expose val bio: String?,
-    @Expose val slug: String?
+    @Expose val slug: String?,
+    @Expose val funds: Int?
 ) {
     val isValid get() = name != null
 }
@@ -21,6 +22,7 @@ object People : IntIdTable() {
     val image = blob("image").nullable()
     val bio = text("bio")
     val slug = varchar("slug", 20).uniqueIndex()
+    val funds = integer("funds")
 }
 
 class Person(id: EntityID<Int>) : IntEntity(id) {
@@ -37,4 +39,7 @@ class Person(id: EntityID<Int>) : IntEntity(id) {
 
     @Readable
     var slug by People.slug
+
+    @Readable
+    var funds by People.funds
 }
