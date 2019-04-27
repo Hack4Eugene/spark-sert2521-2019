@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Formik, Field, Form, FormikActions } from "formik";
-import { TextField } from "formik-material-ui";
-import { Button, InputLabel } from "@material-ui/core";
-import Select from "react-select";
-import axios from "axios";
+import { Formik, Field, Form, FormikActions } from 'formik';
+import { TextField } from 'formik-material-ui';
+import { Button, InputLabel } from '@material-ui/core';
+import Select from 'react-select';
+import axios from 'axios';
 
 interface Person {
   name: string;
@@ -32,10 +32,10 @@ const PersonForm: React.SFC<{}> = () => {
   const [requestOptions, setOptions] = React.useState();
 
   const getOptions = async () => {
-    const items = await axios("http://localhost:8080/api/items");
+    const items = await axios('http://localhost:8080/api/items');
     const mappedItems: Options = items.data.response.map(
-      ({ name, price, id }) => {
-        price = ((price * 100) / 100).toFixed(2);
+      ({ name, price, id }: Request) => {
+        price = Number(((price * 100) / 100).toFixed(2));
         return { label: `${name} - $${price}`, value: id };
       }
     );
@@ -50,10 +50,10 @@ const PersonForm: React.SFC<{}> = () => {
       <h1>Person Details</h1>
       <Formik
         initialValues={{
-          name: "",
-          bio: "",
-          slug: "",
-          requests: []
+          name: '',
+          bio: '',
+          slug: '',
+          requests: [],
         }}
         onSubmit={async (
           values: Person,
@@ -63,13 +63,14 @@ const PersonForm: React.SFC<{}> = () => {
 
           await axios
             .post(
-              "http://localhost:8080/api/people",
+              'http://localhost:8080/api/people',
               { name, bio, slug },
               {
                 headers: {
+                  // getAuthHeader()
                   Authorization:
-                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ"
-                }
+                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ',
+                },
               }
             )
             .then(response => console.log(response));
@@ -80,8 +81,8 @@ const PersonForm: React.SFC<{}> = () => {
               {
                 headers: {
                   Authorization:
-                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ"
-                }
+                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ',
+                },
               }
             )
             .then(response => console.log(response));
@@ -89,10 +90,10 @@ const PersonForm: React.SFC<{}> = () => {
         render={({ setFieldValue }) => (
           <Form
             style={{
-              display: "flex",
-              flexDirection: "column",
-              maxWidth: "400px",
-              margin: "0 auto"
+              display: 'flex',
+              flexDirection: 'column',
+              maxWidth: '400px',
+              margin: '0 auto',
             }}
           >
             <InputLabel htmlFor="name">Name</InputLabel>
@@ -131,11 +132,11 @@ const PersonForm: React.SFC<{}> = () => {
               isMulti
               closeMenuOnSelect={false}
               options={requestOptions}
-              onChange={value =>
-                setFieldValue("requests", value.map(v => v.value))
+              onChange={(value: Array<any>) =>
+                setFieldValue('requests', value.map(v => v.value))
               }
             />
-            <Button type="submit" style={{ display: "block" }}>
+            <Button type="submit" style={{ display: 'block' }}>
               Submit
             </Button>
           </Form>
@@ -145,8 +146,8 @@ const PersonForm: React.SFC<{}> = () => {
   );
 };
 const requestOptions = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
 ];
 export default PersonForm;
