@@ -12,7 +12,7 @@ data class NewPerson(
     @Expose val image: String?,
     @Expose val bio: String?,
     @Expose val slug: String?,
-    @Expose val funds: Float?
+    @Expose val funds: Double?
 ) {
     val isValid get() = name != null
 }
@@ -22,7 +22,7 @@ object People : IntIdTable() {
     val image = blob("image").nullable()
     val bio = text("bio")
     val slug = varchar("slug", 20).uniqueIndex()
-    val funds = float("funds").default(0.0f)
+    val funds = double("funds").default(0.0)
 }
 
 class Person(id: EntityID<Int>) : IntEntity(id) {
