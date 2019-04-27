@@ -33,12 +33,13 @@ object PayPal {
             webProfileId = profiles.first().id ?: ""
         } else {
             val profile = WebProfile().apply {
-                presentation = Presentation().apply { brandName = "Carry it Forward" }
+                presentation = Presentation().apply { brandName = "Spark" }
                 inputFields = InputFields().apply {
                     noShipping = 1
                     addressOverride = 1
                 }
 
+                name = "Spark"
                 temporary = false
             }
 
@@ -49,7 +50,7 @@ object PayPal {
     }
 
     private fun generatePaymentDetails(cost: Double) = Payment().apply {
-        intent = "order"
+        intent = "sale"
         experienceProfileId = webProfileId
         payer = Payer().apply {
             paymentMethod = "paypal"
