@@ -27,6 +27,8 @@ fun Route.payment() {
 
                 val amount = newPayment.amount ?: throw InvalidAmount()
 
+                if (amount <= 0) throw InvalidAmount()
+
                 if (newPayment.isValid) {
                     val payment = PayPal.createPayment(amount) ?: throw MissingFields()
                     val link = payment.links.find { it.rel == "approval_url" }?.href ?: throw InternalServerError()
@@ -52,6 +54,8 @@ fun Route.payment() {
                 val request = RequestController.findById(id) ?: throw NotFound()
 
                 val amount = newPayment.amount ?: throw InvalidAmount()
+
+                if (amount <= 0) throw InvalidAmount()
 
                 if (newPayment.isValid) {
                     val payment = PayPal.createPayment(amount) ?: throw MissingFields()
