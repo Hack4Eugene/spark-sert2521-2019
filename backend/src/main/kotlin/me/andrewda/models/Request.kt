@@ -16,7 +16,7 @@ data class NewRequest(
     @Expose val ordered: Int?,
     @Expose val delivered: Int?
 ) {
-    val isValid get() = person != null && item != null && quantity != null
+    val isValid get() = person != null && item != null
 }
 
 object Requests : IntIdTable() {

@@ -10,7 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Switch } from 'react-router';
+import { Route, Switch } from 'react-router';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PersonForm from './PersonForm';
+import NavigationItem from '../components/NavigationLink';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 
 const drawerWidth = 240;
 
@@ -113,6 +118,15 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
             <ChevronLeftIcon />
           </IconButton>
         </div>
+        <Divider />
+        <List>
+          <NavigationItem
+            icon={PersonAddIcon}
+            text="Person Form"
+            linkTo="/personform"
+            closeNavigation={() => setDrawerOpened(false)}
+          />
+        </List>
       </Drawer>
       <AppBar
         className={classNames(
@@ -145,7 +159,9 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
       </AppBar>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Switch>{/* Routes go here */}</Switch>
+        <Switch>
+          <Route path="/personform" component={PersonForm} />
+        </Switch>
       </main>
     </div>
   );
