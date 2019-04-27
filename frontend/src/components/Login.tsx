@@ -20,11 +20,19 @@ const Login = () => {
           identifier: '',
           password: '',
         }}
-        onSubmit={(
+        onSubmit={async (
           values: LoginInfo,
           { setSubmitting }: FormikActions<LoginInfo>
         ) => {
           console.log(values);
+          await axios
+            .post('http://localhost:8080/api/auth/login', values)
+            .then(response => {
+              window.localStorage.setItem(
+                'token',
+                response.data.response.token
+              );
+            });
         }}
         render={() => (
           <Form
