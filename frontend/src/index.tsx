@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
+import PersonForm from './routes/PersonForm';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/about" component={About} />
         <Route path="/topics" component={Topics} />
+        <Route path="/personForm" component={PersonForm} />
       </div>
     </Router>
   );
@@ -64,6 +66,9 @@ function Header() {
       </li>
       <li>
         <Link to="/topics">Topics</Link>
+      </li>
+      <li>
+        <Link to="/personForm">Person Form</Link>
       </li>
     </ul>
   );

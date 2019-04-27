@@ -31,7 +31,7 @@ write and save the following:
 mysql://sert_homeless:sert2521@db4free.net:3306/homeless
 ```
 
-This will allow you to connect to a remote test database, 
+This will allow you to connect to a remote test database,
 which is hosted through DB4Free.
 
 ## Running
