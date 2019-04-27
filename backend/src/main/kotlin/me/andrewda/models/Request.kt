@@ -12,7 +12,7 @@ data class NewRequest(
     @Expose val person: Int?,
     @Expose val item: Int?,
     @Expose val quantity: Int?,
-    @Expose val donatedFunds: Int?,
+    @Expose val donatedFunds: Float?,
     @Expose val ordered: Int?,
     @Expose val delivered: Int?
 ) {
@@ -24,7 +24,7 @@ object Requests : IntIdTable() {
     val item = entityId("item", Items)
     val quantity = integer("quantity").default(1)
     val fulfilled = integer("fulfilled").default(0)
-    val donatedFunds = integer("donatedFunds").default(0)
+    val donatedFunds = float("donatedFunds").default(0.0f)
     val ordered = integer("ordered").default(0)
     val delivered = integer("delivered").default(0)
 }
