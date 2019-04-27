@@ -67,7 +67,6 @@ fun Route.user() {
             }
 
             delete("/{username}") {
-                call.ensureAuthLevel(AuthLevel.SELF)
                 val username = call.parameters["username"] ?: ""
                 val user = UserController.findByUsername(username) ?: throw NotFound()
                 call.ensureAuthLevel(AuthLevel.SELF, user = user)
