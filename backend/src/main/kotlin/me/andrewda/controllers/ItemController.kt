@@ -1,7 +1,6 @@
 package me.andrewda.controllers
 
-import me.andrewda.models.Item
-import me.andrewda.models.NewItem
+import me.andrewda.models.*
 import me.andrewda.utils.Database
 import me.andrewda.utils.query
 
@@ -40,6 +39,19 @@ object ItemController {
         }
 
         item
+    }
+
+    suspend fun delete(id: Int) = query {
+        val item = Item.find { Items.id eq id }.firstOrNull() ?: return@query false
+
+        // Get requests of this type
+        val requests = Request.find { Requests.item eq id }
+
+        for (request in requests) {
+            request.delete()
+        }
+        item.delete()
+        true
     }
 
     suspend fun findAll() = query { Item.all().toList() }
