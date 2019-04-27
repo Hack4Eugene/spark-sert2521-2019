@@ -1,8 +1,8 @@
-import {ActionType} from 'typesafe-actions';
-import * as actions from "./actions";
-import {Person, Request, User} from "./index";
-import {combineReducers} from "redux";
-import {ActionTypes} from "./actions";
+import { ActionType } from 'typesafe-actions';
+import * as actions from './actions';
+import { Person, Request, User } from './index';
+import {combineReducers} from 'redux';
+import { ActionTypes } from './actions';
 
 const user = (state: User | null = null, action: ActionType<typeof actions>) => {
     switch (action.type) {
