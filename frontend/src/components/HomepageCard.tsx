@@ -8,7 +8,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import logo from '../images/CIF+logo.png';
 import withStyles from '@material-ui/core/es/styles/withStyles';
 import LinearProgress from '@material-ui/core/es/LinearProgress';
-import axios from 'axios';
 import CircularProgress from '@material-ui/core/es/CircularProgress';
 
 const styles = createStyles({
@@ -50,32 +49,13 @@ const styles = createStyles({
   },
 });
 
+// Props: <HomepageCard name={'Bill Nye'} pic={''} items={['Pants', 'Hat' ,'dfd', 'dfs']} totalCosts={[10, 50, 23, 34]} totalFunded={[5,40, 3, 3]} isLoaded={true}/>
+
 const HomepageCard = (props: any) => {
-  const [personData, setPerson] = React.useState();
-
-  // Gets all the requests for a person, given a slug
-  const getPersonData = async (slug: string) => {
-    console.log('requesting');
-    console.log(slug);
-    const response = await axios(
-      'http://localhost:8080/api/people/' + slug + '/requests'
-    );
-    const personData: personRequestData = response.data.response;
-    setPerson(personData);
-
-    return personData;
-  };
-
-  // Assign the styles and props to classes
   const { classes } = props;
 
-  // Get data about person every time page is refreshed
-  React.useEffect(() => {
-    getPersonData(props.slug);
-  }, []);
-
-  // While waiting for the data request to finish, display a loading a screen
-  if (!personData) {
+  // Display a loading screen if isLoaded is false
+  if (!props.isLoaded) {
     return (
       <Card className={classes.homepageCard}>
         <CardContent>
@@ -87,25 +67,23 @@ const HomepageCard = (props: any) => {
     );
   }
 
-  console.log(personData);
-
   // Generates the item divs, with a maximum of 3
   const createItems = () => {
     var itemContainers: Array<any> = [];
-    personData.map((data: personRequestData) => {
-      itemContainers.push(
-        <>
+    for (var i in props.items) {
+      if (itemContainers.length < 3) {
+        itemContainers.push(
           <div className={classes.itemContainer}>
-            <Typography> {data.item.name} </Typography>
+            <Typography> {props.items[i]} </Typography>
             <LinearProgress
               className={classes.progressBar}
               variant="determinate"
-              value={(data.funds / data.totalPrice) * 100}
+              value={(props.totalFunded[i] / props.totalCosts[i]) * 100}
             />
           </div>
-        </>
-      );
-    });
+        );
+      }
+    }
 
     return itemContainers;
   };
@@ -118,12 +96,9 @@ const HomepageCard = (props: any) => {
             <CardMedia
               className={classes.profilePicContainer}
               component="img"
-              // TODO: Replace this with value stored in personData
-              image={logo}
+              image={props.pic}
             />
-            <Typography className={classes.personName}>
-              {personData[0].person.name}
-            </Typography>
+            <Typography className={classes.personName}>{props.name}</Typography>
             {createItems()}
           </CardContent>
         </CardActionArea>
