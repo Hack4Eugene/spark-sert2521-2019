@@ -1,5 +1,7 @@
 # Item
+
 ### Fields
+
 **name** - The name of the item, obviously. For example,
 a sleeping bag item would have the name `"Sleeping Bag"`.
 This should be a unique field, though it is not the
@@ -16,7 +18,9 @@ of these items.
 the organization currently has of this item type.
 
 ### API interactions
+
 TODO
 
 ### Model interactions
-This model does not depend on any other models. It is used, however, by the Request model. 
+
+This model does not depend on any other models. It is used, however, by the Request model.
