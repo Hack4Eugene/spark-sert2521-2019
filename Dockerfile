@@ -1,11 +1,9 @@
-FROM openjdk:11.0-stretch
+FROM mvpstudio/java-8:v01
 
-EXPOSE 8080
+ADD backend/build/distributions/backend.tar /home/mvp/app/
 
-USER root
+USER mvp
 
-ADD backend/build/distributions/backend.tar app/
+WORKDIR /home/mvp
 
-WORKDIR app/backend/bin
-
-CMD while true; do ./backend; done
+ENTRYPOINT ["/home/mvp/app/backend/bin/backend"]
