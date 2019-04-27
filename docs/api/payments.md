@@ -1,6 +1,7 @@
 # /api/payments
 
 ## GET /api/payments/return
+
 This will not be called directly,
 this is where PayPal redirects
 after a transaction has been
@@ -12,6 +13,7 @@ after attempting to process the
 payment.
 
 ### Query Parameters:
+
 **paymentId** - A token
 that represents a transaction.
 
@@ -19,6 +21,7 @@ that represents a transaction.
 that represents the payer.
 
 ## POST /api/payments/people/{slug}
+
 This will submit a payment
 request for a person (in
 other words, a general donation).
@@ -40,6 +43,7 @@ other words, a general donation).
 ```
 
 ## POST /api/requests/{id}
+
 This will submit a payment
 which will contribute
 to a specified request.

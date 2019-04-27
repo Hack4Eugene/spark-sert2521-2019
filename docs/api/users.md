@@ -8,19 +8,19 @@ Get a full list of users in the system.
 
 ```json
 {
-    "response": [
-        {
-            "name": "John Smith",
-            "username": "jsmith",
-            "id": 1
-        },
-        {
-            "name": "Test",
-            "username": "test",
-            "id": 2
-        }
-    ],
-    "success": true
+  "response": [
+    {
+      "name": "John Smith",
+      "username": "jsmith",
+      "id": 1
+    },
+    {
+      "name": "Test",
+      "username": "test",
+      "id": 2
+    }
+  ],
+  "success": true
 }
 ```
 
@@ -45,15 +45,15 @@ creation of the user.
 
 ```json
 {
-    "response": {
-        "user": {
-            "name": "Test",
-            "username": "test",
-            "id": 1
-        },
-        "token": "eyJ0eXAiOiJKV1QiLCJQbGcioiJIUzUyMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6OSwiZXhwIjoxNTU2ODI1NTY0fQ.16Nvln04EOUfP-FL390-zrMWsH8-H6OLDTuzCKG5IBnUrr-_4n4-OfDpOBZDQUBSB9MThKqnJSbPDIkImkg5zg"
+  "response": {
+    "user": {
+      "name": "Test",
+      "username": "test",
+      "id": 1
     },
-    "success": true
+    "token": "eyJ0eXAiOiJKV1QiLCJQbGcioiJIUzUyMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6OSwiZXhwIjoxNTU2ODI1NTY0fQ.16Nvln04EOUfP-FL390-zrMWsH8-H6OLDTuzCKG5IBnUrr-_4n4-OfDpOBZDQUBSB9MThKqnJSbPDIkImkg5zg"
+  },
+  "success": true
 }
 ```
 
@@ -66,28 +66,30 @@ that user.
 ### Example Response
 
 If not logged in as that user:
+
 ```json
 {
-    "response": {
-        "name": "Test",
-        "username": "test",
-        "id": 1
-    },
-    "success": true
+  "response": {
+    "name": "Test",
+    "username": "test",
+    "id": 1
+  },
+  "success": true
 }
 ```
 
 If logged in as that user:
+
 ```json
 {
-    "response": {
-        "authLevel": "USER",
-        "email": "test@test.net",
-        "name": "Test",
-        "username": "test",
-        "id": 9
-    },
-    "success": true
+  "response": {
+    "authLevel": "USER",
+    "email": "test@test.net",
+    "name": "Test",
+    "username": "test",
+    "id": 9
+  },
+  "success": true
 }
 ```
 
@@ -111,14 +113,14 @@ as that user or be an admin.
 
 ```json
 {
-    "response": {
-        "authLevel": "USER",
-        "email": "test@test.net",
-        "name": "Test",
-        "username": "test",
-        "id": 1
-    },
-    "success": true
+  "response": {
+    "authLevel": "USER",
+    "email": "test@test.net",
+    "name": "Test",
+    "username": "test",
+    "id": 1
+  },
+  "success": true
 }
 ```
 
@@ -131,44 +133,44 @@ as that user or be an admin.
 
 ```json
 {
-    "response": [
-        {
-            "amount": 0.72,
-            "paymentId": "PAYID-LTCAMMI95D65772MJ884682R",
-            "personId": 1,
-            "status": "COMPLETE",
-            "type": "PERSON",
-            "userId": 1,
-            "id": 2
-        },
-        {
-            "amount": 5.28,
-            "paymentId": "PAYID-LTCANDA5RR81810GJ972511S",
-            "personId": 1,
-            "status": "COMPLETE",
-            "type": "PERSON",
-            "userId": 1,
-            "id": 3
-        },
-        {
-            "amount": 10.55,
-            "paymentId": "PAYID-LTCAOJY1YJ55349XC1106722",
-            "personId": 1,
-            "status": "COMPLETE",
-            "type": "PERSON",
-            "userId": 1,
-            "id": 4
-        },
-        {
-            "amount": 1.32,
-            "paymentId": "PAYID-LTCAO6Y1GA94608ME2540135",
-            "requestId": 1,
-            "status": "COMPLETE",
-            "type": "PERSON",
-            "userId": 1,
-            "id": 5
-        }
-    ],
-    "success": true
+  "response": [
+    {
+      "amount": 0.72,
+      "paymentId": "PAYID-LTCAMMI95D65772MJ884682R",
+      "personId": 1,
+      "status": "COMPLETE",
+      "type": "PERSON",
+      "userId": 1,
+      "id": 2
+    },
+    {
+      "amount": 5.28,
+      "paymentId": "PAYID-LTCANDA5RR81810GJ972511S",
+      "personId": 1,
+      "status": "COMPLETE",
+      "type": "PERSON",
+      "userId": 1,
+      "id": 3
+    },
+    {
+      "amount": 10.55,
+      "paymentId": "PAYID-LTCAOJY1YJ55349XC1106722",
+      "personId": 1,
+      "status": "COMPLETE",
+      "type": "PERSON",
+      "userId": 1,
+      "id": 4
+    },
+    {
+      "amount": 1.32,
+      "paymentId": "PAYID-LTCAO6Y1GA94608ME2540135",
+      "requestId": 1,
+      "status": "COMPLETE",
+      "type": "PERSON",
+      "userId": 1,
+      "id": 5
+    }
+  ],
+  "success": true
 }
 ```
