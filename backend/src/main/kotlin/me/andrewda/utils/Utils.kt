@@ -6,6 +6,7 @@ import me.andrewda.authentication.AuthLevel
 import me.andrewda.controllers.UserController
 import me.andrewda.controllers.UserPrincipal
 import me.andrewda.models.User
+import java.text.DecimalFormat
 
 typealias ApiResponse = MutableMap<String, Any?>
 
@@ -42,3 +43,5 @@ suspend fun ApplicationCall.ensureAuthLevel(authLevel: AuthLevel, user: User? = 
 
     if (userAuthLevel < authLevel) throw Forbidden()
 }
+
+fun Number.asCurrency() = DecimalFormat("0.00").format(this) ?: this.toString()
