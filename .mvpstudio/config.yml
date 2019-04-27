@@ -1,0 +1,3 @@
+name: spark-sert2521
+docker_context:
+  - ../
