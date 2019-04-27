@@ -12,7 +12,9 @@ data class NewRequest(
     @Expose val person: Int?,
     @Expose val item: Int?,
     @Expose val quantity: Int?,
-    @Expose val fulfilled: Int?
+    @Expose val funds: Double?,
+    @Expose val ordered: Int?,
+    @Expose val delivered: Int?
 ) {
     val isValid get() = person != null && item != null && quantity != null
 }
@@ -21,7 +23,9 @@ object Requests : IntIdTable() {
     val person = entityId("person", People)
     val item = entityId("item", Items)
     val quantity = integer("quantity").default(1)
-    val fulfilled = integer("fulfilled").default(0)
+    val funds = double("funds").default(0.0)
+    val ordered = integer("ordered").default(0)
+    val delivered = integer("delivered").default(0)
 }
 
 class Request(id: EntityID<Int>) : IntEntity(id) {
@@ -36,11 +40,17 @@ class Request(id: EntityID<Int>) : IntEntity(id) {
     @Readable
     var quantity by Requests.quantity
 
-    @Readable(auth = AuthLevel.ADMIN)
-    var fulfilled by Requests.fulfilled
+    @Readable
+    var funds by Requests.funds
 
     @Readable
-    val complete get() = fulfilled >= quantity
+    var ordered by Requests.ordered
+
+    @Readable
+    var delivered by Requests.delivered
+
+    @Readable(deep = true)
+    inline val complete get() = funds >= totalPrice
 
     @Readable(deep = true)
     inline val person get() = Person.findById(personId)

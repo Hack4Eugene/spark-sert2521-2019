@@ -31,6 +31,7 @@ object PersonController {
         if (newPerson.name != null) person.name = newPerson.name
         if (newPerson.bio != null) person.bio = newPerson.bio
         if (newPerson.slug != null) person.slug = newPerson.slug
+        if (newPerson.funds != null) person.funds = newPerson.funds
         if (newPerson.image != null) {
             val byteContent = newPerson.image.toByteArray()
             val blob = Database.connection.connector().createBlob().apply {

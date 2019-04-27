@@ -20,10 +20,6 @@ object RequestController {
             if (request.quantity != null) {
                 quantity = request.quantity
             }
-
-            if (request.fulfilled != null) {
-                fulfilled = request.fulfilled
-            }
         }
     }
 
@@ -31,7 +27,9 @@ object RequestController {
         val request = Request.findById(id) ?: return@query null
 
         if (newRequest.quantity != null) request.quantity = newRequest.quantity
-        if (newRequest.fulfilled != null) request.fulfilled = newRequest.fulfilled
+        if (newRequest.funds != null) request.funds = newRequest.funds
+        if (newRequest.ordered != null) request.ordered = newRequest.ordered
+        if (newRequest.delivered != null) request.delivered = newRequest.delivered
 
         request
     }
