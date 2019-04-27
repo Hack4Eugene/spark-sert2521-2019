@@ -1,7 +1,7 @@
 import { action } from 'typesafe-actions';
 import { Person, Request, User } from './index';
 
-export const enum ActionTypes {
+export enum ActionTypes {
   UPDATE_USER = 'UPDATE_USER',
   UPDATE_PEOPLE = 'UPDATE_PEOPLE',
   UPDATE_REQUESTS = 'UPDATE_REQUESTS',
