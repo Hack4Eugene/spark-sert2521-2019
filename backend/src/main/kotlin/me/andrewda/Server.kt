@@ -46,7 +46,8 @@ fun Application.main() {
     }
 
     install(StatusPages) {
-        status(*HttpStatusCode.allStatusCodes.toTypedArray()) {
+        val errorCodes = HttpStatusCode.allStatusCodes.filter { it.value >= 400 }.toTypedArray()
+        status(*errorCodes) {
             call.respond(Status.fromHttpStatusCode(it))
         }
 
