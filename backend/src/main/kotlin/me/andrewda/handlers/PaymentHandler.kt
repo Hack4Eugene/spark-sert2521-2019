@@ -26,12 +26,17 @@ fun Route.payment() {
 
                     val person = PersonController.findBySlug(slug) ?: throw NotFound()
 
+                    val amount = newPayment.amount ?: throw InvalidAmount()
+
                     if (newPayment.isValid) {
-                        val payment = PayPal.createPayment(newPayment.amount ?: 0.0) ?: throw MissingFields()
+                        val payment = PayPal.createPayment(amount) ?: throw MissingFields()
                         val link = payment.links.find { it.rel == "approval_url" }?.href ?: throw InternalServerError()
 
-                        PaymentController.create(newPayment, payment.id, user, person)
-
+                        try {
+                            PaymentController.create(newPayment, payment.id, user, person)
+                        } catch (exception: Exception) {
+                            throw PaymentFailure()
+                        }
                         call.respond(mapOf("link" to link))
                     } else {
                         throw MissingFields()
@@ -47,11 +52,17 @@ fun Route.payment() {
 
                     val request = RequestController.findById(id) ?: throw NotFound()
 
+                    val amount = newPayment.amount ?: throw InvalidAmount()
+
                     if (newPayment.isValid) {
-                        val payment = PayPal.createPayment(newPayment.amount ?: 0.0) ?: throw MissingFields()
+                        val payment = PayPal.createPayment(amount) ?: throw MissingFields()
                         val link = payment.links.find { it.rel == "approval_url" }?.href ?: throw InternalServerError()
 
-                        PaymentController.create(newPayment, payment.id, user, request)
+                        try {
+                            PaymentController.create(newPayment, payment.id, user, request)
+                        } catch (exception: Exception) {
+                            throw PaymentFailure()
+                        }
 
                         call.respond(mapOf("link" to link))
                     } else {
@@ -64,9 +75,12 @@ fun Route.payment() {
         get("/return") {
             val paymentId = call.request.queryParameters["paymentId"] ?: ""
             val payerId = call.request.queryParameters["PayerID"] ?: ""
-            PayPal.executePayment(paymentId, payerId)
 
-            println("SUCCESS $paymentId $payerId")
+            try {
+                PayPal.executePayment(paymentId, payerId)
+            } catch (exception: Exception) {
+                throw PaymentFailure()
+            }
 
             PaymentController.completePayment(paymentId)
 

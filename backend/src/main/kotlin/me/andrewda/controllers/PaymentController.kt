@@ -1,6 +1,7 @@
 package me.andrewda.controllers
 
 import me.andrewda.models.*
+import me.andrewda.utils.PaymentFailure
 import me.andrewda.utils.query
 
 object PaymentController {
@@ -27,19 +28,21 @@ object PaymentController {
     }
 
     suspend fun completePayment(paymentId: String) = query {
-        val payment = Payment.find { Payments.paymentId eq paymentId }.firstOrNull() ?: return@query
-        payment.status = PaymentStatus.COMPLETE
+        val payment = Payment.find { Payments.paymentId eq paymentId }.firstOrNull() ?: throw PaymentFailure()
 
-        println("Completing payment $paymentId")
+        if (payment.status != PaymentStatus.PENDING) {
+            throw PaymentFailure()
+        }
+
+        payment.status = PaymentStatus.COMPLETE
 
         when (payment.type) {
             PaymentType.PERSON -> {
-                val person = payment.person ?: return@query
+                val person = payment.person ?: throw PaymentFailure()
                 person.funds += payment.amount
             }
             PaymentType.REQUEST -> {
-                println("Updating request")
-                val request = payment.request ?: return@query
+                val request = payment.request ?: throw PaymentFailure()
                 request.funds += payment.amount
             }
         }
