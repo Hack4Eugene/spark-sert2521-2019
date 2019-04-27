@@ -28,9 +28,9 @@ Example response:
 
 ```json
 {
-    "response": {
-        "token": "eyJ0eXAiOidnmqwdmhjhqrjqGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImquwidsiInBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2NzY3NTE2fQ.sDQzqOlgSofjJSSQgBBUGxm2BMN6W1du24SIfFJro0FBhfsdkjhfkjsda2Am4HVmDXPmWTiblZeN6t58w"
-    },
-    "success": true
+  "response": {
+    "token": "eyJ0eXAiOidnmqwdmhjhqrjqGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImquwidsiInBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2NzY3NTE2fQ.sDQzqOlgSofjJSSQgBBUGxm2BMN6W1du24SIfFJro0FBhfsdkjhfkjsda2Am4HVmDXPmWTiblZeN6t58w"
+  },
+  "success": true
 }
 ```
