@@ -1,4 +1,4 @@
-import createStyles from "@material-ui/core/es/styles/createStyles";
+import createStyles from '@material-ui/core/es/styles/createStyles';
 import classNames from 'classnames';
 import { Theme } from '@material-ui/core';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Route, Switch } from 'react-router';
+import { Switch } from 'react-router';
 
 const drawerWidth = 240;
 
