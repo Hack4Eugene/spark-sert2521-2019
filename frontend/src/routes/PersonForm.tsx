@@ -32,7 +32,6 @@ const PersonForm: React.SFC<{}> = () => {
   const [requestOptions, setOptions] = React.useState();
 
   const getOptions = async () => {
-    console.log("requesting");
     const items = await axios("http://localhost:8080/api/items");
     const mappedItems: Options = items.data.response.map(
       ({ name, price, id }) => {
@@ -40,7 +39,6 @@ const PersonForm: React.SFC<{}> = () => {
         return { label: `${name} - $${price}`, value: id };
       }
     );
-    console.log(mappedItems);
     setOptions(mappedItems);
   };
   React.useEffect(() => {
@@ -70,7 +68,7 @@ const PersonForm: React.SFC<{}> = () => {
               {
                 headers: {
                   Authorization:
-                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2Nzg0MDMxfQ.5qz6hifpIm7Rc5ni6myjPdketXgt4Mn0MCdaGfHKIDftd7BiwC5oJ6xGReCdvyn_Be5 - HgEiKJZp12KttFjInw"
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ"
                 }
               }
             )
@@ -82,7 +80,7 @@ const PersonForm: React.SFC<{}> = () => {
               {
                 headers: {
                   Authorization:
-                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2Nzg0MDMxfQ.5qz6hifpIm7Rc5ni6myjPdketXgt4Mn0MCdaGfHKIDftd7BiwC5oJ6xGReCdvyn_Be5 - HgEiKJZp12KttFjInw"
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ"
                 }
               }
             )
