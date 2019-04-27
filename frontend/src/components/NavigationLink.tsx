@@ -4,8 +4,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { Link } from 'react-router-dom';
 
-const NavigationItem = (props: NavigationItemProps) => {
-  const { icon, text, linkTo } = props;
+const NavigationItem = ({ icon, text, linkTo }: NavigationItemProps) => {
   return (
     <Link to={linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
       <ListItem button>
