@@ -5,6 +5,7 @@ import { TextField } from 'formik-material-ui';
 import { Button, InputLabel } from '@material-ui/core';
 import Select from 'react-select';
 import axios from 'axios';
+import getAuthHeader from '../utilities/getAuthHeader';
 
 interface Person {
   name: string;
@@ -30,6 +31,7 @@ interface Options {
 
 const PersonForm: React.SFC<{}> = () => {
   const [requestOptions, setOptions] = React.useState();
+  const [success, setSuccess] = React.useState('');
 
   const getOptions = async () => {
     const items = await axios('http://localhost:8080/api/items');
@@ -57,37 +59,36 @@ const PersonForm: React.SFC<{}> = () => {
         }}
         onSubmit={async (
           values: Person,
-          { setSubmitting }: FormikActions<Person>
+          { setSubmitting, resetForm }: FormikActions<Person>
         ) => {
           const { name, bio, slug, requests } = values;
 
-          await axios
-            .post(
-              'http://localhost:8080/api/people',
-              { name, bio, slug },
-              {
-                headers: {
-                  // getAuthHeader()
-                  Authorization:
-                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ',
-                },
-              }
-            )
-            .then(response => console.log(response));
-          await axios
-            .post(
-              `http://localhost:8080/api/person/${slug}/requests`,
-              requests,
-              {
-                headers: {
-                  Authorization:
-                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ',
-                },
-              }
-            )
-            .then(response => console.log(response));
+          try {
+            await axios
+              .post(
+                'http://localhost:8080/api/people',
+                { name, bio, slug },
+                {
+                  headers: getAuthHeader(),
+                }
+              )
+              .then(response => console.log(response));
+            await axios
+              .post(
+                `http://localhost:8080/api/people/${slug}/requests`,
+                requests,
+                {
+                  headers: getAuthHeader(),
+                }
+              )
+              .then(response => console.log(response));
+            setSuccess('success');
+            resetForm();
+          } catch {
+            setSuccess('fail');
+          }
         }}
-        render={({ setFieldValue }) => (
+        render={({ setFieldValue, isSubmitting, isValid }) => (
           <Form
             style={{
               display: 'flex',
@@ -103,6 +104,7 @@ const PersonForm: React.SFC<{}> = () => {
               placeholder="John"
               type="text"
               component={TextField}
+              required
             />
 
             <InputLabel htmlFor="bio">Bio</InputLabel>
@@ -113,6 +115,7 @@ const PersonForm: React.SFC<{}> = () => {
               type="text"
               component={TextField}
               multiline
+              required
             />
 
             <InputLabel htmlFor="slug">Nickname</InputLabel>
@@ -122,6 +125,7 @@ const PersonForm: React.SFC<{}> = () => {
               placeholder="JimmyJohn"
               type="text"
               component={TextField}
+              required
             />
 
             <InputLabel htmlFor="requests">Requests</InputLabel>
@@ -133,21 +137,28 @@ const PersonForm: React.SFC<{}> = () => {
               closeMenuOnSelect={false}
               options={requestOptions}
               onChange={(value: Array<any>) =>
-                setFieldValue('requests', value.map(v => v.value))
+                setFieldValue('requests', value.map(v => ({ item: v.value })))
               }
+              required
             />
-            <Button type="submit" style={{ display: 'block' }}>
+            <Button
+              type="submit"
+              disabled={isSubmitting || !isValid}
+              style={{ display: 'block' }}
+            >
               Submit
             </Button>
           </Form>
         )}
       />
+      {success &&
+        (success === 'success' ? (
+          <h3>Person added!</h3>
+        ) : (
+          <h3>Please try again</h3>
+        ))}
     </div>
   );
 };
-const requestOptions = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+
 export default PersonForm;

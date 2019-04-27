@@ -7,11 +7,11 @@ import { store } from './state';
 import App from './components/App';
 
 const Root = () => (
-    <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
 
 render(<Root />, document.getElementById('root'));

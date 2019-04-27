@@ -11,11 +11,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Switch } from 'react-router';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { PersonAdd, PermIdentity } from '@material-ui/icons';
 import PersonForm from './PersonForm';
 import NavigationItem from '../components/NavigationLink';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import Login from '../components/Login';
 
 const drawerWidth = 240;
 
@@ -121,7 +122,13 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
         <Divider />
         <List>
           <NavigationItem
-            icon={PersonAddIcon}
+            icon={PermIdentity}
+            text="Login"
+            linkTo="/login"
+            closeNavigation={() => setDrawerOpened(false)}
+          />
+          <NavigationItem
+            icon={PersonAdd}
             text="Person Form"
             linkTo="/personform"
             closeNavigation={() => setDrawerOpened(false)}
@@ -160,6 +167,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Switch>
+          <Route path="/login" component={Login} />
           <Route path="/personform" component={PersonForm} />
         </Switch>
       </main>

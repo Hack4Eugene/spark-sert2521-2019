@@ -4,12 +4,12 @@ import { CssBaseline } from '@material-ui/core';
 import Main from '../routes/Main';
 
 const App = () => (
-    <>
-        <CssBaseline/>
-        <Switch>
-            <Route path="/" component={Main}/>
-        </Switch>
-    </>
+  <>
+    <CssBaseline />
+    <Switch>
+      <Route path="/" component={Main} />
+    </Switch>
+  </>
 );
 
 export default App;
