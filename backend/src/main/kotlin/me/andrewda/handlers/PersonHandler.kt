@@ -5,11 +5,9 @@ import io.ktor.auth.authenticate
 import io.ktor.request.receiveOrNull
 import io.ktor.routing.*
 import me.andrewda.controllers.PersonController
+import me.andrewda.controllers.RequestController
 import me.andrewda.models.NewPerson
-import me.andrewda.utils.MissingFields
-import me.andrewda.utils.NotFound
-import me.andrewda.utils.getApiResponse
-import me.andrewda.utils.respond
+import me.andrewda.utils.*
 
 fun Route.person() {
     route("/people") {
@@ -23,6 +21,15 @@ fun Route.person() {
             val person = PersonController.findBySlug(slug) ?: throw NotFound()
 
             call.respond(person.getApiResponse())
+        }
+
+        get("/{slug}/requests") {
+            val slug = call.parameters["slug"] ?: throw NotFound()
+            val excluded = call.request.queryParameters.getAll("exclude") ?: emptyList()
+            val person = PersonController.findBySlug(slug) ?: throw NotFound()
+            val requests = RequestController.findByPerson(person)
+
+            call.respond(requests.map { it.getDeepApiResponse(exclude = excluded) })
         }
 
         authenticate {
