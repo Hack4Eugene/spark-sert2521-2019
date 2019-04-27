@@ -26,11 +26,11 @@ function About() {
     return <h2>About</h2>;
 }
 
-function Topic({ match }) {
+function Topic({ match }: { match: any }) {
     return <h3>Requested Param: {match.params.id}</h3>;
 }
 
-function Topics({ match }) {
+function Topics({ match }: { match: any }) {
     return (
         <div>
             <h2>Topics</h2>
