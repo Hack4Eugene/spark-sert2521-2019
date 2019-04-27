@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import PersonForm from './routes/PersonForm';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/about" component={About} />
         <Route path="/topics" component={Topics} />
         <Route path="/personForm" component={PersonForm} />
+        <Route path="/login" component={Login} />
       </div>
     </Router>
   );
@@ -69,6 +71,9 @@ function Header() {
       </li>
       <li>
         <Link to="/personForm">Person Form</Link>
+      </li>
+      <li>
+        <Link to="/login">Login</Link>
       </li>
     </ul>
   );
