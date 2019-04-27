@@ -1,1 +1,0 @@
-mysql://user:pass@localhost:3306/db_name
