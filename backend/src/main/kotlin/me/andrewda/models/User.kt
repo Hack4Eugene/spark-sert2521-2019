@@ -24,7 +24,7 @@ object Users : IntIdTable() {
     val name = varchar("name", 50)
     val email = varchar("email", 50)
     val password = varchar("password", 255)
-    val auth = varchar("auth", 20).default(AuthLevel.USER.name)
+    val authLevel = enumeration("authLevel", AuthLevel::class).default(AuthLevel.USER)
 }
 
 class User(id: EntityID<Int>) : IntEntity(id) {
@@ -39,10 +39,8 @@ class User(id: EntityID<Int>) : IntEntity(id) {
     @Readable(auth = AuthLevel.SELF)
     var email by Users.email
 
-    @Readable("authLevel", auth = AuthLevel.SELF)
-    var auth by Users.auth
+    @Readable(auth = AuthLevel.SELF)
+    var authLevel by Users.authLevel
 
     var password by Users.password
-
-    val authLevel get() = AuthLevel.valueOf(auth)
 }
