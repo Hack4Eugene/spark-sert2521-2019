@@ -16,10 +16,10 @@ object PersonController {
         }
 
         Person.new {
-            name = person.name ?: ""
+            name = person.name!!
             image = blob
             bio = person.bio ?: ""
-            slug = person.slug ?: ""
+            slug = person.slug!!
         }
     }
 
