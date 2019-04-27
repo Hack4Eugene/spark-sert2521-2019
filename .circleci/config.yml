@@ -11,7 +11,7 @@ jobs:
           root: ./
           # must include anything needed to build/tag/push docker image
           paths:
-            - build/distributions
+            - backend/build/distributions
             - .mvpstudio
             - .git
             - Dockerfile
