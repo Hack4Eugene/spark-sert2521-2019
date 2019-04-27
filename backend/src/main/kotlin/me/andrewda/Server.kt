@@ -74,7 +74,6 @@ fun Application.main() {
             person()
             item()
             request()
-            payment()
 
             test()
 

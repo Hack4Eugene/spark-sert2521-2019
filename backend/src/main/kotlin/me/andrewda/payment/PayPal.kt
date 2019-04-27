@@ -11,7 +11,7 @@ object PayPal {
      *
      * 1. Create payment with `createPayment()` method, and accept the Payment object
      * 2. Get the link in `payment.links` with "rel=approval_url" (add &useraction=commit)
-     * 3. Send the user to that link (they will be prompted to choose how to payment)
+     * 3. Send the user to that link (they will be prompted to choose how to pay)
      * 4. User will be redirected to /api/payments/return?paymentId=<PAYMENT_ID>&token=<TOKEN>&PayerID=<PAYER_ID>
      * 5. Finish and execute the payment with `executePayment()` method with the payerId
      */
