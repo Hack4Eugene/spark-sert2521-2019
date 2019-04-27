@@ -5,25 +5,25 @@ import me.andrewda.utils.PaymentFailure
 import me.andrewda.utils.query
 
 object PaymentController {
-    suspend fun create(payment: NewPayment, paymentId: String, user: User, person: Person) = query {
+    suspend fun create(payment: NewPayment, paymentId: String, user: User?, person: Person) = query {
         Payment.new {
             this.paymentId = paymentId
 
             amount = payment.amount ?: 0.0
             type = PaymentType.PERSON
-            userId = user.id
             personId = person.id
+            userId = user?.id
         }
     }
 
-    suspend fun create(payment: NewPayment, paymentId: String, user: User, request: Request) = query {
+    suspend fun create(payment: NewPayment, paymentId: String, user: User?, request: Request) = query {
         Payment.new {
             this.paymentId = paymentId
 
             amount = payment.amount ?: 0.0
             type = PaymentType.REQUEST
-            userId = user.id
             requestId = request.id
+            userId = user?.id
         }
     }
 

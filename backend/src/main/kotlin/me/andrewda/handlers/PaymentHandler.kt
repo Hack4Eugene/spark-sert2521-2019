@@ -17,57 +17,55 @@ import me.andrewda.utils.*
 
 fun Route.payment() {
     route("/payments") {
-        authenticate {
-            route("/people") {
-                post("/{slug}") {
-                    val slug = call.parameters["slug"] ?: throw NotFound()
-                    val newPayment = call.receiveOrNull<NewPayment>() ?: throw MissingFields()
-                    val user = call.getUser() ?: throw NotAuthenticated()
+        route("/people") {
+            post("/{slug}") {
+                val slug = call.parameters["slug"] ?: throw NotFound()
+                val newPayment = call.receiveOrNull<NewPayment>() ?: throw MissingFields()
+                val user = call.getUser()
 
-                    val person = PersonController.findBySlug(slug) ?: throw NotFound()
+                val person = PersonController.findBySlug(slug) ?: throw NotFound()
 
-                    val amount = newPayment.amount ?: throw InvalidAmount()
+                val amount = newPayment.amount ?: throw InvalidAmount()
 
-                    if (newPayment.isValid) {
-                        val payment = PayPal.createPayment(amount) ?: throw MissingFields()
-                        val link = payment.links.find { it.rel == "approval_url" }?.href ?: throw InternalServerError()
+                if (newPayment.isValid) {
+                    val payment = PayPal.createPayment(amount) ?: throw MissingFields()
+                    val link = payment.links.find { it.rel == "approval_url" }?.href ?: throw InternalServerError()
 
-                        try {
-                            PaymentController.create(newPayment, payment.id, user, person)
-                        } catch (exception: Exception) {
-                            throw PaymentFailure()
-                        }
-                        call.respond(mapOf("link" to link))
-                    } else {
-                        throw MissingFields()
+                    try {
+                        PaymentController.create(newPayment, payment.id, user, person)
+                    } catch (exception: Exception) {
+                        throw PaymentFailure()
                     }
+                    call.respond(mapOf("link" to link))
+                } else {
+                    throw MissingFields()
                 }
             }
+        }
 
-            route("/requests") {
-                post("/{id}") {
-                    val id = call.parameters["id"]?.toIntOrNull() ?: throw NotFound()
-                    val newPayment = call.receiveOrNull<NewPayment>() ?: throw MissingFields()
-                    val user = call.getUser() ?: throw NotAuthenticated()
+        route("/requests") {
+            post("/{id}") {
+                val id = call.parameters["id"]?.toIntOrNull() ?: throw NotFound()
+                val newPayment = call.receiveOrNull<NewPayment>() ?: throw MissingFields()
+                val user = call.getUser()
 
-                    val request = RequestController.findById(id) ?: throw NotFound()
+                val request = RequestController.findById(id) ?: throw NotFound()
 
-                    val amount = newPayment.amount ?: throw InvalidAmount()
+                val amount = newPayment.amount ?: throw InvalidAmount()
 
-                    if (newPayment.isValid) {
-                        val payment = PayPal.createPayment(amount) ?: throw MissingFields()
-                        val link = payment.links.find { it.rel == "approval_url" }?.href ?: throw InternalServerError()
+                if (newPayment.isValid) {
+                    val payment = PayPal.createPayment(amount) ?: throw MissingFields()
+                    val link = payment.links.find { it.rel == "approval_url" }?.href ?: throw InternalServerError()
 
-                        try {
-                            PaymentController.create(newPayment, payment.id, user, request)
-                        } catch (exception: Exception) {
-                            throw PaymentFailure()
-                        }
-
-                        call.respond(mapOf("link" to link))
-                    } else {
-                        throw MissingFields()
+                    try {
+                        PaymentController.create(newPayment, payment.id, user, request)
+                    } catch (exception: Exception) {
+                        throw PaymentFailure()
                     }
+
+                    call.respond(mapOf("link" to link))
+                } else {
+                    throw MissingFields()
                 }
             }
         }
