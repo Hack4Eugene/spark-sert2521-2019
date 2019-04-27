@@ -134,15 +134,6 @@ as that user or be an admin.
     "response": [
         {
             "amount": 0.72,
-            "paymentId": "",
-            "personId": 1,
-            "status": "PENDING",
-            "type": "PERSON",
-            "userId": 1,
-            "id": 1
-        },
-        {
-            "amount": 0.72,
             "paymentId": "PAYID-LTCAMMI95D65772MJ884682R",
             "personId": 1,
             "status": "COMPLETE",
