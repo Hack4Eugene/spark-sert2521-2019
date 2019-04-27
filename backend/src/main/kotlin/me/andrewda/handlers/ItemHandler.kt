@@ -4,6 +4,7 @@ import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.request.receiveOrNull
 import io.ktor.routing.*
+import io.netty.handler.codec.http.HttpResponseStatus
 import me.andrewda.authentication.AuthLevel
 import me.andrewda.controllers.ItemController
 import me.andrewda.models.NewItem
@@ -46,6 +47,18 @@ fun Route.item() {
                 val item = ItemController.patch(id, newItem) ?: throw NotFound()
 
                 call.respond(item.getApiResponse())
+            }
+
+            delete("/{id}") {
+                call.ensureAuthLevel(AuthLevel.ADMIN)
+
+                val id = (call.parameters["id"] ?: "").toIntOrNull() ?: throw NotFound()
+
+                if (ItemController.delete(id)) {
+                    call.respond(HttpResponseStatus.OK)
+                } else {
+                    throw NotFound()
+                }
             }
         }
     }
