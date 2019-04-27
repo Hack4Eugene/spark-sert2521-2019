@@ -21,8 +21,8 @@ object RequestController {
                 quantity = request.quantity
             }
 
-            if (request.donatedFunds != null) {
-                donatedFunds = request.donatedFunds
+            if (request.funds != null) {
+                funds = request.funds
             }
 
             if (request.ordered != null) {
@@ -39,7 +39,7 @@ object RequestController {
         val request = Request.findById(id) ?: return@query null
 
         if (newRequest.quantity != null) request.quantity = newRequest.quantity
-        if (newRequest.donatedFunds != null) request.donatedFunds = newRequest.donatedFunds
+        if (newRequest.funds != null) request.funds = newRequest.funds
         if (newRequest.ordered != null) request.ordered = newRequest.ordered
         if (newRequest.delivered != null) request.delivered = newRequest.delivered
 
