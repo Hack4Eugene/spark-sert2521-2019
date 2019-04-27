@@ -22,7 +22,6 @@ object PersonController {
             image = blob
             bio = person.bio ?: ""
             slug = person.slug ?: ""
-            funds = person.funds ?: 0
         }
     }
 

@@ -20,18 +20,6 @@ object RequestController {
             if (request.quantity != null) {
                 quantity = request.quantity
             }
-
-            if (request.funds != null) {
-                funds = request.funds
-            }
-
-            if (request.ordered != null) {
-                ordered = request.ordered
-            }
-
-            if (request.delivered != null) {
-                delivered = request.delivered
-            }
         }
     }
 
