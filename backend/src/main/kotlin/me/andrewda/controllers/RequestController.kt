@@ -1,6 +1,7 @@
 package me.andrewda.controllers
 
 import me.andrewda.models.*
+import me.andrewda.utils.MissingFields
 import me.andrewda.utils.query
 import org.jetbrains.exposed.dao.EntityID
 
@@ -16,6 +17,21 @@ object RequestController {
 
             if (request.quantity != null) {
                 quantity = request.quantity
+            }
+        }
+    }
+
+    suspend fun createSeveral(requests: List<NewRequest>, person: Person) = query {
+        requests.map {
+            if (it.item == null) throw MissingFields()
+
+            Request.new {
+                personId = person.id
+                itemId = EntityID(it.item, Items)
+
+                if (it.quantity != null) {
+                    quantity = it.quantity
+                }
             }
         }
     }

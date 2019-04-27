@@ -9,6 +9,7 @@ import me.andrewda.authentication.AuthLevel
 import me.andrewda.controllers.PersonController
 import me.andrewda.controllers.RequestController
 import me.andrewda.models.NewPerson
+import me.andrewda.models.NewRequest
 import me.andrewda.utils.*
 
 fun Route.person() {
@@ -30,6 +31,17 @@ fun Route.person() {
             val excluded = call.request.queryParameters.getAll("exclude") ?: emptyList()
             val person = PersonController.findBySlug(slug) ?: throw NotFound()
             val requests = RequestController.findByPerson(person)
+
+            call.respond(requests.map { it.getDeepApiResponse(exclude = excluded) })
+        }
+
+        post("/{slug}/requests") {
+            val slug = call.parameters["slug"] ?: throw NotFound()
+            val excluded = call.request.queryParameters.getAll("exclude") ?: emptyList()
+            val newRequests = call.receiveOrNull<Array<NewRequest>>() ?: throw MissingFields()
+            val person = PersonController.findBySlug(slug) ?: throw NotFound()
+
+            val requests = RequestController.createSeveral(newRequests.toList(), person)
 
             call.respond(requests.map { it.getDeepApiResponse(exclude = excluded) })
         }
