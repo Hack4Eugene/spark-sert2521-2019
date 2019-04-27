@@ -69,9 +69,7 @@ object PayPal {
     }
 
     fun createPayment(cost: Double) = try {
-        val p = generatePaymentDetails(cost).create(apiContext)
-        println(Payment.getLastResponse())
-        p
+        generatePaymentDetails(cost).create(apiContext)
     } catch (exception: PayPalRESTException) {
         println("Could not create payment...")
         println(exception)
