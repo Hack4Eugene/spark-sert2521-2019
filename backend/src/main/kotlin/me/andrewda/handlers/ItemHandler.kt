@@ -54,7 +54,7 @@ fun Route.item() {
 
                 val id = (call.parameters["id"] ?: "").toIntOrNull() ?: throw NotFound()
 
-                if(ItemController.delete(id)) {
+                if (ItemController.delete(id)) {
                     call.respond(HttpResponseStatus.OK)
                 } else {
                     throw NotFound()

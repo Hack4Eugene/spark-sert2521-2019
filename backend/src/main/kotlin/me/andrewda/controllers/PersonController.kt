@@ -46,7 +46,6 @@ object PersonController {
         val person = Person.find { People.slug eq slug }.firstOrNull() ?: return@query false
 
         // Get requests related to this person
-
         val requests = Request.find { Requests.person eq person.id }
 
         for (request in requests) {
