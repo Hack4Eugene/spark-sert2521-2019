@@ -5,7 +5,6 @@ import { TextField } from "formik-material-ui";
 import { Button, InputLabel } from "@material-ui/core";
 import Select from "react-select";
 import axios from "axios";
-import { async } from "q";
 
 interface Person {
   name: string;
