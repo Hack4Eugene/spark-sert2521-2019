@@ -1,0 +1,40 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk-node
+    steps:
+      - checkout
+      - run: sudo npm install -g yarn
+      - run: ./gradlew build
+      - persist_to_workspace:
+          root: ./
+          # must include anything needed to build/tag/push docker image
+          paths:
+            - build/distributions
+            - .mvpstudio
+            - .git
+            - Dockerfile
+
+  publish:
+    docker:
+      - image: circleci/python:3
+    steps:
+      - attach_workspace:
+          at: ./
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: curl https://raw.githubusercontent.com/MVPStudio/build_setup/master/build_tag_push.sh | bash
+
+workflows:
+  version: 2
+  build-publish-deploy:
+    jobs:
+      - build
+      - publish:
+          context: dockerhub-publish
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
