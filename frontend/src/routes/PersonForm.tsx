@@ -137,7 +137,7 @@ const PersonForm: React.SFC<{}> = () => {
               closeMenuOnSelect={false}
               options={requestOptions}
               onChange={(value: Array<any>) =>
-                setFieldValue('requests', value.map(v => v.value))
+                setFieldValue('requests', value.map(v => ({ item: v.value })))
               }
               required
             />
