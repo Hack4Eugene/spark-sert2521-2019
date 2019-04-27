@@ -65,6 +65,18 @@ fun Route.user() {
 
                 call.respond(payments.map { it.getApiResponse(exclude = excluded) })
             }
+
+            delete("/{username}") {
+                val username = call.parameters["username"] ?: ""
+                val user = UserController.findByUsername(username) ?: throw NotFound()
+                call.ensureAuthLevel(AuthLevel.SELF, user = user)
+
+                if (UserController.delete(username)) {
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    throw NotFound()
+                }
+            }
         }
     }
 }

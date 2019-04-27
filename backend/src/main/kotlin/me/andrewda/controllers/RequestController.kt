@@ -31,6 +31,13 @@ object RequestController {
         request
     }
 
+    suspend fun delete(id: Int) = query {
+        val request = Request.findById(id) ?: return@query false
+
+        request.delete()
+        true
+    }
+
     suspend fun findAll() = query { Request.all().toList() }
 
     suspend fun findById(id: Int) = query { Request.findById(id) }
