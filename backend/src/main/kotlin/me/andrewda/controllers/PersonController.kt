@@ -2,6 +2,7 @@ package me.andrewda.controllers
 
 import me.andrewda.models.*
 import me.andrewda.utils.Database
+import me.andrewda.utils.MissingFields
 import me.andrewda.utils.query
 
 object PersonController {
@@ -16,10 +17,10 @@ object PersonController {
         }
 
         Person.new {
-            name = person.name!!
+            name = person.name ?: throw MissingFields()
             image = blob
             bio = person.bio ?: ""
-            slug = person.slug!!
+            slug = person.slug ?: throw MissingFields()
         }
     }
 

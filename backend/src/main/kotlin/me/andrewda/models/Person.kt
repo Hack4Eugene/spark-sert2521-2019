@@ -14,7 +14,7 @@ data class NewPerson(
     @Expose val slug: String?,
     @Expose val funds: Double?
 ) {
-    val isValid get() = name != null && slug != null && name != "" && slug != ""
+    val isValid get() = name.isNullOrBlank() && slug.isNullOrBlank()
 }
 
 object People : IntIdTable() {
