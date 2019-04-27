@@ -48,6 +48,7 @@ fun Application.main() {
 
     install(CORS) {
         anyHost()
+        header("Authorization")
     }
 
     install(StatusPages) {
