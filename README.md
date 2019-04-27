@@ -2,6 +2,23 @@
 
 SERT's code for the Spark challenge @ Hack for a Cause 2019.
 
+## Installation
+To get Spark up and running, you will need a few things first:
+
+**NPM** - You will need NPM to install Yarn, which is used to build the front-end.
+To install NPM, run:
+
+`sudo apt-get install npm`
+
+Then, to install Yarn, run
+
+`sudo npm install -g yarn`
+
+**Docker** - This only applies if you are going to run a docker container.
+Installation is fairly simple:
+
+`sudo apt-get install docker`
+
 ## Running
 
 To run the program, use the commands below:
