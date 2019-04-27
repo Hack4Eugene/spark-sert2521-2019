@@ -1,5 +1,7 @@
 # Person
+
 ### Fields
+
 **name** - The name of the Person.
 
 **image** - A blob that represents an image of the Person.
@@ -12,7 +14,9 @@
 made to this Person.
 
 ### API interactions
+
 `/api/people` is the general endpoint for creating and reading Person models.
 
 ### Model interactions
+
 The Request model references Person, but does not read from it.

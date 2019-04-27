@@ -1,5 +1,7 @@
 # Request
+
 ### Fields
+
 **person** - A reference to the person making the request as an ID.
 
 **item** - A reference to the type of item being requested as an ID.
@@ -27,5 +29,6 @@ the associated item's price.
 `/api/requests` is the general endpoint for creating and reading Requests.
 
 ### Model interactions
+
 Requests currently interact with the Item model through the `totalPrice` and `complete` fields, both
 of which use `item.price` to calculate themselves.

@@ -4,6 +4,8 @@ import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.request.receiveOrNull
 import io.ktor.routing.*
+import io.netty.handler.codec.http.HttpResponseStatus
+import me.andrewda.authentication.AuthLevel
 import me.andrewda.controllers.PersonController
 import me.andrewda.controllers.RequestController
 import me.andrewda.models.NewPerson
@@ -60,6 +62,17 @@ fun Route.person() {
                 val person = PersonController.patch(slug, newPerson) ?: throw NotFound()
 
                 call.respond(person.getApiResponse())
+            }
+
+            delete("/{slug}") {
+                call.ensureAuthLevel(AuthLevel.ADMIN)
+                val slug = call.parameters["slug"] ?: throw NotFound()
+
+                if (PersonController.delete(slug)) {
+                    call.respond(HttpResponseStatus.OK)
+                } else {
+                    throw NotFound()
+                }
             }
         }
     }

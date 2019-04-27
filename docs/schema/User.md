@@ -1,5 +1,7 @@
 # User
+
 ### Fields
+
 **username** - The username of the user, obviously.
 
 **name** - The real name of the user.
@@ -11,7 +13,9 @@
 **password** - Only used when creating new Users. Cannot be read.
 
 ### API interactions
+
 TODO
 
 ### Model interactions
+
 None so far.

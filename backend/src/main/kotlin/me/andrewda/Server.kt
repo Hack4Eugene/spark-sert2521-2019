@@ -6,9 +6,11 @@ import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.jwt.jwt
 import io.ktor.features.CallLogging
+import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.gson.gson
+import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import io.ktor.routing.get
@@ -39,6 +41,15 @@ fun Application.main() {
 
     install(CallLogging) {
         level = Level.INFO
+    }
+
+    install(CORS) {
+        anyHost()
+
+        header("Authorization")
+
+        method(HttpMethod.Patch)
+        method(HttpMethod.Delete)
     }
 
     install(StatusPages) {

@@ -8,15 +8,15 @@ Example response:
 
 ```json
 {
-    "response": [
-        {
-            "bio": "I used to make TV shows.",
-            "name": "Bill Nye",
-            "slug": "ScienceGuy",
-            "id": 1
-        }
-    ],
-    "success": true
+  "response": [
+    {
+      "bio": "I used to make TV shows.",
+      "name": "Bill Nye",
+      "slug": "ScienceGuy",
+      "id": 1
+    }
+  ],
+  "success": true
 }
 ```
 
