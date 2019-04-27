@@ -1,27 +1,21 @@
-import {Component} from "react";
-import {Home} from "@material-ui/icons";
 import {Card} from "@material-ui/core";
 import * as React from "react";
 import Typography from "@material-ui/core/es/Typography";
 import CardContent from "@material-ui/core/es/CardContent";
 import CardActionArea from "@material-ui/core/es/CardActionArea";
 import createStyles from "@material-ui/core/es/styles/createStyles";
-import {Theme, WithStyles} from "@material-ui/core/es";
+import {WithStyles} from "@material-ui/core/es";
 import CardMedia from '@material-ui/core/CardMedia';
 import logo from "../images/CIF+logo.png"
 import withStyles from "@material-ui/core/es/styles/withStyles";
-import {inspect} from "util";
 import LinearProgress from "@material-ui/core/es/LinearProgress";
 
 const styles = createStyles({
-    homepagecard: {
-        height: '23vh',
-    },
-    homepagecardstyles: {
+    homepageCard: {
         height: '23vh',
     },
 
-    profilepicwrapper: {
+    profilePicContainer: {
         width: 'auto',
         height: '20vh',
         float: 'left',
@@ -29,7 +23,7 @@ const styles = createStyles({
         marginRight: '5%',
     },
 
-    personname: {
+    personName: {
         marginTop: '-6px',
         textAlign: 'center',
         fontSize: '3vh',
@@ -38,51 +32,56 @@ const styles = createStyles({
         fontFamily: 'montserrat'
     },
 
-    itemcontainer: {
+    itemContainer: {
         marginTop: '5px',
     },
 
-    progressbar: {
+    progressBar: {
         minHeight: '1vh',
-    }
+    },
+
+    colorPrimary: {
+        // backgroundColor: getColor(.5)
+    },
+
+
 });
 
 const HomepageCard = (props: WithStyles<typeof styles>) => {
     const {classes} = props;
     return (
         <>
-            <Card className={classes.homepagecard}>
-                <CardActionArea className={classes.homepagecardstyles}>
+            <Card className={classes.homepageCard}>
+                <CardActionArea className={classes.homepageCard}>
                     <CardContent>
-                        <CardMedia className={classes.profilepicwrapper}
+                        <CardMedia className={classes.profilePicContainer}
                                    component="img"
                                    image={logo}
-                            // title="Contemplative Reptile"
                         />
-                        <Typography className={classes.personname}>
+                        <Typography className={classes.personName}>
                             Person Name
                         </Typography>
-                        <div className={classes.itemcontainer}>
+                        <div className={classes.itemContainer}>
                             <Typography> Item Name </Typography>
-                            <LinearProgress className={classes.progressbar} variant="determinate"
-                                            value={50}></LinearProgress>
+                            <LinearProgress className={classes.progressBar} variant="determinate"
+                                            value={50}/>
                         </div>
-                        <div className={classes.itemcontainer}>
+                        <div className={classes.itemContainer}>
                             <Typography> Item Name </Typography>
-                            <LinearProgress className={classes.progressbar} variant="determinate"
-                                            value={50}></LinearProgress>
+                            <LinearProgress className={classes.progressBar} variant="determinate"
+                                            value={50}/>
                         </div>
-                        <div className={classes.itemcontainer}>
+                        <div className={classes.itemContainer}>
                             <Typography> Item Name </Typography>
-                            <LinearProgress className={classes.progressbar} variant="determinate"
-                                            value={50}></LinearProgress>
+                            <LinearProgress
+                                className={classes.progressBar} variant="determinate"
+                                value={50}/>
                         </div>
                     </CardContent>
                 </CardActionArea>
             </Card>
-
         </>
     );
-}
+};
 
 export default withStyles(styles)(HomepageCard);
