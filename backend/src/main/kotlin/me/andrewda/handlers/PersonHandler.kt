@@ -32,6 +32,14 @@ fun Route.person() {
             call.respond(requests.map { it.getDeepApiResponse(exclude = excluded) })
         }
 
+        post("/{slug}/requests") {
+            val slug = call.parameters["slug"] ?: throw NotFound()
+            val person = PersonController.findBySlug(slug) ?: throw NotFound()
+
+            RequestController.createSeveral()
+            val requests = RequestController.findByPerson(person)
+        }
+
         authenticate {
             post {
                 val newPerson = call.receiveOrNull<NewPerson>() ?: throw MissingFields()

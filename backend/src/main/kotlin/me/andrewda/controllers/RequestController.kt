@@ -1,6 +1,7 @@
 package me.andrewda.controllers
 
 import me.andrewda.models.*
+import me.andrewda.models.Payments.request
 import me.andrewda.utils.query
 import org.jetbrains.exposed.dao.EntityID
 
@@ -16,6 +17,23 @@ object RequestController {
 
             if (request.quantity != null) {
                 quantity = request.quantity
+            }
+        }
+    }
+
+    suspend fun createSeveral(requests: List<NewRequest>) = query {
+        requests.forEach {
+            if (it.person == null || it.item == null) {
+                return@query null
+            }
+
+            Request.new {
+                personId = EntityID(it.person, People)
+                itemId = EntityID(it.item, Items)
+
+                if (it.quantity != null) {
+                    quantity = it.quantity
+                }
             }
         }
     }
