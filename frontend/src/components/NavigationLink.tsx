@@ -4,8 +4,17 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { Link } from 'react-router-dom';
 
-const NavigationItem = ({ icon, text, linkTo }: NavigationItemProps) => (
-  <Link to={linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
+const NavigationItem = ({
+  icon,
+  text,
+  linkTo,
+  closeNavigation,
+}: NavigationItemProps) => (
+  <Link
+    to={linkTo}
+    style={{ textDecoration: 'none', color: 'inherit' }}
+    onClick={closeNavigation ? closeNavigation : () => {}}
+  >
     <ListItem button>
       <ListItemIcon>{createElement(icon)}</ListItemIcon>
       <ListItemText primary={text} />
@@ -17,6 +26,7 @@ export interface NavigationItemProps {
   icon: React.ComponentType;
   text: string;
   linkTo: string;
+  closeNavigation: (() => void) | null;
 }
 
 export default NavigationItem;
