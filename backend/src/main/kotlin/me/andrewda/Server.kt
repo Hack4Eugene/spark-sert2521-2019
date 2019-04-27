@@ -6,6 +6,7 @@ import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.jwt.jwt
 import io.ktor.features.CallLogging
+import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
 import io.ktor.gson.gson
@@ -43,6 +44,10 @@ fun Application.main() {
 
     install(CallLogging) {
         level = Level.INFO
+    }
+
+    install(CORS) {
+        anyHost()
     }
 
     install(StatusPages) {
