@@ -1,6 +1,7 @@
 package me.andrewda.controllers
 
 import me.andrewda.models.*
+import me.andrewda.utils.MissingFields
 import me.andrewda.utils.query
 import org.jetbrains.exposed.dao.EntityID
 
@@ -20,6 +21,21 @@ object RequestController {
         }
     }
 
+    suspend fun createSeveral(requests: List<NewRequest>, person: Person) = query {
+        requests.map {
+            if (it.item == null) throw MissingFields()
+
+            Request.new {
+                personId = person.id
+                itemId = EntityID(it.item, Items)
+
+                if (it.quantity != null) {
+                    quantity = it.quantity
+                }
+            }
+        }
+    }
+
     suspend fun patch(id: Int, newRequest: NewRequest) = query {
         val request = Request.findById(id) ?: return@query null
 
@@ -29,6 +45,13 @@ object RequestController {
         if (newRequest.delivered != null) request.delivered = newRequest.delivered
 
         request
+    }
+
+    suspend fun delete(id: Int) = query {
+        val request = Request.findById(id) ?: return@query false
+
+        request.delete()
+        true
     }
 
     suspend fun findAll() = query { Request.all().toList() }

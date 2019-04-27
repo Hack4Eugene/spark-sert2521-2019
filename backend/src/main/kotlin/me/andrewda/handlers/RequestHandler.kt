@@ -2,14 +2,13 @@ package me.andrewda.handlers
 
 import io.ktor.application.call
 import io.ktor.auth.authenticate
+import io.ktor.http.HttpStatusCode
 import io.ktor.request.receiveOrNull
 import io.ktor.routing.*
+import me.andrewda.authentication.AuthLevel
 import me.andrewda.controllers.RequestController
 import me.andrewda.models.NewRequest
-import me.andrewda.utils.MissingFields
-import me.andrewda.utils.NotFound
-import me.andrewda.utils.getDeepApiResponse
-import me.andrewda.utils.respond
+import me.andrewda.utils.*
 
 fun Route.request() {
     route("/requests") {
@@ -48,6 +47,17 @@ fun Route.request() {
                 val request = RequestController.patch(id, newRequest) ?: throw NotFound()
 
                 call.respond(request.getDeepApiResponse())
+            }
+
+            delete("/{id}") {
+                call.ensureAuthLevel(AuthLevel.ADMIN)
+                val id = (call.parameters["id"] ?: "").toIntOrNull() ?: throw NotFound()
+
+                if (RequestController.delete(id)) {
+                    call.respond(HttpStatusCode.OK)
+                } else {
+                    throw NotFound()
+                }
             }
         }
     }

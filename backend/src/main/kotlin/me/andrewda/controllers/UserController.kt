@@ -39,6 +39,13 @@ object UserController {
         user
     }
 
+    suspend fun delete(username: String) = query {
+        val user = User.find { Users.username eq username }.firstOrNull() ?: return@query false
+
+        user.delete()
+        true
+    }
+
     suspend fun findAll() = query { User.all().toList() }
 
     suspend fun findById(id: Int) = query {

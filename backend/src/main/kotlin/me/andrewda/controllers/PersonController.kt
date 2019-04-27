@@ -1,8 +1,6 @@
 package me.andrewda.controllers
 
-import me.andrewda.models.NewPerson
-import me.andrewda.models.People
-import me.andrewda.models.Person
+import me.andrewda.models.*
 import me.andrewda.utils.Database
 import me.andrewda.utils.query
 
@@ -42,6 +40,19 @@ object PersonController {
         }
 
         person
+    }
+
+    suspend fun delete(slug: String) = query {
+        val person = Person.find { People.slug eq slug }.firstOrNull() ?: return@query false
+
+        // Get requests related to this person
+        val requests = Request.find { Requests.person eq person.id }
+
+        for (request in requests) {
+            request.delete()
+        }
+        person.delete()
+        true
     }
 
     suspend fun findAll() = query { Person.all().toList() }
