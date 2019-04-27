@@ -5,6 +5,7 @@ import { TextField } from 'formik-material-ui';
 import { Button, InputLabel } from '@material-ui/core';
 import Select from 'react-select';
 import axios from 'axios';
+import getAuthHeader from '../utilities/getAuthHeader';
 
 interface Person {
   name: string;
@@ -66,11 +67,10 @@ const PersonForm: React.SFC<{}> = () => {
               'http://localhost:8080/api/people',
               { name, bio, slug },
               {
-                headers: {
-                  // getAuthHeader()
-                  Authorization:
-                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ',
-                },
+                headers: getAuthHeader(),
+                //   Authorization:
+                //     'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ',
+                // },
               }
             )
             .then(response => console.log(response));
@@ -79,10 +79,7 @@ const PersonForm: React.SFC<{}> = () => {
               `http://localhost:8080/api/person/${slug}/requests`,
               requests,
               {
-                headers: {
-                  Authorization:
-                    'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2ODIyMDAxfQ.V9os-kmSqSb-QixNrzPcVmpwHhdlh-t_1HfQQSC9bWfdMPH1wS0xBfp8GMh5KezquitDwJMjEzTnuLrSbsMuEQ',
-                },
+                headers: getAuthHeader(),
               }
             )
             .then(response => console.log(response));
