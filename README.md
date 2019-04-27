@@ -3,6 +3,7 @@
 SERT's code for the Spark challenge @ Hack for a Cause 2019.
 
 ## Installation
+
 To get Spark up and running, you will need a few things first:
 
 **NPM** - You will need NPM to install Yarn, which is used to build the front-end.
@@ -18,6 +19,20 @@ Then, to install Yarn, run
 Installation is fairly simple:
 
 `sudo apt-get install docker`
+
+### Setting up a test database connection
+
+Skip this if you are only running this through Docker.
+
+Create a file called `backend/src/main/resources/db.txt`, and inside of it
+write and save the following:
+
+```
+mysql://sert_homeless:sert2521@db4free.net:3306/homeless
+```
+
+This will allow you to connect to a remote test database, 
+which is hosted through DB4Free.
 
 ## Running
 
