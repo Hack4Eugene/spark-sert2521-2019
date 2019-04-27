@@ -5,6 +5,7 @@ import { TextField } from "formik-material-ui";
 import { Button, InputLabel } from "@material-ui/core";
 import Select from "react-select";
 import axios from "axios";
+import { async } from "q";
 
 interface Person {
   name: string;
@@ -57,23 +58,36 @@ const PersonForm: React.SFC<{}> = () => {
           slug: "",
           requests: []
         }}
-        onSubmit={(
+        onSubmit={async (
           values: Person,
           { setSubmitting }: FormikActions<Person>
         ) => {
-          // axios
-          //   .post("http://localhost:8080/api/people", values, {
-          //     headers: {
-          //       Authorization:
-          //         "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2Nzg0MDMxfQ.5qz6hifpIm7Rc5ni6myjPdketXgt4Mn0MCdaGfHKIDftd7BiwC5oJ6xGReCdvyn_Be5 - HgEiKJZp12KttFjInw"
-          //     }
-          //   })
-          //   .then(response => console.log(response));
+          const { name, bio, slug, requests } = values;
 
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 500);
+          await axios
+            .post(
+              "http://localhost:8080/api/people",
+              { name, bio, slug },
+              {
+                headers: {
+                  Authorization:
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2Nzg0MDMxfQ.5qz6hifpIm7Rc5ni6myjPdketXgt4Mn0MCdaGfHKIDftd7BiwC5oJ6xGReCdvyn_Be5 - HgEiKJZp12KttFjInw"
+                }
+              }
+            )
+            .then(response => console.log(response));
+          await axios
+            .post(
+              `http://localhost:8080/api/person/${slug}/requests`,
+              requests,
+              {
+                headers: {
+                  Authorization:
+                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6InBheWl0Zm9yd2FyZC5jb20iLCJpZCI6MSwiZXhwIjoxNTU2Nzg0MDMxfQ.5qz6hifpIm7Rc5ni6myjPdketXgt4Mn0MCdaGfHKIDftd7BiwC5oJ6xGReCdvyn_Be5 - HgEiKJZp12KttFjInw"
+                }
+              }
+            )
+            .then(response => console.log(response));
         }}
         render={({ setFieldValue }) => (
           <Form
