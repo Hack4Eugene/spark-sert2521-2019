@@ -51,7 +51,7 @@ object Database {
     private inline fun createAdminAccount() {
         val adminUser = User.find { Users.username eq "admin" }.firstOrNull()
 
-        if (adminUser != null) {
+        if (adminUser == null) {
             User.new {
                 name = "Admin McAdminface"
                 username = "admin"
