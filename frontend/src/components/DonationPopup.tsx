@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Button, CircularProgress, InputLabel } from '@material-ui/core';
 import { TextField } from 'formik-material-ui';
 import Dialog from '@material-ui/core/es/Dialog';
+import getHost from '../utilities/getHost';
 
 const styles = createStyles({
   popover: {
@@ -84,8 +85,7 @@ const DonationPopup = (props: any) => {
                   try {
                     await axios
                       .post(
-                        'http://localhost:8080/api/payments/people/' +
-                          form.identifier,
+                        getHost() + '/api/payments/people/' + form.identifier,
                         { amount: form.amount }
                       )
                       .then(response => {
@@ -104,8 +104,7 @@ const DonationPopup = (props: any) => {
                   try {
                     await axios
                       .post(
-                        'http://localhost:8080/api/payments/requests/' +
-                          form.identifier,
+                        getHost() + '/api/payments/requests/' + form.identifier,
                         { amount: form.amount }
                       )
                       .then(response => {

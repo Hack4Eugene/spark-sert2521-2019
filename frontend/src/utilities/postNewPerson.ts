@@ -19,13 +19,11 @@ const makeFileString = (file: any) => {
 };
 
 export default async ({ name, bio, slug, image, requests }: Person) => {
-  console.log(image);
-  const imageStr = await makeFileString(image);
-  console.log(imageStr);
+  const { imageStr }: any = await makeFileString(image);
   await axios
     .post(
       getHost() + '/api/people',
-      { name, bio, slug },
+      { name, bio, slug, image: imageStr },
       {
         headers: getAuthHeader(),
       }

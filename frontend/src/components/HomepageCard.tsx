@@ -240,7 +240,7 @@ const HomepageCard = ({
 
         <div className={classes.itemContainer}>
           {requests.map(req => {
-            if (req.person !== null && req.person.slug == slug) {
+            if (req.person && req.person.slug == slug) {
               return (
                 <>
                   <ItemCard
