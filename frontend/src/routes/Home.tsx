@@ -4,6 +4,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
 import { connect } from 'react-redux';
 import HomepageCard from '../components/HomepageCard';
+import { CircularProgress } from '@material-ui/core';
 
 const styles = createStyles({
   hello: {
@@ -12,6 +13,10 @@ const styles = createStyles({
 });
 
 const Home = ({ people }: HomeProps) => {
+  if (people.length == 0) {
+    return <CircularProgress style={{ margin: 'auto' }} size={100} />;
+  }
+
   return (
     <div>
       {people.map(person => {
