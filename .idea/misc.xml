@@ -4,9 +4,6 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="JSX" />
   </component>
-  <component name="MacroExpansionManager">
-    <option name="directoryName" value="BKMUaZIE" />
-  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>

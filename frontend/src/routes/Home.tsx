@@ -1,5 +1,5 @@
 import React, { createElement } from 'react';
-import { Person } from '../state';
+import { Person, Request } from '../state';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
 import { connect } from 'react-redux';
@@ -12,8 +12,9 @@ const styles = createStyles({
   },
 });
 
-const Home = ({ people }: HomeProps) => {
-  if (people.length == 0) {
+const Home = ({ people, requests }: HomeProps) => {
+  console.log(people, requests);
+  if (people.length == 0 || requests.length == 0) {
     return <CircularProgress style={{ margin: 'auto' }} size={100} />;
   }
 
@@ -29,7 +30,8 @@ const Home = ({ people }: HomeProps) => {
             slug={person.slug}
             totalFunded={person.totalFunded}
             totalCost={person.totalCost}
-            items={[]}
+            requests={requests}
+            bioText={person.bio}
           />
         );
       })}
@@ -39,10 +41,11 @@ const Home = ({ people }: HomeProps) => {
 
 interface HomeProps extends WithStyles<typeof styles> {
   people: Array<Person>;
+  requests: Array<Request>;
 }
 
 export default withStyles(styles)(
-  connect(({ people }: any) => {
-    return { people: people };
+  connect(({ people, requests }: any) => {
+    return { people: people, requests: requests };
   })(Home)
 );

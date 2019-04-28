@@ -18,7 +18,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import logo from '../images/profpic.jpg';
 import ItemCard from './ItemCard';
 import LinearProgress from '@material-ui/core/es/LinearProgress';
-import { Item } from '../state';
+import { Request } from '../state';
+import RequestDonationButton from './RequestDonationButton';
+import PersonDonationButton from './PersonDonationButton';
 
 interface state {
   fullWidth: boolean;
@@ -155,7 +157,8 @@ const HomepageCard = ({
   slug,
   totalCost,
   totalFunded,
-  items,
+  requests,
+  bioText,
 }: HomepageCardProps) => {
   const [open, setOpen] = React.useState(false);
 
@@ -179,27 +182,6 @@ const HomepageCard = ({
       </Card>
     );
   }
-
-  // Generates the item divs, with a maximum of 3
-  const createItems = () => {
-    var itemContainers: Array<any> = [];
-    for (var i in items) {
-      if (itemContainers.length < 3) {
-        itemContainers.push(
-          <div className={classes.itemContainer}>
-            <Typography> {items[i]} </Typography>
-            <LinearProgress
-              className={classes.progressBar}
-              variant="determinate"
-              value={100}
-            />
-          </div>
-        );
-      }
-    }
-
-    return itemContainers;
-  };
 
   const handleClick = () => {
     console.log('sdads');
@@ -242,6 +224,11 @@ const HomepageCard = ({
       <Dialog fullScreen open={open} onClose={handleClose}>
         <AppBar>
           <Toolbar>
+            <div className={classes.fullscreenNameContainer}>
+              <Typography className={classes.fullscreenNameText}>
+                {name}
+              </Typography>
+            </div>
             <IconButton
               color="inherit"
               onClick={handleClose}
@@ -249,41 +236,34 @@ const HomepageCard = ({
             >
               <CloseIcon />
             </IconButton>
-            <div className={classes.fullscreenNameContainer}>
-              <Typography className={classes.fullscreenNameText}>
-                Sheev
-              </Typography>
-            </div>
           </Toolbar>
         </AppBar>
         <div className={classes.fullscreenImageContainer}>
           <img className={classes.fullscreenImage} src={pic} />
         </div>
 
+        <PersonDonationButton slug={slug} />
+
         <div className={classes.bioContainer}>
-          <Typography className={classes.bioText}>
-            Did you ever hear the Tragedy of Darth Plagueis the wise? I thought
-            not. It's not a story the Jedi would tell you. It's a Sith legend.
-            Darth Plagueis was a Dark Lord of the Sith, so powerful and so wise
-            he could use the Force to influence the midichlorians to create
-            life... He had such a knowledge of the dark side that he could even
-            keep the ones he cared about from dying. The dark side of the Force
-            is a pathway to many abilities some consider to be unnatural. He
-            became so powerful... the only thing he was afraid of was losing his
-            power, which eventually, of course, he did. Unfortunately, he taught
-            his apprentice everything he knew, then his apprentice killed him in
-            his sleep. It's ironic he could save others from death, but not
-            himself.
-          </Typography>
+          <Typography className={classes.bioText}>{bioText}</Typography>
         </div>
 
         <div className={classes.itemContainer}>
-          <ItemCard
-            itemName={'Backpack'}
-            totalCost={50}
-            totalFunded={25}
-            pic={pic}
-          />
+          {requests.map(req => {
+            if (req.person.slug == slug) {
+              return (
+                <>
+                  <ItemCard
+                    itemName={req.item.name}
+                    totalCost={req.totalPrice}
+                    totalFunded={req.funds}
+                    pic={''}
+                    id={req.id}
+                  />
+                </>
+              );
+            }
+          })}
         </div>
       </Dialog>
     </>
@@ -297,7 +277,8 @@ interface HomepageCardProps extends WithStyles<typeof styles> {
   pic: string;
   name: string;
   slug: string;
-  items: Array<Item>;
+  requests: Array<Request>;
+  bioText: string;
 }
 
 export default withStyles(styles)(HomepageCard);

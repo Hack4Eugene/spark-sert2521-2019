@@ -56,7 +56,7 @@ const DonationPopup = (props: any) => {
               initialValues={{
                 amount: '0',
                 type: getType(props.type),
-                identifier: 'scienceguy',
+                identifier: props.id,
               }}
               onSubmit={async (
                 form: DonationForm,
@@ -85,6 +85,26 @@ const DonationPopup = (props: any) => {
                     await axios
                       .post(
                         'http://localhost:8080/api/payments/people/' +
+                          form.identifier,
+                        { amount: form.amount }
+                      )
+                      .then(response => {
+                        if (response.status == 200) {
+                          if (response.data.success) {
+                            window.location = response.data.response.link;
+                          } else {
+                            alert('Transaction unsuccessful!');
+                            setSubmitting(false);
+                          }
+                        }
+                      });
+                  } finally {
+                  }
+                } else {
+                  try {
+                    await axios
+                      .post(
+                        'http://localhost:8080/api/payments/requests/' +
                           form.identifier,
                         { amount: form.amount }
                       )
