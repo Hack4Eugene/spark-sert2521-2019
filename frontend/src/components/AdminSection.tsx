@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Paper,
-  AppBar,
   ExpansionPanel,
   ExpansionPanelSummary,
   Typography,
@@ -9,12 +7,14 @@ import {
   Avatar,
   FormControlLabel,
   Checkbox,
-  LinearProgress,
   createStyles,
   CircularProgress,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/es/styles';
+import List from '@material-ui/core/es/List';
+import ListItem from '@material-ui/core/es/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = (theme: any) =>
   createStyles({
@@ -40,10 +40,11 @@ const AdminSection = ({ classes, title, items }: any) => {
       </ExpansionPanelSummary>
       {items && (
         <ExpansionPanelDetails className={classes.expansion}>
-          {items.map((item: any) => {
-            console.log(item);
-            return <AdminCard key={`${item.id}`} {...item} />;
-          })}
+          <List>
+            {items.map((item: any) => {
+              return <AdminCard key={`${item.id}`} {...item} />;
+            })}
+          </List>
         </ExpansionPanelDetails>
       )}
     </ExpansionPanel>
@@ -53,7 +54,6 @@ const AdminSection = ({ classes, title, items }: any) => {
 const AdminCard = ({
   item,
   person,
-  slug,
   ordered,
   delivered,
   funds,
@@ -61,15 +61,15 @@ const AdminCard = ({
   complete,
 }: any) => {
   // distribute items?
-  const [checkedOrdered, setOrdered] = useState(ordered ? true : false);
-  const [checkedDelivered, setDelivered] = useState(delivered ? true : false);
+  const [checkedOrdered, setOrdered] = useState(!!ordered);
+  const [checkedDelivered, setDelivered] = useState(!!delivered);
 
   return (
-    <Paper>
+    <ListItem divider>
       {person.avatar && <Avatar src={person.avatar} />}
-      <Typography>
-        {item.name} for {person.name}
-      </Typography>
+      <ListItemText secondary={`requested ${item.name}`}>
+        {person.name}
+      </ListItemText>
       <FormControlLabel
         control={
           <Checkbox
@@ -93,8 +93,11 @@ const AdminCard = ({
         }
         label="Delivered"
       />
-      <CircularProgress value={(funds / totalPrice) * 100} variant="static" />
-    </Paper>
+      <CircularProgress
+        value={(f => (f <= 100 ? f : 100))((funds / totalPrice) * 100)}
+        variant="static"
+      />
+    </ListItem>
   );
 };
 
