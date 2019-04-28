@@ -74,8 +74,8 @@ const styles = createStyles({
   loadingCircle: {
     position: 'absolute',
     margin: 'auto',
-    top: -7,
-    left: -7,
+    top: 0,
+    left: 0,
     textAlign: 'center',
     color: '#388e3c',
   },
@@ -199,7 +199,7 @@ const HomepageCard = ({
               <CircularProgress
                 thickness={3}
                 className={classes.loadingCircle}
-                size={120}
+                size="14vh"
                 variant="static"
                 value={(totalFunded / totalCost) * 100}
               />
