@@ -18,9 +18,7 @@ spec:
     spec:
       containers:
         - name: web-server
-          image: mvpstudio/sert2521:1a8ac09
-          #          command: ["/bin/sh"]
-          #          args: ["-c", "while true; do echo hello; sleep 10;done"]
+          image: mvpstudio/sert2521:6d0b9a3
           resources:
             limits:
               cpu: 0.25
@@ -115,7 +113,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mysql:8
+          image: mysql:5
           resources:
             limits:
               cpu: 0.5
