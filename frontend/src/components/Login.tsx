@@ -4,14 +4,16 @@ import axios from 'axios';
 import { Formik, Field, Form, FormikActions } from 'formik';
 import { TextField } from 'formik-material-ui';
 
-import { InputLabel, Button } from '@material-ui/core';
+import { InputLabel, Button, CircularProgress } from '@material-ui/core';
+import { Redirect } from 'react-router';
+import isLoggedIn from '../utilities/isLoggedIn';
 
 interface LoginInfo {
   identifier: string;
   password: string;
 }
-
-const Login: React.SFC<{}> = () => {
+const Login = ({ history }: any) => {
+  const [failedLogin, setFailedLogin] = React.useState(false);
   return (
     <div className="loginForm">
       <h1>Login</h1>
@@ -25,14 +27,22 @@ const Login: React.SFC<{}> = () => {
           { setSubmitting }: FormikActions<LoginInfo>
         ) => {
           console.log(values);
-          await axios
-            .post('http://localhost:8080/api/auth/login', values)
-            .then(response => {
-              window.localStorage.setItem(
-                'token',
-                response.data.response.token
-              );
-            });
+          try {
+            await axios
+              .post('http://localhost:8080/api/auth/login', values)
+              .then(response => {
+                window.localStorage.setItem(
+                  'token',
+                  response.data.response.token
+                );
+              });
+            if (isLoggedIn()) {
+              history.replace('/');
+            }
+          } catch {
+            setSubmitting(false);
+            setFailedLogin(true);
+          }
         }}
         render={({ isSubmitting, isValid }) => (
           <Form
@@ -47,7 +57,7 @@ const Login: React.SFC<{}> = () => {
             <Field
               id="identifier"
               name="identifier"
-              placeholder="username/email"
+              placeholder=""
               type="text"
               component={TextField}
               required
@@ -56,21 +66,26 @@ const Login: React.SFC<{}> = () => {
             <Field
               id="password"
               name="password"
-              placeholder="username/email"
+              placeholder=""
               type="password"
               component={TextField}
               required
             />
-            <Button
-              type="submit"
-              disabled={isSubmitting || !isValid}
-              style={{ display: 'block' }}
-            >
-              Login
-            </Button>
+            {isSubmitting ? (
+              <CircularProgress style={{ margin: 'auto' }} size={50} />
+            ) : (
+              <Button
+                type="submit"
+                disabled={isSubmitting || !isValid}
+                style={{ display: 'block' }}
+              >
+                Login
+              </Button>
+            )}
           </Form>
         )}
       />
+      {failedLogin && <h3>Login Failed</h3>}
     </div>
   );
 };
