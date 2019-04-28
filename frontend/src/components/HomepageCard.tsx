@@ -3,26 +3,22 @@ import * as React from 'react';
 import Typography from '@material-ui/core/es/Typography';
 import CardContent from '@material-ui/core/es/CardContent';
 import createStyles from '@material-ui/core/es/styles/createStyles';
-import CardMedia from '@material-ui/core/CardMedia';
 import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
-import LinearProgress from '@material-ui/core/es/LinearProgress';
 import CircularProgress from '@material-ui/core/es/CircularProgress';
 import ExpansionPanel from '@material-ui/core/es/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/es/ExpansionPanelSummary';
 import { createElement } from 'react';
 import Avatar from '@material-ui/core/es/Avatar';
-import CardActionArea from '@material-ui/core/es/CardActionArea';
-import ButtonBase from '@material-ui/core/es/ButtonBase';
 import Dialog from '@material-ui/core/es/Dialog';
-import Transition from 'react-transition-group/Transition';
 import Slide from '@material-ui/core/es/Slide';
-import Button from '@material-ui/core/es/Button';
 import IconButton from '@material-ui/core/es/IconButton';
 import Toolbar from '@material-ui/core/es/Toolbar';
 import AppBar from '@material-ui/core/es/AppBar';
 import CloseIcon from '@material-ui/icons/Close';
 import logo from '../images/profpic.jpg';
 import ItemCard from './ItemCard';
+import LinearProgress from '@material-ui/core/es/LinearProgress';
+import { Item } from '../state';
 
 interface state {
   fullWidth: boolean;
@@ -147,9 +143,20 @@ const styles = createStyles({
 });
 
 // Props: <HomePageCard slug={'scienceguy'} pic={''} totalFunded = {50} totalCost= {65} name={'Bill Nye'} isLoaded={true}
-const HomepageCard = (props: any) => {
-  const { classes } = props;
 
+// const HomepageCard = (props: any) => {
+//   const { classes } = props;
+
+const HomepageCard = ({
+  classes,
+  isLoaded,
+  name,
+  pic,
+  slug,
+  totalCost,
+  totalFunded,
+  items,
+}: HomepageCardProps) => {
   const [open, setOpen] = React.useState(false);
 
   function handleClickOpen() {
@@ -161,7 +168,7 @@ const HomepageCard = (props: any) => {
   }
 
   // Display a loading screen if isLoaded is false
-  if (!props.isLoaded) {
+  if (!isLoaded) {
     return (
       <Card className={classes.homepageCard}>
         <CardContent>
@@ -174,25 +181,25 @@ const HomepageCard = (props: any) => {
   }
 
   // Generates the item divs, with a maximum of 3
-  // const createItems = () => {
-  //     var itemContainers: Array<any> = [];
-  //     for (var i in props.items) {
-  //         if (itemContainers.length < 3) {
-  //             itemContainers.push(
-  //                 <div className={classes.itemContainer}>
-  //                     <Typography> {props.items[i]} </Typography>
-  //                     <LinearProgress
-  //                         className={classes.progressBar}
-  //                         variant="determinate"
-  //                         value={(props.totalFunded[i] / props.totalCosts[i]) * 100}
-  //                     />
-  //                 </div>
-  //             );
-  //         }
-  //     }
-  //
-  //     return itemContainers;
-  // };
+  const createItems = () => {
+    var itemContainers: Array<any> = [];
+    for (var i in items) {
+      if (itemContainers.length < 3) {
+        itemContainers.push(
+          <div className={classes.itemContainer}>
+            <Typography> {items[i]} </Typography>
+            <LinearProgress
+              className={classes.progressBar}
+              variant="determinate"
+              value={100}
+            />
+          </div>
+        );
+      }
+    }
+
+    return itemContainers;
+  };
 
   const handleClick = () => {
     console.log('sdads');
@@ -213,27 +220,21 @@ const HomepageCard = (props: any) => {
         >
           <div className={classes.profilePicContainer}>
             <div className={classes.inner}>
-              <Avatar
-                className={classes.profilePic}
-                alt={props.name}
-                src={props.pic}
-              />
+              <Avatar className={classes.profilePic} alt={name} src={pic} />
               <CircularProgress
                 thickness={3}
                 className={classes.loadingCircle}
                 size={120}
                 variant="static"
-                value={(props.totalFunded / props.totalCost) * 100}
+                value={(totalFunded / totalCost) * 100}
               />
             </div>
           </div>
           <div className={classes.contentContainer}>
             <div className={classes.nameContainer}>
-              <Typography className={classes.personName}>
-                {props.name}
-              </Typography>
+              <Typography className={classes.personName}>{name}</Typography>
             </div>
-            <Typography className={classes.slug}>{props.slug}</Typography>
+            <Typography className={classes.slug}>{slug}</Typography>
           </div>
         </ExpansionPanelSummary>
       </ExpansionPanel>
@@ -256,7 +257,7 @@ const HomepageCard = (props: any) => {
           </Toolbar>
         </AppBar>
         <div className={classes.fullscreenImageContainer}>
-          <img className={classes.fullscreenImage} src={logo} />
+          <img className={classes.fullscreenImage} src={pic} />
         </div>
 
         <div className={classes.bioContainer}>
@@ -276,12 +277,12 @@ const HomepageCard = (props: any) => {
           </Typography>
         </div>
 
-        <div className={classes.itemsContainer}>
+        <div className={classes.itemContainer}>
           <ItemCard
             itemName={'Backpack'}
             totalCost={50}
             totalFunded={25}
-            pic={logo}
+            pic={pic}
           />
         </div>
       </Dialog>
@@ -289,40 +290,14 @@ const HomepageCard = (props: any) => {
   );
 };
 
-interface personRequestData {
-  funds: number;
-  itemId: number;
-  ordered: boolean;
-  personId: number;
-  quantity: number;
-  id: number;
-  complete: boolean;
-  item: itemData;
-  person: personData;
-  totalPrice: number;
-}
-
-interface itemData {
-  name: string;
-  price: number;
-  id: number;
-}
-
-interface personData {
-  bio: string;
-  funds: number;
-  name: string;
-  slug: string;
-  id: number;
-}
-
 interface HomepageCardProps extends WithStyles<typeof styles> {
-  items: Array<number>;
   isLoaded: boolean;
-  totalFunded: Array<number>;
-  totalCosts: Array<number>;
+  totalFunded: number;
+  totalCost: number;
   pic: string;
   name: string;
+  slug: string;
+  items: Array<Item>;
 }
 
 export default withStyles(styles)(HomepageCard);

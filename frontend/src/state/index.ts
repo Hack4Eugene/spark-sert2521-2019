@@ -34,6 +34,7 @@ export interface Person {
   funds: number;
   totalCost: number;
   totalFunded: number;
+  image: string;
 }
 
 export interface Item {

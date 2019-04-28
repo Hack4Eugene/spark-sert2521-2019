@@ -1,8 +1,10 @@
 import React, { createElement } from 'react';
-import { AppState, Person } from '../state';
+import { Person } from '../state';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
 import { connect } from 'react-redux';
+import HomepageCard from '../components/HomepageCard';
+import { CircularProgress } from '@material-ui/core';
 
 const styles = createStyles({
   hello: {
@@ -11,10 +13,25 @@ const styles = createStyles({
 });
 
 const Home = ({ people }: HomeProps) => {
+  if (people.length == 0) {
+    return <CircularProgress style={{ margin: 'auto' }} size={100} />;
+  }
+
   return (
     <div>
       {people.map(person => {
-        return <div>{JSON.stringify(person)}</div>;
+        return (
+          <HomepageCard
+            key={person.id}
+            isLoaded={true}
+            name={person.name}
+            pic={person.image}
+            slug={person.slug}
+            totalFunded={person.totalFunded}
+            totalCost={person.totalCost}
+            items={[]}
+          />
+        );
       })}
     </div>
   );
@@ -25,5 +42,7 @@ interface HomeProps extends WithStyles<typeof styles> {
 }
 
 export default withStyles(styles)(
-  connect(({ people }: AppState) => ({ people }))(Home)
+  connect(({ people }: any) => {
+    return { people: people };
+  })(Home)
 );
