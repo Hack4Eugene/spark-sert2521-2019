@@ -19,7 +19,7 @@ data class NewItem(
 
 object Items : IntIdTable() {
     val name = varchar("name", 50)
-    val image = blob("image").nullable()
+    val image = varchar("image", 40).nullable()
     val price = double("price")
     val inventory = integer("inventory").default(0).nullable()
 }

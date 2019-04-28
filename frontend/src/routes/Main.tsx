@@ -2,7 +2,7 @@ import createStyles from '@material-ui/core/es/styles/createStyles';
 import classNames from 'classnames';
 import { Theme } from '@material-ui/core';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import React, { createElement, useState } from 'react';
+import React, { createElement, useState, useEffect } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -18,6 +18,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Login from '../components/Login';
 import Home from './Home';
+import isLoggedIn from '../utilities/isLoggedIn';
 
 const drawerWidth = 240;
 
@@ -102,6 +103,13 @@ const styles = (theme: Theme) =>
 
 const Main = ({ classes }: WithStyles<typeof styles>) => {
   const [drawerOpened, setDrawerOpened] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      setLoggedIn(true);
+    }
+  }, []);
   return (
     <div className={classes.root}>
       <Drawer
@@ -122,12 +130,21 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
         </div>
         <Divider />
         <List>
-          <NavigationItem
-            icon={PermIdentity}
-            text="Login"
-            linkTo="/login"
-            closeNavigation={() => setDrawerOpened(false)}
-          />
+          {!loggedIn ? (
+            <NavigationItem
+              icon={PermIdentity}
+              text="Login"
+              linkTo="/login"
+              closeNavigation={() => setDrawerOpened(false)}
+            />
+          ) : (
+            <NavigationItem
+              icon={PermIdentity}
+              text="Account"
+              linkTo="/user"
+              closeNavigation={() => setDrawerOpened(false)}
+            />
+          )}
           <NavigationItem
             icon={PersonAdd}
             text="Person Form"

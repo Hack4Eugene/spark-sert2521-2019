@@ -25,6 +25,8 @@ dependencies {
     implementation "com.auth0:java-jwt:$jwt_version"
     implementation "org.mindrot:jbcrypt:$bcrypt_version"
     implementation "com.paypal.sdk:rest-api-sdk:$paypal_version"
+    implementation "com.github.kittinunf.fuel:fuel:$fuel_version"
+    implementation "com.github.kittinunf.fuel:fuel-json:$fuel_version"
 }
 
 compileKotlin {
