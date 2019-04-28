@@ -51,7 +51,7 @@ const DonationPopup = (props: any) => {
   return (
     <>
       <div className={classes.popoverDiv}>
-        <Dialog open={props.openSlug}>
+        <Dialog open={props.open}>
           <div className={classes.popover}>
             <Formik
               initialValues={{
