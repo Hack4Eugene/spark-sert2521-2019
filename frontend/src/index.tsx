@@ -5,6 +5,14 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { store } from './state';
 import App from './components/App';
+import { updatePeople } from './state/actions';
+import getPeople from './utilities/getPeople';
+
+// Populate the store with people from the
+(async () => {
+  const people = await getPeople();
+  store.dispatch(updatePeople(people.data));
+})();
 
 const Root = () => (
   <Provider store={store}>

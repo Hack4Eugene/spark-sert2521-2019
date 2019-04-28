@@ -3,7 +3,9 @@ import * as React from 'react';
 import Typography from '@material-ui/core/es/Typography';
 import CardContent from '@material-ui/core/es/CardContent';
 import createStyles from '@material-ui/core/es/styles/createStyles';
-import withStyles from '@material-ui/core/es/styles/withStyles';
+import CardMedia from '@material-ui/core/CardMedia';
+import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
+import LinearProgress from '@material-ui/core/es/LinearProgress';
 import CircularProgress from '@material-ui/core/es/CircularProgress';
 import ExpansionPanel from '@material-ui/core/es/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/es/ExpansionPanelSummary';
@@ -186,6 +188,15 @@ interface personData {
   name: string;
   slug: string;
   id: number;
+}
+
+interface HomepageCardProps extends WithStyles<typeof styles> {
+  items: Array<number>;
+  isLoaded: boolean;
+  totalFunded: Array<number>;
+  totalCosts: Array<number>;
+  pic: string;
+  name: string;
 }
 
 export default withStyles(styles)(HomepageCard);
