@@ -104,12 +104,17 @@ const styles = (theme: Theme) =>
 const Main = ({ classes }: WithStyles<typeof styles>) => {
   const [drawerOpened, setDrawerOpened] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (isLoggedIn()) {
+  const checkLogin = async () => {
+    if (await isLoggedIn()) {
+      console.log('logged in?');
       setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
     }
-  }, []);
+  };
+  useEffect(() => {
+    checkLogin();
+  }, [loggedIn]);
   return (
     <div className={classes.root}>
       <Drawer

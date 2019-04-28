@@ -8,6 +8,7 @@ export default async () => {
     });
     console.log(authed);
     if (authed.data.success) {
+      console.log(authed.data.success);
       return true;
     }
   }

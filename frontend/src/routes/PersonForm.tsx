@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Formik, Field, Form, FormikActions } from 'formik';
-import { TextField } from 'formik-material-ui';
+import { TextField, SimpleFileUpload } from 'formik-material-ui';
 import { Button, InputLabel } from '@material-ui/core';
 import Select from 'react-select';
 import postNewPerson from '../utilities/postNewPerson';
@@ -11,6 +11,7 @@ export interface Person {
   name: string;
   bio: string;
   slug: string;
+  image: string;
   requests: Array<number>;
 }
 
@@ -36,6 +37,19 @@ const PersonForm: React.SFC<{}> = () => {
     getOptions();
   }, []);
 
+  const makeFileString = async (event: any, setFieldValue: any) => {
+    const reader = new FileReader();
+    // const result = reader.readAsDataURL(
+    //   event.currentTarget.files[0]
+    // );
+    const file = event.currentTarget.files[0];
+    console.log(file);
+    await reader.readAsDataURL(file);
+    const result = reader.result;
+    console.log(result);
+    setFieldValue('image', result);
+  };
+
   return (
     <div className="container">
       <h1>Person Details</h1>
@@ -44,6 +58,7 @@ const PersonForm: React.SFC<{}> = () => {
           name: '',
           bio: '',
           slug: '',
+          image: '',
           requests: [],
         }}
         onSubmit={async (
@@ -86,6 +101,7 @@ const PersonForm: React.SFC<{}> = () => {
               component={TextField}
               multiline
               required
+              margin="normal"
             />
 
             <InputLabel htmlFor="slug">Nickname</InputLabel>
@@ -110,6 +126,16 @@ const PersonForm: React.SFC<{}> = () => {
                 setFieldValue('requests', value.map(v => ({ item: v.value })))
               }
               required
+            />
+            <InputLabel htmlFor="image">Photo</InputLabel>
+            <Field
+              id="image"
+              name="image"
+              component={SimpleFileUpload}
+              type="file"
+              onChange={(event: any) =>
+                setFieldValue('image', event.currentTarget.files[0])
+              }
             />
             <Button
               type="submit"
