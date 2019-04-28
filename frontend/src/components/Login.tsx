@@ -9,6 +9,7 @@ import FormField from './FormField';
 
 import { store } from '../state';
 import { updateUser } from '../state/actions';
+import getHost from '../utilities/getHost';
 
 interface LoginInfo {
   identifier: string;
@@ -31,7 +32,7 @@ const Login = ({ history }: any) => {
           setFailedLogin(false);
           try {
             await axios
-              .post('http://localhost:8080/api/auth/login', values)
+              .post(getHost() + '/api/auth/login', values)
               .then(response => {
                 window.localStorage.setItem(
                   'token',
