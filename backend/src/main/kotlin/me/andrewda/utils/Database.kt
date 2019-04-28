@@ -3,6 +3,8 @@ package me.andrewda.utils
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.andrewda.authentication.AuthLevel
+import me.andrewda.authentication.hashPassword
 import me.andrewda.models.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -37,10 +39,27 @@ object Database {
 
     fun init() {
         val transaction = TransactionManager.currentOrNew(Connection.TRANSACTION_REPEATABLE_READ)
+
         SchemaUtils.createMissingTablesAndColumns(Users, Items, Requests, People, Payments)
+        createAdminAccount()
+
         transaction.commit()
 
         println("Database initiated")
+    }
+
+    private inline fun createAdminAccount() {
+        val adminUser = User.find { Users.username eq "admin" }.firstOrNull()
+
+        if (adminUser != null) {
+            User.new {
+                name = "Admin McAdminface"
+                username = "admin"
+                email = "admin@sert2521.org"
+                password = hashPassword("sert2521")
+                authLevel = AuthLevel.ADMIN
+            }
+        }
     }
 }
 
