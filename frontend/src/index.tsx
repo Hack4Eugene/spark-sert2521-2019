@@ -5,19 +5,32 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { store } from './state';
 import App from './components/App';
-import { updatePeople } from './state/actions';
+import { updatePeople, updateRequests } from './state/actions';
 import getPeople from './utilities/getPeople';
+import getRequests from './utilities/getRequests';
 
-// Populate the store with people from the
+// Populate the store
+import MuiThemeProvider from '@material-ui/core/es/styles/MuiThemeProvider';
+import { theme } from './theme';
+import 'typeface-eb-garamond';
+import 'typeface-rubik';
+
 (async () => {
   const people = await getPeople();
-  store.dispatch(updatePeople(people.data));
+  store.dispatch(updatePeople(...people.data.response));
+})();
+
+(async () => {
+  const requests = await getRequests();
+  store.dispatch(updateRequests(...requests.data.response));
 })();
 
 const Root = () => (
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
     </BrowserRouter>
   </Provider>
 );

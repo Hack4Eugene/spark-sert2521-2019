@@ -1,16 +1,13 @@
 import axios from 'axios';
 import getAuthHeader from './getAuthHeader';
+import getHost from './getHost';
 
 export default async () => {
   if (window.localStorage.getItem('token')) {
-    const authed = await axios.get('http://localhost:8080/api/auth/me', {
+    const authed = await axios.get(getHost() + '/api/auth/me', {
       headers: getAuthHeader(),
     });
-    console.log(authed);
-    if (authed.data.success) {
-      console.log(authed.data.success);
-      return true;
-    }
+
+    return authed.data.response;
   }
-  return false;
 };

@@ -63,8 +63,8 @@ object PayPal {
             }
         )
         redirectUrls = RedirectUrls().apply {
-            cancelUrl = "http://127.0.0.1:8080/api/payments/cancel"
-            returnUrl = "http://127.0.0.1:8080/api/payments/return"
+            cancelUrl = "https://sert2521.stage.apps.mvpstudio.org/api/payments/cancel"
+            returnUrl = "https://sert2521.stage.apps.mvpstudio.org/api/payments/return"
         }
     }
 

@@ -11,7 +11,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Switch } from 'react-router';
-import { PersonAdd, PermIdentity } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
+import { PersonAdd, PermIdentity, Storage } from '@material-ui/icons';
 import PersonForm from './PersonForm';
 import NavigationItem from '../components/NavigationLink';
 import List from '@material-ui/core/List';
@@ -20,6 +21,10 @@ import Login from '../components/Login';
 import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
 import PaymentSuccess from './PaymentSuccess';
+import AdminPage from './Admin';
+import logo from '../images/logo.png';
+import { store } from '../state';
+import { updateUser } from '../state/actions';
 
 const drawerWidth = 240;
 
@@ -30,6 +35,7 @@ const styles = (theme: Theme) =>
     },
     title: {
       flexGrow: 1,
+      lineHeight: '50px',
     },
     toolbar: {
       paddingRight: 24, // keep right padding when drawer closed
@@ -55,6 +61,11 @@ const styles = (theme: Theme) =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+    },
+    logo: {
+      width: '1.3cm',
+      height: '1.3cm',
+      marginRight: theme.spacing.unit * 2,
     },
     menuButton: {
       marginLeft: 12,
@@ -104,18 +115,28 @@ const styles = (theme: Theme) =>
 
 const Main = ({ classes }: WithStyles<typeof styles>) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const checkLogin = async () => {
-    if (await isLoggedIn()) {
-      console.log('logged in?');
-      setLoggedIn(true);
+
+  async function checkLogin() {
+    const user: any = await isLoggedIn();
+
+    if (user) {
+      console.log('found log in!', user);
+      store.dispatch(
+        updateUser({
+          username: user.username,
+          email: user.email,
+        })
+      );
     } else {
-      setLoggedIn(false);
+      console.log('not authed');
+      store.dispatch(updateUser(null));
     }
-  };
-  useEffect(() => {
-    checkLogin();
-  }, [loggedIn]);
+  }
+
+  checkLogin();
+
+  const isAuthed = store.getState().user != null;
+
   return (
     <div className={classes.root}>
       <Drawer
@@ -136,7 +157,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
         </div>
         <Divider />
         <List>
-          {!loggedIn ? (
+          {!isAuthed ? (
             <NavigationItem
               icon={PermIdentity}
               text="Login"
@@ -155,6 +176,12 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
             icon={PersonAdd}
             text="Person Form"
             linkTo="/personform"
+            closeNavigation={() => setDrawerOpened(false)}
+          />
+          <NavigationItem
+            icon={Storage}
+            text="Admin Center"
+            linkTo="/admin"
             closeNavigation={() => setDrawerOpened(false)}
           />
         </List>
@@ -177,15 +204,21 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="title"
-            color="inherit"
-            component="h1"
-            noWrap
-            className={classes.title}
+          <Link
+            to="/"
+            style={{ display: 'flex', textDecoration: 'none', color: 'white' }}
           >
-            Spark
-          </Typography>
+            <img src={logo} className={classes.logo} alt="logo" />
+            <Typography
+              variant="title"
+              color="inherit"
+              component="h1"
+              noWrap
+              className={classes.title}
+            >
+              Spark
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
@@ -194,6 +227,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/personform" component={PersonForm} />
+          <Route path="/admin" component={AdminPage} />
           <Route path="/payment/success" component={PaymentSuccess} />
         </Switch>
       </main>
