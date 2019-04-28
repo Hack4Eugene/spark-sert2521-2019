@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import getRequests from '../utilities/getRequests';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Paper } from '@material-ui/core';
+import AdminSection from '../components/AdminSection';
 
 const AdminPage = () => {
   const [requests, setRequests] = useState();
@@ -19,7 +20,11 @@ const AdminPage = () => {
   if (loading) {
     return <CircularProgress size={100} style={{ margin: 'auto' }} />;
   }
-  return <div>loaded</div>;
+  return (
+    <div>
+      <AdminSection />
+    </div>
+  );
 };
 
 export default AdminPage;
