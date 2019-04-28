@@ -9,6 +9,8 @@ import { updatePeople } from './state/actions';
 import getPeople from './utilities/getPeople';
 import MuiThemeProvider from '@material-ui/core/es/styles/MuiThemeProvider';
 import { theme } from './theme';
+import 'typeface-eb-garamond';
+import 'typeface-rubik';
 
 // Populate the store with people from the
 (async () => {

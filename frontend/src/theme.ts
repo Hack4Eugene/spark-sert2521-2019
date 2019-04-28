@@ -15,4 +15,11 @@ export const theme = createMuiTheme({
       contrastText: '#fff',
     },
   },
+  typography: {
+    fontFamily: 'Rubik',
+    title: {
+      fontFamily: 'EB Garamond',
+      fontSize: 24,
+    },
+  },
 });
