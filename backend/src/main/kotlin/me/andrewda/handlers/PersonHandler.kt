@@ -16,14 +16,14 @@ fun Route.person() {
     route("/people") {
         get {
             val people = PersonController.findAll()
-            call.respond(people.map { it.getApiResponse() })
+            call.respond(people.map { it.getDeepApiResponse() })
         }
 
         get("/{slug}") {
             val slug = call.parameters["slug"] ?: throw NotFound()
             val person = PersonController.findBySlug(slug) ?: throw NotFound()
 
-            call.respond(person.getApiResponse())
+            call.respond(person.getDeepApiResponse())
         }
 
         get("/{slug}/requests") {
@@ -53,7 +53,7 @@ fun Route.person() {
                 if (newPerson.isValid) {
                     val request = PersonController.create(newPerson)
 
-                    call.respond(request.getApiResponse())
+                    call.respond(request.getDeepApiResponse())
                 } else {
                     throw MissingFields()
                 }
@@ -65,7 +65,7 @@ fun Route.person() {
 
                 val person = PersonController.patch(slug, newPerson) ?: throw NotFound()
 
-                call.respond(person.getApiResponse())
+                call.respond(person.getDeepApiResponse())
             }
 
             delete("/{slug}") {
