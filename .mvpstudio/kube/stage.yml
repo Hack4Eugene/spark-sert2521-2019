@@ -59,12 +59,13 @@ metadata:
   annotations:
     getambassador.io/config: |
       ---
-      apiVersion: ambassador/v0
+      apiVersion: ambassador/v1
       kind: Mapping
       name: sert2521-mapping
       host: sert2521.stage.apps.mvpstudio.org
       prefix: /
       service: sert2521-web.sert2521
+      timeout_ms: 20000
       ---
       apiVersion: ambassador/v0
       kind: TLSContext
