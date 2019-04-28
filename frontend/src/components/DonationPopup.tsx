@@ -19,8 +19,6 @@ const styles = createStyles({
   },
 });
 
-console.log(styles);
-
 function getType(s: String): DonationType {
   switch (s) {
     case 'person':
@@ -48,8 +46,6 @@ interface DonationForm {
 
 const DonationPopup = (props: any) => {
   const { classes } = props;
-
-  console.log(classes);
 
   return (
     <>
@@ -93,7 +89,6 @@ const DonationPopup = (props: any) => {
                         { amount: form.amount }
                       )
                       .then(response => {
-                        console.log(response);
                         if (response.status == 200) {
                           if (response.data.success) {
                             window.location = response.data.response.link;
