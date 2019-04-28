@@ -42,4 +42,12 @@ class Person(id: EntityID<Int>) : IntEntity(id) {
 
     @Readable
     var funds by People.funds
+
+    @Readable(deep = true)
+    inline val totalCost get() =
+        Request.find { Requests.person eq id }.fold(0.0) { acc, request -> acc + request.totalPrice }
+
+    @Readable(deep = true)
+    inline val totalFunded get() =
+        Request.find { Requests.person eq id }.fold(0.0) { acc, request -> acc + request.funds } + funds
 }

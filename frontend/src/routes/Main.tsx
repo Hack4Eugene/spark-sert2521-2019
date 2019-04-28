@@ -2,7 +2,7 @@ import createStyles from '@material-ui/core/es/styles/createStyles';
 import classNames from 'classnames';
 import { Theme } from '@material-ui/core';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import React, { createElement, useState } from 'react';
+import React, { createElement, useState, useEffect } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -11,11 +11,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Switch } from 'react-router';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { PersonAdd, PermIdentity } from '@material-ui/icons';
 import PersonForm from './PersonForm';
 import NavigationItem from '../components/NavigationLink';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import Login from '../components/Login';
+import isLoggedIn from '../utilities/isLoggedIn';
 
 const drawerWidth = 240;
 
@@ -100,6 +102,13 @@ const styles = (theme: Theme) =>
 
 const Main = ({ classes }: WithStyles<typeof styles>) => {
   const [drawerOpened, setDrawerOpened] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      setLoggedIn(true);
+    }
+  }, []);
   return (
     <div className={classes.root}>
       <Drawer
@@ -120,8 +129,23 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
         </div>
         <Divider />
         <List>
+          {!loggedIn ? (
+            <NavigationItem
+              icon={PermIdentity}
+              text="Login"
+              linkTo="/login"
+              closeNavigation={() => setDrawerOpened(false)}
+            />
+          ) : (
+            <NavigationItem
+              icon={PermIdentity}
+              text="Account"
+              linkTo="/user"
+              closeNavigation={() => setDrawerOpened(false)}
+            />
+          )}
           <NavigationItem
-            icon={PersonAddIcon}
+            icon={PersonAdd}
             text="Person Form"
             linkTo="/personform"
             closeNavigation={() => setDrawerOpened(false)}
@@ -160,6 +184,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Switch>
+          <Route path="/login" component={Login} />
           <Route path="/personform" component={PersonForm} />
         </Switch>
       </main>
