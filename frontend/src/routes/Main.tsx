@@ -21,6 +21,8 @@ import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
 import PaymentSuccess from './PaymentSuccess';
 import logo from '../images/logo.png';
+import { store } from '../state';
+import { updateUser } from '../state/actions';
 
 const drawerWidth = 240;
 
@@ -110,13 +112,28 @@ const styles = (theme: Theme) =>
 
 const Main = ({ classes }: WithStyles<typeof styles>) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    if (isLoggedIn()) {
-      setLoggedIn(true);
+  async function checkLogin() {
+    const user: any = await isLoggedIn();
+
+    if (user) {
+      console.log('found log in!', user);
+      store.dispatch(
+        updateUser({
+          username: user.username,
+          email: user.email,
+        })
+      );
+    } else {
+      console.log('not authed');
+      store.dispatch(updateUser(null));
     }
-  }, []);
+  }
+
+  checkLogin();
+
+  const isAuthed = store.getState().user != null;
+
   return (
     <div className={classes.root}>
       <Drawer
@@ -137,7 +154,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
         </div>
         <Divider />
         <List>
-          {!loggedIn ? (
+          {!isAuthed ? (
             <NavigationItem
               icon={PermIdentity}
               text="Login"

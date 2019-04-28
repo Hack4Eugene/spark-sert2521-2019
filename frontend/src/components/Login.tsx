@@ -5,8 +5,10 @@ import { Formik, Field, Form, FormikActions } from 'formik';
 import { TextField } from 'formik-material-ui';
 
 import { InputLabel, Button, CircularProgress } from '@material-ui/core';
-import { Redirect } from 'react-router';
 import isLoggedIn from '../utilities/isLoggedIn';
+
+import { store } from '../state';
+import { updateUser } from '../state/actions';
 
 interface LoginInfo {
   identifier: string;
@@ -36,7 +38,16 @@ const Login = ({ history }: any) => {
                   response.data.response.token
                 );
               });
-            if (isLoggedIn()) {
+
+            const authed = await isLoggedIn();
+            console.log(authed);
+            if (authed) {
+              store.dispatch(
+                updateUser({
+                  username: authed.username,
+                  email: authed.email,
+                })
+              );
               history.replace('/');
             }
           } catch {
