@@ -19,7 +19,7 @@ const makeFileString = (file: any) => {
 };
 
 export default async ({ name, bio, slug, image, requests }: Person) => {
-  const imageStr = await makeFileString(image);
+  const { imageStr }: any = await makeFileString(image);
   await axios
     .post(
       getHost() + '/api/people',
