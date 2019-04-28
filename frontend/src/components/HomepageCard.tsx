@@ -21,6 +21,8 @@ import LinearProgress from '@material-ui/core/es/LinearProgress';
 import { Request } from '../state';
 import RequestDonationButton from './RequestDonationButton';
 import PersonDonationButton from './PersonDonationButton';
+import { Link } from 'react-router-dom';
+import { theme } from '../theme';
 
 interface state {
   fullWidth: boolean;
@@ -91,7 +93,7 @@ const styles = createStyles({
     top: 0,
     left: 0,
     textAlign: 'center',
-    color: '#388e3c',
+    color: theme.palette.primary.dark,
   },
 
   inner: {
@@ -159,16 +161,9 @@ const HomepageCard = ({
   totalFunded,
   requests,
   bioText,
+  expanded,
 }: HomepageCardProps) => {
-  const [open, setOpen] = React.useState(false);
-
-  function handleClickOpen() {
-    setOpen(true);
-  }
-
-  function handleClose() {
-    setOpen(false);
-  }
+  // const [open, setOpen] = React.useState(false);
 
   // Display a loading screen if isLoaded is false
   if (!isLoaded) {
@@ -188,14 +183,9 @@ const HomepageCard = ({
   }
 
   return (
-    <>
+    <Link to={`/s/${slug}`} style={{ textDecoration: 'none' }}>
       <ExpansionPanel className={classes.root} expanded={false}>
-        <ExpansionPanelSummary
-          className={classes.homepageCard}
-          onClick={event => {
-            handleClickOpen();
-          }}
-        >
+        <ExpansionPanelSummary className={classes.homepageCard}>
           <div className={classes.profilePicContainer}>
             <div className={classes.inner}>
               <Avatar className={classes.profilePic} alt={name} src={pic} />
@@ -217,7 +207,7 @@ const HomepageCard = ({
         </ExpansionPanelSummary>
       </ExpansionPanel>
 
-      <Dialog fullScreen open={open} onClose={handleClose}>
+      <Dialog fullScreen open={expanded}>
         <AppBar>
           <Toolbar>
             <div className={classes.fullscreenNameContainer}>
@@ -225,13 +215,17 @@ const HomepageCard = ({
                 {name}
               </Typography>
             </div>
-            <IconButton
-              color="inherit"
-              onClick={handleClose}
-              aria-label="Close"
+            <Link
+              to="/"
+              style={{
+                textDecoration: 'none',
+                color: theme.palette.primary.contrastText,
+              }}
             >
-              <CloseIcon />
-            </IconButton>
+              <IconButton color="inherit" aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+            </Link>
           </Toolbar>
         </AppBar>
         <div className={classes.fullscreenImageContainer}>
@@ -262,7 +256,7 @@ const HomepageCard = ({
           })}
         </div>
       </Dialog>
-    </>
+    </Link>
   );
 };
 
@@ -275,6 +269,7 @@ interface HomepageCardProps extends WithStyles<typeof styles> {
   slug: string;
   requests: Array<Request>;
   bioText: string;
+  expanded: boolean;
 }
 
 export default withStyles(styles)(HomepageCard);

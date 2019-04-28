@@ -227,6 +227,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
         <div className={classes.appBarSpacer} />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/s/:expanded" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/personform" component={PersonForm} />
           <Route path="/admin" component={AdminPage} />
