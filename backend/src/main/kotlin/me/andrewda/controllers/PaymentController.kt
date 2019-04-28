@@ -22,6 +22,7 @@ object PaymentController {
 
             amount = payment.amount ?: 0.0
             type = PaymentType.REQUEST
+            personId = request.personId
             requestId = request.id
             userId = user?.id
         }
@@ -49,8 +50,10 @@ object PaymentController {
     }
 
     suspend fun findByUser(user: User) = query {
-        Payment.find {
-            Payments.user eq user.id
-        }.toList()
+        Payment.find { Payments.user eq user.id }.toList()
+    }
+
+    suspend fun findByPaymentId(paymentId: String) = query {
+        Payment.find { Payments.paymentId eq paymentId }.firstOrNull()
     }
 }
