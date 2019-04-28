@@ -9,11 +9,14 @@ import ExpansionPanel from '@material-ui/core/es/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/es/ExpansionPanelSummary';
 import { createElement } from 'react';
 import Avatar from '@material-ui/core/es/Avatar';
+import ExpansionPanelDetails from '@material-ui/core/es/ExpansionPanelDetails';
+import logo from '../images/billnyedoc.png';
 
 const styles = createStyles({
   homepageCard: {
     height: '23vh',
     paddingRight: '0px',
+    marginTop: '1vh',
   },
 
   root: {
@@ -87,6 +90,26 @@ const styles = createStyles({
     textAlign: 'center',
     color: 'gray',
   },
+
+  expand: {
+    maxHeight: '80vh',
+    minHeight: '40vh',
+    padding: '10px',
+  },
+
+  bioContainer: {
+    width: '100%',
+    borderRadius: '25px',
+    backgroundColor: '#DCDCDC',
+    padding: '10px',
+  },
+
+  bioText: {
+    padding: '-25px',
+    width: '100%',
+    fontFamily: 'Montserrat',
+    fontSize: '3vh',
+  },
 });
 
 // Props: <HomePageCard slug={'scienceguy'} pic={''} totalFunded = {50} totalCost= {65} name={'Bill Nye'} isLoaded={true}
@@ -136,7 +159,7 @@ const HomepageCard = (props: any) => {
               <Avatar
                 className={classes.profilePic}
                 alt={props.name}
-                src={props.pic}
+                src={logo}
               />
               <CircularProgress
                 thickness={3}
@@ -156,6 +179,24 @@ const HomepageCard = (props: any) => {
             <Typography className={classes.slug}>{props.slug}</Typography>
           </div>
         </ExpansionPanelSummary>
+        <ExpansionPanelDetails className={classes.expand}>
+          <div className={classes.bioContainer}>
+            <Typography className={classes.bioText}>
+              Did you ever hear the Tragedy of Darth Plagueis the wise? I
+              thought not. It's not a story the Jedi would tell you. It's a Sith
+              legend. Darth Plagueis was a Dark Lord of the Sith, so powerful
+              and so wise he could use the Force to influence the midichlorians
+              to create life... He had such a knowledge of the dark side that he
+              could even keep the ones he cared about from dying. The dark side
+              of the Force is a pathway to many abilities some consider to be
+              unnatural. He became so powerful... the only thing he was afraid
+              of was losing his power, which eventually, of course, he did.
+              Unfortunately, he taught his apprentice everything he knew, then
+              his apprentice killed him in his sleep. It's ironic he could save
+              others from death, but not himself.
+            </Typography>
+          </div>
+        </ExpansionPanelDetails>
       </ExpansionPanel>
     </>
   );
