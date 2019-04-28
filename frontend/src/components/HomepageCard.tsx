@@ -5,22 +5,30 @@ import CardContent from '@material-ui/core/es/CardContent';
 import CardActionArea from '@material-ui/core/es/CardActionArea';
 import createStyles from '@material-ui/core/es/styles/createStyles';
 import CardMedia from '@material-ui/core/CardMedia';
-import logo from '../images/CIF+logo.png';
+import logo from '../images/billnyedoc.png';
 import withStyles from '@material-ui/core/es/styles/withStyles';
 import LinearProgress from '@material-ui/core/es/LinearProgress';
 import CircularProgress from '@material-ui/core/es/CircularProgress';
+import ExpansionPanel from '@material-ui/core/es/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/es/ExpansionPanelSummary';
+import { createElement } from 'react';
+import Avatar from '@material-ui/core/es/Avatar';
 
 const styles = createStyles({
   homepageCard: {
     height: '23vh',
+    paddingRight: '0px',
+  },
+
+  root: {
+    alignItems: 'center',
   },
 
   profilePicContainer: {
-    width: 'auto',
-    height: '20vh',
-    float: 'left',
-    marginBottom: '10vh',
-    marginRight: '5%',
+    width: '40vw',
+    height: '15vh',
+    position: 'relative',
+    marginTop: '7px',
   },
 
   personName: {
@@ -45,7 +53,34 @@ const styles = createStyles({
 
   loadingContainer: {
     margin: 'auto',
+  },
+
+  profilePic: {
+    width: '14vh',
+    height: '14vh',
+    // margin: 'auto',
+  },
+
+  nameContainer: {
+    position: 'relative',
     textAlign: 'center',
+    width: '100%',
+  },
+
+  contentContainer: {
+    width: '60%',
+  },
+
+  loadingCircle: {
+    position: 'absolute',
+    margin: 'auto',
+    top: -7,
+    left: -7,
+    textAlign: 'center',
+  },
+
+  inner: {
+    margin: 'auto',
   },
 });
 
@@ -60,7 +95,7 @@ const HomepageCard = (props: any) => {
       <Card className={classes.homepageCard}>
         <CardContent>
           <div className={classes.loadingContainer}>
-            <CircularProgress size={120} />
+            <CircularProgress size={140} />
           </div>
         </CardContent>
       </Card>
@@ -90,19 +125,34 @@ const HomepageCard = (props: any) => {
 
   return (
     <>
-      <Card className={classes.homepageCard}>
-        <CardActionArea className={classes.homepageCard}>
-          <CardContent>
-            <CardMedia
-              className={classes.profilePicContainer}
-              component="img"
-              image={props.pic}
-            />
-            <Typography className={classes.personName}>{props.name}</Typography>
+      <ExpansionPanel className={classes.root}>
+        <ExpansionPanelSummary className={classes.homepageCard}>
+          <div className={classes.profilePicContainer}>
+            <div className={classes.inner}>
+              <Avatar
+                className={classes.profilePic}
+                alt={props.name}
+                src={logo}
+              />
+              <CircularProgress
+                thickness={3}
+                className={classes.loadingCircle}
+                size={120}
+                variant="determinate"
+                value={100}
+              />
+            </div>
+          </div>
+          <div className={classes.contentContainer}>
+            <div className={classes.nameContainer}>
+              <Typography className={classes.personName}>
+                {props.name}
+              </Typography>
+            </div>
             {createItems()}
-          </CardContent>
-        </CardActionArea>
-      </Card>
+          </div>
+        </ExpansionPanelSummary>
+      </ExpansionPanel>
     </>
   );
 };
