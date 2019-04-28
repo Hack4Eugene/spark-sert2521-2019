@@ -9,7 +9,11 @@ const makeFileString = (file: any) => {
     console.log(file);
     reader.readAsDataURL(file);
     reader.onload = () => {
-      resolve({ imageStr: reader.result });
+      resolve({
+        imageStr: (reader.result || '')
+          .toString()
+          .replace('data:image/png;base64', ''),
+      });
     };
   });
 };
