@@ -28,15 +28,7 @@ object PersonController {
         if (newPerson.bio != null) person.bio = newPerson.bio
         if (newPerson.slug != null) person.slug = newPerson.slug
         if (newPerson.funds != null) person.funds = newPerson.funds
-        if (newPerson.image != null) {
-            val imageUrl = if (person.image != null) {
-                uploadImage(newPerson.image)
-            } else {
-                null
-            }
-
-            person.image = imageUrl
-        }
+        if (newPerson.image != null) person.image = uploadImage(newPerson.image)
 
         person
     }

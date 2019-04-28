@@ -26,9 +26,7 @@ object ItemController {
         if (newItem.name != null) item.name = newItem.name
         if (newItem.price != null) item.price = newItem.price
         if (newItem.inventory != null) item.inventory = newItem.inventory
-        if (newItem.image != null) {
-            item.image = uploadImage(newItem.image)
-        }
+        if (newItem.image != null) item.image = uploadImage(newItem.image)
 
         item
     }

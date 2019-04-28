@@ -1,10 +1,11 @@
-import React, { createElement } from 'react';
+import React, { createElement, useEffect, useState } from 'react';
 import { Person, Request } from '../state';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
 import { connect } from 'react-redux';
 import HomepageCard from '../components/HomepageCard';
 import { CircularProgress } from '@material-ui/core';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 const styles = createStyles({
   hello: {
@@ -12,8 +13,9 @@ const styles = createStyles({
   },
 });
 
-const Home = ({ people, requests }: HomeProps) => {
+const Home = ({ people, requests, match }: HomeProps) => {
   console.log(people, requests);
+
   if (people.length == 0) {
     return <CircularProgress style={{ margin: 'auto' }} size={100} />;
   }
@@ -32,6 +34,7 @@ const Home = ({ people, requests }: HomeProps) => {
             totalCost={person.totalCost}
             requests={requests}
             bioText={person.bio}
+            expanded={match.params.expanded === person.slug}
           />
         );
       })}
@@ -39,13 +42,17 @@ const Home = ({ people, requests }: HomeProps) => {
   );
 };
 
-interface HomeProps extends WithStyles<typeof styles> {
+interface HomeProps
+  extends WithStyles<typeof styles>,
+    RouteComponentProps<{ expanded: string }> {
   people: Array<Person>;
   requests: Array<Request>;
 }
 
-export default withStyles(styles)(
-  connect(({ people, requests }: any) => {
-    return { people: people, requests: requests };
-  })(Home)
+export default withRouter(
+  withStyles(styles)(
+    connect(({ people, requests }: any) => {
+      return { people: people, requests: requests };
+    })(Home)
+  )
 );
