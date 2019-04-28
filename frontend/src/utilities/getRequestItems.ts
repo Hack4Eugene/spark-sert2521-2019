@@ -1,4 +1,5 @@
 import axios from 'axios';
+import getHost from './getHost';
 
 interface Request {
   name: string;
@@ -7,7 +8,7 @@ interface Request {
 }
 
 export default async () => {
-  const items = await axios('http://localhost:8080/api/items');
+  const items = await axios(getHost() + '/api/items');
   //const mappedItems: Options =
   return items.data.response.map(({ name, price, id }: Request) => {
     const formattedPrice = ((price * 100) / 100).toFixed(2);
