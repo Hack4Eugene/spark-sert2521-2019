@@ -53,4 +53,10 @@ object PaymentController {
             Payments.user eq user.id
         }.toList()
     }
+
+    suspend fun findByPerson(person: Person) = query {
+        Payment.find {
+            Payments.person eq person.id
+        }.toList()
+    }
 }
