@@ -72,6 +72,7 @@ fun Application.main() {
             setPrettyPrinting()
             enableComplexMapKeySerialization()
             excludeFieldsWithoutExposeAnnotation()
+            serializeNulls()
         }
     }
 

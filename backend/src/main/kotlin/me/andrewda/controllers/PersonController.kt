@@ -1,24 +1,21 @@
 package me.andrewda.controllers
 
 import me.andrewda.models.*
-import me.andrewda.utils.Database
 import me.andrewda.utils.MissingFields
 import me.andrewda.utils.query
+import me.andrewda.utils.uploadImage
 
 object PersonController {
     suspend fun create(person: NewPerson) = query {
-        val byteContent = person.image?.toByteArray()
-        val blob = if (byteContent != null) {
-            Database.connection.connector().createBlob().apply {
-                setBytes(1, byteContent)
-            }
+        val imageUrl = if (person.image != null) {
+            uploadImage(person.image)
         } else {
             null
         }
 
         Person.new {
             name = person.name ?: throw MissingFields()
-            image = blob
+            image = imageUrl
             bio = person.bio ?: ""
             slug = person.slug ?: throw MissingFields()
         }
@@ -32,12 +29,13 @@ object PersonController {
         if (newPerson.slug != null) person.slug = newPerson.slug
         if (newPerson.funds != null) person.funds = newPerson.funds
         if (newPerson.image != null) {
-            val byteContent = newPerson.image.toByteArray()
-            val blob = Database.connection.connector().createBlob().apply {
-                setBytes(1, byteContent)
+            val imageUrl = if (person.image != null) {
+                uploadImage(newPerson.image)
+            } else {
+                null
             }
 
-            person.image = blob
+            person.image = imageUrl
         }
 
         person

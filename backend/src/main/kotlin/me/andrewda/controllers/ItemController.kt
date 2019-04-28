@@ -1,23 +1,13 @@
 package me.andrewda.controllers
 
 import me.andrewda.models.*
-import me.andrewda.utils.Database
 import me.andrewda.utils.query
-import com.github.kittinunf.fuel.Fuel
-import com.github.kittinunf.fuel.json.FuelJson
-
-const val CLIENT_ID = "Client-ID ed5784d13d20f95"
+import me.andrewda.utils.uploadImage
 
 object ItemController {
     suspend fun create(item: NewItem) = query {
         val imageUrl = if (item.image != null) {
-            val image = uploadImage(item.image)
-            if (image != null) {
-                image
-            } else {
-                println("Warning: Uploading to Imgur failed!")
-                null
-            }
+            uploadImage(item.image)
         } else {
             null
         }
@@ -59,16 +49,4 @@ object ItemController {
     suspend fun findAll() = query { Item.all().toList() }
 
     suspend fun findById(id: Int) = query { Item.findById(id) }
-
-    private fun uploadImage(imageBlob: String): String? {
-        val response = Fuel.post("https://api.imgur.com/3/upload", listOf("image" to imageBlob, "type" to "base64")).also {
-            it.headers.append("Authorization", CLIENT_ID)
-        }.response().second.body().asString("application/json")
-        val json = FuelJson(response).obj()
-        if (json.getBoolean("success")) {
-            return json.getJSONObject("data").getString("link")
-        } else {
-            return null
-        }
-    }
 }
