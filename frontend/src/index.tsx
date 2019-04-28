@@ -11,7 +11,7 @@ import getPeople from './utilities/getPeople';
 // Populate the store with people from the
 (async () => {
   const people = await getPeople();
-  store.dispatch(updatePeople(people.data));
+  store.dispatch(updatePeople(...people.data.response));
 })();
 
 const Root = () => (

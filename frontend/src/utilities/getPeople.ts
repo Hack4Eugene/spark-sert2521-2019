@@ -1,3 +1,3 @@
 import axios from 'axios';
 
-export default async () => await axios('http://localhost:8080/api/people');
+export default async () => axios('http://localhost:8080/api/people');
