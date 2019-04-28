@@ -34,6 +34,7 @@ const styles = createStyles({
   progressBar: {
     marginTop: '10px',
     minHeight: '4.5vh',
+    marginRight: '5%',
   },
 
   linearColorPrimary: {
@@ -55,6 +56,10 @@ const styles = createStyles({
 
 const ItemCard = (props: any) => {
   const { classes } = props;
+  const funded = ((parseFloat(props.totalFunded) * 100) / 100).toFixed(2);
+  const cost = ((parseFloat(props.totalCost) * 100) / 100).toFixed(2);
+  const percent = ((props.totalFunded / props.totalCost) * 100).toFixed(0);
+
   return (
     <>
       <Card className={classes.homepageCard}>
@@ -76,8 +81,7 @@ const ItemCard = (props: any) => {
             />
             <div className={classes.bottomTextContainer}>
               <Typography className={classes.bottomText} variant="h6">
-                {props.totalFunded}$/${props.totalCost}(
-                {(props.totalFunded / props.totalCost) * 100}%)
+                ${funded} donated of ${cost} ({percent}%)
               </Typography>
             </div>
             <RequestDonationButton id={props.id} />
