@@ -35,6 +35,7 @@ fun Route.payment() {
                     try {
                         PaymentController.create(newPayment, payment.id, user, person)
                     } catch (exception: Exception) {
+                        println(exception)
                         throw PaymentFailure()
                     }
                     call.respond(mapOf("link" to link))
@@ -63,6 +64,7 @@ fun Route.payment() {
                     try {
                         PaymentController.create(newPayment, payment.id, user, request)
                     } catch (exception: Exception) {
+                        println(exception)
                         throw PaymentFailure()
                     }
 
@@ -80,6 +82,7 @@ fun Route.payment() {
             val amount = try {
                 PayPal.executePayment(paymentId, payerId).transactions.firstOrNull()?.amount?.total ?: "0.00"
             } catch (exception: Exception) {
+                println(exception)
                 throw PaymentFailure()
             }
 
