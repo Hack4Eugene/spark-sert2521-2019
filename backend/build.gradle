@@ -8,7 +8,7 @@ mainClassName = "io.ktor.server.netty.DevelopmentEngine"
 
 sourceCompatibility = 1.8
 
-distTar.dependsOn "deployStatic"
+build.dependsOn "deployStatic"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
