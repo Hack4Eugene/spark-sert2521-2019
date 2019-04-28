@@ -1,16 +1,18 @@
 import * as React from 'react';
 
-import { Form, Formik, FormikActions } from 'formik';
-import { Button, Typography } from '@material-ui/core';
+import { Formik, Field, Form, FormikActions } from 'formik';
+import { TextField, SimpleFileUpload } from 'formik-material-ui';
+import { Button, InputLabel, Typography } from '@material-ui/core';
+import Select from 'react-select';
 import postNewPerson from '../utilities/postNewPerson';
 import getRequestItems from '../utilities/getRequestItems';
 import FormField from '../components/FormField';
-import Select from 'react-select';
 
 export interface Person {
   name: string;
   bio: string;
   slug: string;
+  image: string;
   requests: Array<number>;
 }
 
@@ -44,6 +46,7 @@ const PersonForm: React.SFC<{}> = ({ theme, classes }: any) => {
           name: '',
           bio: '',
           slug: '',
+          image: '',
           requests: [],
         }}
         onSubmit={async (
@@ -86,6 +89,15 @@ const PersonForm: React.SFC<{}> = ({ theme, classes }: any) => {
                 required
               />
             </div>
+            <FormField
+              label="Photo"
+              name="image"
+              component={SimpleFileUpload}
+              type="file"
+              onChange={(event: any) =>
+                setFieldValue('image', event.currentTarget.files[0])
+              }
+            />
             <Button
               type="submit"
               disabled={isSubmitting || !isValid}
