@@ -167,7 +167,9 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           ) : (
             <NavigationItem
               icon={PermIdentity}
-              text="Account"
+              text={`Account (${
+                (store.getState().user || { username: '' }).username
+              })`}
               linkTo="/user"
               closeNavigation={() => setDrawerOpened(false)}
             />

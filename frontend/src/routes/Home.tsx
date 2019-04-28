@@ -14,7 +14,7 @@ const styles = createStyles({
 
 const Home = ({ people, requests }: HomeProps) => {
   console.log(people, requests);
-  if (people.length == 0 || requests.length == 0) {
+  if (people.length == 0) {
     return <CircularProgress style={{ margin: 'auto' }} size={100} />;
   }
 

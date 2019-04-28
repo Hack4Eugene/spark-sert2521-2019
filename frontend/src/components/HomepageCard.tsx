@@ -88,8 +88,8 @@ const styles = createStyles({
   loadingCircle: {
     position: 'absolute',
     margin: 'auto',
-    top: -7,
-    left: -7,
+    top: 0,
+    left: 0,
     textAlign: 'center',
     color: '#388e3c',
   },
@@ -118,16 +118,16 @@ const styles = createStyles({
   },
 
   fullscreenImageContainer: {
-    maxWidth: '35vh',
     margin: 'auto',
-    height: '25vh',
-    marginTop: '65px',
+    width: '30vh',
+    height: '30vh',
+    marginTop: '80px',
     marginBottom: '20px',
   },
 
   fullscreenImage: {
-    width: '30vh',
-    height: '30vh',
+    width: '100%',
+    height: '100%',
   },
 
   bioContainer: {
@@ -183,17 +183,13 @@ const HomepageCard = ({
     );
   }
 
-  const handleClick = () => {
-    console.log('sdads');
-  };
-
   function Transition(props: any) {
     return <Slide direction="up" {...props} />;
   }
 
   return (
     <>
-      <ExpansionPanel className={classes.root}>
+      <ExpansionPanel className={classes.root} expanded={false}>
         <ExpansionPanelSummary
           className={classes.homepageCard}
           onClick={event => {
@@ -206,9 +202,9 @@ const HomepageCard = ({
               <CircularProgress
                 thickness={3}
                 className={classes.loadingCircle}
-                size={120}
+                size="14vh"
                 variant="static"
-                value={(totalFunded / totalCost) * 100}
+                value={totalCost > 0 ? (totalFunded / totalCost) * 100 : 0}
               />
             </div>
           </div>

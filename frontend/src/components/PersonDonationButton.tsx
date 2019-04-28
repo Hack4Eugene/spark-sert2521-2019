@@ -4,9 +4,15 @@ import DonationPopup from './DonationPopup';
 import * as React from 'react';
 import { Button } from '@material-ui/core';
 
-const styles = createStyles({});
+const styles = createStyles({
+  donateButton: {
+    width: '25vh',
+    margin: 'auto',
+    marginBottom: '20px',
+  },
+});
 
-const RequestDonationButton = (props: any) => {
+const PersonDonationButton = (props: any) => {
   const { classes } = props;
 
   const id = props.slug;
@@ -16,6 +22,7 @@ const RequestDonationButton = (props: any) => {
   return (
     <>
       <Button
+        className={classes.donateButton}
         variant={'contained'}
         color={'primary'}
         onClick={() => {
@@ -29,4 +36,4 @@ const RequestDonationButton = (props: any) => {
   );
 };
 
-export default withStyles(styles)(RequestDonationButton);
+export default withStyles(styles)(PersonDonationButton);
