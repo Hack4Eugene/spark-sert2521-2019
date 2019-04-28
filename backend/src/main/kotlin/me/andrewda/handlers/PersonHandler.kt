@@ -49,7 +49,7 @@ fun Route.person() {
 
         authenticate {
             get("/{slug}/payments") {
-                call.ensureAuthLevel(AuthLevel.SELF)
+                call.ensureAuthLevel(AuthLevel.ADMIN)
                 val slug = call.parameters["slug"] ?: throw NotFound()
                 val person = PersonController.findBySlug(slug) ?: throw NotFound()
                 val excluded = call.request.queryParameters.getAll("exclude") ?: emptyList()
@@ -57,7 +57,7 @@ fun Route.person() {
 
                 call.respond(payments.map { it.getApiResponse(exclude = excluded) })
             }
-            
+
             post {
                 val newPerson = call.receiveOrNull<NewPerson>() ?: throw MissingFields()
 
