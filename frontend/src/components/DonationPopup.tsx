@@ -17,9 +17,6 @@ const styles = createStyles({
   popoverDiv: {
     position: 'absolute',
   },
-  reeee: {
-    textColor: 'green',
-  },
 });
 
 console.log(styles);
