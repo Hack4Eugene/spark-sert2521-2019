@@ -13,6 +13,7 @@ allprojects {
         ext.jwt_version = "3.8.0"
         ext.bcrypt_version = "0.4"
         ext.paypal_version = "1.14.0"
+        ext.fuel_version = "2.0.1"
 
         repositories {
             jcenter()
