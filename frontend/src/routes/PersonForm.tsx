@@ -1,16 +1,18 @@
 import * as React from 'react';
 
 import { Formik, Field, Form, FormikActions } from 'formik';
-import { TextField } from 'formik-material-ui';
-import { Button, InputLabel } from '@material-ui/core';
+import { TextField, SimpleFileUpload } from 'formik-material-ui';
+import { Button, InputLabel, Typography } from '@material-ui/core';
 import Select from 'react-select';
 import postNewPerson from '../utilities/postNewPerson';
 import getRequestItems from '../utilities/getRequestItems';
+import FormField from '../components/FormField';
 
 export interface Person {
   name: string;
   bio: string;
   slug: string;
+  image: string;
   requests: Array<number>;
 }
 
@@ -25,7 +27,7 @@ interface Options {
   label: string;
 }
 
-const PersonForm: React.SFC<{}> = () => {
+const PersonForm: React.SFC<{}> = ({ theme, classes }: any) => {
   const [requestOptions, setOptions] = React.useState();
   const [success, setSuccess] = React.useState('');
   const getOptions = async () => {
@@ -37,13 +39,14 @@ const PersonForm: React.SFC<{}> = () => {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Person Details</h1>
+    <div className="container" style={{ textAlign: 'center' }}>
+      <Typography variant="display1">Create Person</Typography>
       <Formik
         initialValues={{
           name: '',
           bio: '',
           slug: '',
+          image: '',
           requests: [],
         }}
         onSubmit={async (
@@ -67,54 +70,38 @@ const PersonForm: React.SFC<{}> = () => {
               margin: '0 auto',
             }}
           >
-            <InputLabel htmlFor="name">Name</InputLabel>
-            <Field
-              id="name"
-              name="name"
-              placeholder="John"
-              type="text"
-              component={TextField}
-              required
-            />
+            <FormField name="name" type="text" label="Name" required />
 
-            <InputLabel htmlFor="bio">Bio</InputLabel>
-            <Field
-              id="bio"
-              name="bio"
-              placeholder="Doe"
-              type="text"
-              component={TextField}
-              multiline
-              required
-            />
+            <FormField name="bio" type="text" label="Bio" multiline required />
 
-            <InputLabel htmlFor="slug">Nickname</InputLabel>
-            <Field
-              id="slug"
-              name="slug"
-              placeholder="JimmyJohn"
-              type="text"
-              component={TextField}
-              required
-            />
+            <FormField name="slug" type="text" label="Slug" required />
 
-            <InputLabel htmlFor="requests">Requests</InputLabel>
-            <Field
-              id="requests"
-              name="requests"
-              component={Select}
-              isMulti
-              closeMenuOnSelect={false}
-              options={requestOptions}
-              onChange={(value: Array<any>) =>
-                setFieldValue('requests', value.map(v => ({ item: v.value })))
+            <div style={{ marginTop: 20 }}>
+              <FormField
+                name="requests"
+                component={Select}
+                isMulti
+                closeMenuOnSelect={false}
+                options={requestOptions}
+                onChange={(value: Array<any>) =>
+                  setFieldValue('requests', value.map(v => ({ item: v.value })))
+                }
+                required
+              />
+            </div>
+            <FormField
+              label="Photo"
+              name="image"
+              component={SimpleFileUpload}
+              type="file"
+              onChange={(event: any) =>
+                setFieldValue('image', event.currentTarget.files[0])
               }
-              required
             />
             <Button
               type="submit"
               disabled={isSubmitting || !isValid}
-              style={{ display: 'block' }}
+              style={{ display: 'block', marginTop: 20 }}
             >
               Submit
             </Button>

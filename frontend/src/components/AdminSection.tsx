@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Paper,
-  AppBar,
   ExpansionPanel,
   ExpansionPanelSummary,
   Typography,
@@ -9,60 +7,77 @@ import {
   Avatar,
   FormControlLabel,
   Checkbox,
-  LinearProgress,
+  createStyles,
+  CircularProgress,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/es/styles';
+import List from '@material-ui/core/es/List';
+import ListItem from '@material-ui/core/es/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
-const styles = (theme: any) => ({
-  root: {
-    width: '100%',
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
-  },
-});
+const styles = (theme: any) =>
+  createStyles({
+    root: {
+      width: '100%',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+    expansion: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+  });
 
 const AdminSection = ({ classes, title, items }: any) => {
+  console.log(items);
   return (
-    <ExpansionPanel>
+    <ExpansionPanel defaultExpanded>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
         <Typography className={classes.heading}>{title}</Typography>
       </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
-        {items.map((item: any) => (
-          <AdminCard {...items} key={`${item.itemName}${item.personName}`} />
-        ))}
-      </ExpansionPanelDetails>
+      {items && (
+        <ExpansionPanelDetails className={classes.expansion}>
+          <List>
+            {items.map((item: any) => {
+              return <AdminCard key={`${item.id}`} {...item} />;
+            })}
+          </List>
+        </ExpansionPanelDetails>
+      )}
     </ExpansionPanel>
   );
 };
 
 const AdminCard = ({
-  itemName,
-  personName,
-  avatar,
-  slug,
+
+  item,
+  person,
   ordered,
   delivered,
-  percentFunded,
+  funds,
+  totalPrice,
+  complete,
 }: any) => {
   // distribute items?
-  const [checkedOrdered, setOrdered] = useState(ordered);
-  const [checkedDelivered, setDelivered] = useState(delivered);
+  const [checkedOrdered, setOrdered] = useState(!!ordered);
+  const [checkedDelivered, setDelivered] = useState(!!delivered);
+
   return (
-    <Paper>
-      Avatar src={avatar}/>
-      <Typography>
-        {itemName} for {personName}
-      </Typography>
+    <ListItem divider>
+      {person.avatar && <Avatar src={person.avatar} />}
+      <ListItemText secondary={`requested ${item.name}`}>
+        {person.name}
+      </ListItemText>
       <FormControlLabel
         control={
           <Checkbox
             checked={checkedOrdered}
             onChange={() => setOrdered(!checkedOrdered)}
             value="Ordered"
+            disabled={!complete || ordered || !delivered}
           />
         }
         label="Ordered"
@@ -74,12 +89,16 @@ const AdminCard = ({
             onChange={() => setDelivered(!checkedDelivered)}
             value="Delivered"
             color="primary"
+            disabled={!complete || !delivered}
           />
         }
         label="Delivered"
       />
-      <LinearProgress value={percentFunded} />
-    </Paper>
+      <CircularProgress
+        value={(f => (f <= 100 ? f : 100))((funds / totalPrice) * 100)}
+        variant="static"
+      />
+    </ListItem>
   );
 };
 

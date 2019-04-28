@@ -1,14 +1,15 @@
 import * as React from 'react';
 import axios from 'axios';
 
-import { Formik, Field, Form, FormikActions } from 'formik';
-import { TextField } from 'formik-material-ui';
+import { Formik, Form, FormikActions } from 'formik';
 
-import { InputLabel, Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, Typography } from '@material-ui/core';
 import isLoggedIn from '../utilities/isLoggedIn';
+import FormField from './FormField';
 
 import { store } from '../state';
 import { updateUser } from '../state/actions';
+import getHost from '../utilities/getHost';
 
 interface LoginInfo {
   identifier: string;
@@ -17,8 +18,8 @@ interface LoginInfo {
 const Login = ({ history }: any) => {
   const [failedLogin, setFailedLogin] = React.useState(false);
   return (
-    <div className="loginForm">
-      <h1>Login</h1>
+    <div className="loginForm" style={{ textAlign: 'center' }}>
+      <Typography variant="display1">Login</Typography>
       <Formik
         initialValues={{
           identifier: '',
@@ -28,10 +29,10 @@ const Login = ({ history }: any) => {
           values: LoginInfo,
           { setSubmitting }: FormikActions<LoginInfo>
         ) => {
-          console.log(values);
+          setFailedLogin(false);
           try {
             await axios
-              .post('http://localhost:8080/api/auth/login', values)
+              .post(getHost() + '/api/auth/login', values)
               .then(response => {
                 window.localStorage.setItem(
                   'token',
@@ -64,22 +65,17 @@ const Login = ({ history }: any) => {
               margin: '0 auto',
             }}
           >
-            <InputLabel htmlFor="identifier">Username</InputLabel>
-            <Field
-              id="identifier"
+            <FormField
               name="identifier"
               placeholder=""
               type="text"
-              component={TextField}
+              label="Username"
               required
             />
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Field
-              id="password"
+            <FormField
               name="password"
-              placeholder=""
               type="password"
-              component={TextField}
+              label="Password"
               required
             />
             {isSubmitting ? (
@@ -88,7 +84,7 @@ const Login = ({ history }: any) => {
               <Button
                 type="submit"
                 disabled={isSubmitting || !isValid}
-                style={{ display: 'block' }}
+                style={{ display: 'block', marginTop: 20 }}
               >
                 Login
               </Button>
@@ -96,18 +92,9 @@ const Login = ({ history }: any) => {
           </Form>
         )}
       />
-      {failedLogin && <h3>Login Failed</h3>}
+      {failedLogin && <Typography variant="subtitle2">Login Failed</Typography>}
     </div>
   );
 };
 
 export default Login;
-
-// post user deets /api/auth/login
-// body: identifier (username or email), password: text
-// response: user object, token
-
-// window.localstorage.token
-
-// create: post /api/users/
-// body: username, password, email, name

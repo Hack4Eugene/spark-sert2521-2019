@@ -11,6 +11,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Switch } from 'react-router';
+import { Link } from 'react-router-dom';
 import { PersonAdd, PermIdentity, Storage } from '@material-ui/icons';
 import PersonForm from './PersonForm';
 import NavigationItem from '../components/NavigationLink';
@@ -20,6 +21,7 @@ import Login from '../components/Login';
 import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
 import PaymentSuccess from './PaymentSuccess';
+import AdminPage from './Admin';
 import logo from '../images/logo.png';
 import { store } from '../state';
 import { updateUser } from '../state/actions';
@@ -34,6 +36,7 @@ const styles = (theme: Theme) =>
     },
     title: {
       flexGrow: 1,
+      lineHeight: '50px',
     },
     toolbar: {
       paddingRight: 24, // keep right padding when drawer closed
@@ -202,16 +205,21 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           >
             <MenuIcon />
           </IconButton>
-          <img src={logo} className={classes.logo} alt="logo" />
-          <Typography
-            variant="title"
-            color="inherit"
-            component="h1"
-            noWrap
-            className={classes.title}
+          <Link
+            to="/"
+            style={{ display: 'flex', textDecoration: 'none', color: 'white' }}
           >
-            Spark
-          </Typography>
+            <img src={logo} className={classes.logo} alt="logo" />
+            <Typography
+              variant="title"
+              color="inherit"
+              component="h1"
+              noWrap
+              className={classes.title}
+            >
+              Spark
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>

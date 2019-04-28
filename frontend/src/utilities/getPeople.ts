@@ -1,3 +1,4 @@
 import axios from 'axios';
+import getHost from './getHost';
 
-export default async () => axios('http://localhost:8080/api/people');
+export default async () => axios(getHost() + '/api/people');

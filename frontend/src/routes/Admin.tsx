@@ -29,21 +29,13 @@ const AdminPage = ({ requests }: AdminProps) => {
   if (requests.length <= 0) {
     return <CircularProgress size={100} style={{ margin: 'auto' }} />;
   }
-  // return (
-  //   <div>
-  //     <AdminSection />
-  //   </div>
 
   return (
     <>
-      <h2>Not Funded</h2>
-      {getNotFunded().map(request => {})}
-      <h2>Funded</h2>
-      {getFunded().map(request => {})}
-      <h2>Ordered</h2>
-      {getOrdered().map(request => {})}
-      <h2>Delivered</h2>
-      {getDelivered().map(request => {})}
+      <AdminSection title="Not Funded" items={getNotFunded()} />
+      <AdminSection title="Funded" items={getFunded()} />
+      <AdminSection title="Ordered" items={getOrdered()} />
+      <AdminSection title="Delivered" items={getDelivered()} />
     </>
   );
 };
