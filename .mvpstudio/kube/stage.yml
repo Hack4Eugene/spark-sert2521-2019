@@ -19,6 +19,8 @@ spec:
       containers:
         - name: web-server
           image: mvpstudio/sert2521:1a8ac09
+          #          command: ["/bin/sh"]
+          #          args: ["-c", "while true; do echo hello; sleep 10;done"]
           resources:
             limits:
               cpu: 0.25
@@ -93,6 +95,7 @@ spec:
       name: mysql
   selector:
     app: sert2521-mysql
+  clusterIP: None
 ---
 apiVersion: apps/v1
 kind: StatefulSet
