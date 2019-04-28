@@ -183,17 +183,13 @@ const HomepageCard = ({
     );
   }
 
-  const handleClick = () => {
-    console.log('sdads');
-  };
-
   function Transition(props: any) {
     return <Slide direction="up" {...props} />;
   }
 
   return (
     <>
-      <ExpansionPanel className={classes.root}>
+      <ExpansionPanel className={classes.root} expanded={false}>
         <ExpansionPanelSummary
           className={classes.homepageCard}
           onClick={event => {
