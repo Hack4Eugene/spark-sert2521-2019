@@ -28,7 +28,9 @@
     "react-select": "^2.4.3",
     "redux": "^4.0.1",
     "typesafe-actions": "^4.2.0",
-    "typescript": "^3.4.4"
+    "typescript": "^3.4.4",
+    "typeface-rubik": "^0.0.72",
+    "typeface-eb-garamond": "^0.0.72"
   },
   "scripts": {
     "start": "react-scripts start",

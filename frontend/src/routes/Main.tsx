@@ -20,6 +20,7 @@ import Login from '../components/Login';
 import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
 import PaymentSuccess from './PaymentSuccess';
+import logo from '../images/logo.png';
 import { store } from '../state';
 import { updateUser } from '../state/actions';
 
@@ -57,6 +58,11 @@ const styles = (theme: Theme) =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+    },
+    logo: {
+      width: '1.3cm',
+      height: '1.3cm',
+      marginRight: theme.spacing.unit * 2,
     },
     menuButton: {
       marginLeft: 12,
@@ -189,6 +195,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           >
             <MenuIcon />
           </IconButton>
+          <img src={logo} className={classes.logo} alt="logo" />
           <Typography
             variant="title"
             color="inherit"
