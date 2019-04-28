@@ -1,25 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import getRequests from '../utilities/getRequests';
 import { CircularProgress } from '@material-ui/core';
+import createStyles from '@material-ui/core/es/styles/createStyles';
+import { connect } from 'react-redux';
+import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
+import { Person, Request } from '../state';
 
-const AdminPage = () => {
-  const [requests, setRequests] = useState();
-  const [loading, setLoading] = useState(true);
-  const fetchRequests = async () => {
-    const data = await getRequests();
-    setRequests(data);
-    console.log(data);
-    setLoading(false);
+const styles = createStyles({});
+
+const AdminPage = ({ requests }: AdminProps) => {
+  const getNotFunded = () => {
+    return requests.filter(x => !x.complete);
   };
 
-  useEffect(() => {
-    fetchRequests();
-  }, [requests]);
+  const getFunded = () => {
+    return requests.filter(x => x.complete && !x.ordered && !x.delivered);
+  };
 
-  if (loading) {
+  const getOrdered = () => {
+    return requests.filter(x => x.complete && x.ordered && !x.delivered);
+  };
+
+  const getDelivered = () => {
+    return requests.filter(x => x.complete && x.ordered && x.delivered);
+  };
+
+  if (requests.length <= 0) {
     return <CircularProgress size={100} style={{ margin: 'auto' }} />;
   }
-  return <div>loaded</div>;
+
+  return (
+    <>
+      <h2>Not Funded</h2>
+      {getNotFunded().map(request => {})}
+      <h2>Funded</h2>
+      {getFunded().map(request => {})}
+      <h2>Ordered</h2>
+      {getOrdered().map(request => {})}
+      <h2>Delivered</h2>
+      {getDelivered().map(request => {})}
+    </>
+  );
 };
 
-export default AdminPage;
+interface AdminProps extends WithStyles<typeof styles> {
+  requests: Array<Request>;
+}
+
+export default withStyles(styles)(
+  connect(({ requests }: any) => {
+    return { requests: requests };
+  })(AdminPage)
+);
