@@ -21,7 +21,6 @@ import Login from '../components/Login';
 import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
 import PaymentSuccess from './PaymentSuccess';
-import AdminPage from './Admin';
 import logo from '../images/logo.png';
 import { store } from '../state';
 import { updateUser } from '../state/actions';
