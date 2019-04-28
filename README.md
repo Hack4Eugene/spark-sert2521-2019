@@ -1,8 +1,44 @@
 # Spark
 
+[sert2521.stage.apps.mvpstudio.org](https://sert2521.stage.apps.mvpstudio.org)
 SERT's code for the Spark challenge @ Hack for a Cause 2019.
 
-## Installation
+# How to use!
+
+Go to [sert2521.stage.apps.mvpstudio.org](https://sert2521.stage.apps.mvpstudio.org)
+
+## Home page
+
+Here you can view the profiles of people to give to. Notice the progress circle of how much more funding each person needs.
+Click on any of the people to see more details and find out what you can donate to.
+
+### Person Profile
+
+Here you can either:
+
+- donate to the person's general fund
+- donate to a specific item
+
+After you specify the amount you wish to donate, you will be directed to Paypal to complete your transaction.
+
+## Admin Usage
+
+With admin privileges, an admin can login and add users. Soon, they will be able to edit users, too!
+First, the admin must login.
+After loggin in, the admin will be able to make a new person profile.
+(For your convenience, you can see the add person form from the menu)
+
+### Add Person
+
+Here, an admin can add a user, and take a photo to upload as they are using it in the field!
+
+### Admin Center
+
+Here, Admins can track progress of all of the donations by catagory and progress.
+Once items are funded, an Admin will be able to check off that they have order the item.
+Once the item is delievered to the person, the Admin can then check off that the item has been delievered!
+
+## Installation for development
 
 To get Spark up and running, you will need a few things first:
 
