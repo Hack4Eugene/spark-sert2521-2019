@@ -11,7 +11,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Switch } from 'react-router';
-import { PersonAdd, PermIdentity } from '@material-ui/icons';
+import { PersonAdd, PermIdentity, Storage } from '@material-ui/icons';
 import PersonForm from './PersonForm';
 import NavigationItem from '../components/NavigationLink';
 import List from '@material-ui/core/List';
@@ -20,6 +20,7 @@ import Login from '../components/Login';
 import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
 import PaymentSuccess from './PaymentSuccess';
+import AdminPage from './Admin';
 import logo from '../images/logo.png';
 import { store } from '../state';
 import { updateUser } from '../state/actions';
@@ -175,6 +176,12 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
             linkTo="/personform"
             closeNavigation={() => setDrawerOpened(false)}
           />
+          <NavigationItem
+            icon={Storage}
+            text="Admin Center"
+            linkTo="/admin"
+            closeNavigation={() => setDrawerOpened(false)}
+          />
         </List>
       </Drawer>
       <AppBar
@@ -213,6 +220,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/personform" component={PersonForm} />
+          <Route path="/admin" component={AdminPage} />
           <Route path="/payment/success" component={PaymentSuccess} />
         </Switch>
       </main>
