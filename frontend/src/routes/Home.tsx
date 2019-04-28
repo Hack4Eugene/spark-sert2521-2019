@@ -20,7 +20,7 @@ const Home = ({ people }: HomeProps) => {
             key={person.id}
             isLoaded={true}
             name={person.name}
-            pic=""
+            pic={person.image}
             slug={person.slug}
             totalFunded={person.totalFunded}
             totalCost={person.totalCost}
