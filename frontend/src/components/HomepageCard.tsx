@@ -2,12 +2,8 @@ import { Card } from '@material-ui/core';
 import * as React from 'react';
 import Typography from '@material-ui/core/es/Typography';
 import CardContent from '@material-ui/core/es/CardContent';
-import CardActionArea from '@material-ui/core/es/CardActionArea';
 import createStyles from '@material-ui/core/es/styles/createStyles';
-import CardMedia from '@material-ui/core/CardMedia';
-import logo from '../images/billnyedoc.png';
 import withStyles from '@material-ui/core/es/styles/withStyles';
-import LinearProgress from '@material-ui/core/es/LinearProgress';
 import CircularProgress from '@material-ui/core/es/CircularProgress';
 import ExpansionPanel from '@material-ui/core/es/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/es/ExpansionPanelSummary';
@@ -34,7 +30,7 @@ const styles = createStyles({
   personName: {
     marginTop: '-6px',
     textAlign: 'center',
-    fontSize: '3vh',
+    fontSize: '5vh',
     fontWeight: 'bold',
     lineHeight: '1.2',
   },
@@ -68,6 +64,7 @@ const styles = createStyles({
   },
 
   contentContainer: {
+    margin: 'auto',
     width: '60%',
   },
 
@@ -77,15 +74,22 @@ const styles = createStyles({
     top: -7,
     left: -7,
     textAlign: 'center',
+    color: '#388e3c',
   },
 
   inner: {
     margin: 'auto',
   },
+
+  slug: {
+    marginTop: '1vh',
+    fontSize: '4vh',
+    textAlign: 'center',
+    color: 'gray',
+  },
 });
 
-// Props: <HomepageCard name={'Bill Nye'} pic={''} items={['Pants', 'Hat' ,'dfd', 'dfs']} totalCosts={[10, 50, 23, 34]} totalFunded={[5,40, 3, 3]} isLoaded={true}/>
-
+// Props: <HomePageCard slug={'scienceguy'} pic={''} totalFunded = {50} totalCost= {65} name={'Bill Nye'} isLoaded={true}
 const HomepageCard = (props: any) => {
   const { classes } = props;
 
@@ -103,25 +107,25 @@ const HomepageCard = (props: any) => {
   }
 
   // Generates the item divs, with a maximum of 3
-  const createItems = () => {
-    var itemContainers: Array<any> = [];
-    for (var i in props.items) {
-      if (itemContainers.length < 3) {
-        itemContainers.push(
-          <div className={classes.itemContainer}>
-            <Typography> {props.items[i]} </Typography>
-            <LinearProgress
-              className={classes.progressBar}
-              variant="determinate"
-              value={(props.totalFunded[i] / props.totalCosts[i]) * 100}
-            />
-          </div>
-        );
-      }
-    }
-
-    return itemContainers;
-  };
+  // const createItems = () => {
+  //     var itemContainers: Array<any> = [];
+  //     for (var i in props.items) {
+  //         if (itemContainers.length < 3) {
+  //             itemContainers.push(
+  //                 <div className={classes.itemContainer}>
+  //                     <Typography> {props.items[i]} </Typography>
+  //                     <LinearProgress
+  //                         className={classes.progressBar}
+  //                         variant="determinate"
+  //                         value={(props.totalFunded[i] / props.totalCosts[i]) * 100}
+  //                     />
+  //                 </div>
+  //             );
+  //         }
+  //     }
+  //
+  //     return itemContainers;
+  // };
 
   return (
     <>
@@ -132,14 +136,14 @@ const HomepageCard = (props: any) => {
               <Avatar
                 className={classes.profilePic}
                 alt={props.name}
-                src={logo}
+                src={props.pic}
               />
               <CircularProgress
                 thickness={3}
                 className={classes.loadingCircle}
                 size={120}
-                variant="determinate"
-                value={100}
+                variant="static"
+                value={(props.totalFunded / props.totalCost) * 100}
               />
             </div>
           </div>
@@ -149,7 +153,7 @@ const HomepageCard = (props: any) => {
                 {props.name}
               </Typography>
             </div>
-            {createItems()}
+            <Typography className={classes.slug}>{props.slug}</Typography>
           </div>
         </ExpansionPanelSummary>
       </ExpansionPanel>
