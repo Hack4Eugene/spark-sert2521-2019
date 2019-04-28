@@ -3,13 +3,20 @@ package me.andrewda.controllers
 import me.andrewda.models.*
 import me.andrewda.utils.Database
 import me.andrewda.utils.query
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.json.FuelJson
+
+const val CLIENT_ID = "Client-ID ed5784d13d20f95"
 
 object ItemController {
     suspend fun create(item: NewItem) = query {
-        val byteContent = item.image?.toByteArray()
-        val blob = if (byteContent != null) {
-            Database.connection.connector().createBlob().apply {
-                setBytes(1, byteContent)
+        val imageUrl = if (item.image != null) {
+            val image = uploadImage(item.image)
+            if (image != null) {
+                image
+            } else {
+                println("Warning: Uploading to Imgur failed!")
+                null
             }
         } else {
             null
@@ -17,7 +24,7 @@ object ItemController {
 
         Item.new {
             name = item.name ?: ""
-            image = blob
+            image = imageUrl
             price = item.price ?: 0.0
             inventory = item.inventory
         }
@@ -30,12 +37,7 @@ object ItemController {
         if (newItem.price != null) item.price = newItem.price
         if (newItem.inventory != null) item.inventory = newItem.inventory
         if (newItem.image != null) {
-            val byteContent = newItem.image.toByteArray()
-            val blob = Database.connection.connector().createBlob().apply {
-                setBytes(1, byteContent)
-            }
-
-            item.image = blob
+            item.image = uploadImage(newItem.image)
         }
 
         item
@@ -57,4 +59,16 @@ object ItemController {
     suspend fun findAll() = query { Item.all().toList() }
 
     suspend fun findById(id: Int) = query { Item.findById(id) }
+
+    private fun uploadImage(imageBlob: String): String? {
+        val response = Fuel.post("https://api.imgur.com/3/upload", listOf("image" to imageBlob, "type" to "base64")).also {
+            it.headers.append("Authorization", CLIENT_ID)
+        }.response().second.body().asString("application/json")
+        val json = FuelJson(response).obj()
+        if (json.getBoolean("success")) {
+            return json.getJSONObject("data").getString("link")
+        } else {
+            return null
+        }
+    }
 }
