@@ -19,6 +19,7 @@ import Divider from '@material-ui/core/Divider';
 import Login from '../components/Login';
 import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
+import PaymentSuccess from './PaymentSuccess';
 
 const drawerWidth = 240;
 
@@ -102,7 +103,7 @@ const styles = (theme: Theme) =>
   });
 
 const Main = ({ classes }: WithStyles<typeof styles>) => {
-  const [drawerOpened, setDrawerOpened] = useState(true);
+  const [drawerOpened, setDrawerOpened] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -188,6 +189,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/personform" component={PersonForm} />
+          <Route path="/payment/success" component={PaymentSuccess} />
         </Switch>
       </main>
     </div>
