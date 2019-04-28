@@ -17,6 +17,7 @@ import NavigationItem from '../components/NavigationLink';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Login from '../components/Login';
+import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
 
 const drawerWidth = 240;
@@ -184,6 +185,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Switch>
+          <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/personform" component={PersonForm} />
         </Switch>

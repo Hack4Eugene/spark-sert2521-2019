@@ -14,6 +14,17 @@ export interface Person {
   requests: Array<number>;
 }
 
+interface Request {
+  name: string;
+  price: number;
+  id: number;
+}
+
+interface Options {
+  value: string;
+  label: string;
+}
+
 const PersonForm: React.SFC<{}> = () => {
   const [requestOptions, setOptions] = React.useState();
   const [success, setSuccess] = React.useState('');
