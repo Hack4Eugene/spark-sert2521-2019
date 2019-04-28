@@ -52,6 +52,7 @@ const AdminSection = ({ classes, title, items }: any) => {
 };
 
 const AdminCard = ({
+
   item,
   person,
   ordered,

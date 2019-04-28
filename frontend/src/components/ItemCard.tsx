@@ -7,10 +7,12 @@ import createStyles from '@material-ui/core/es/styles/createStyles';
 import CardMedia from '@material-ui/core/CardMedia';
 import withStyles from '@material-ui/core/es/styles/withStyles';
 import LinearProgress from '@material-ui/core/es/LinearProgress';
+import RequestDonationButton from './RequestDonationButton';
+import { createElement } from 'react';
 
 const styles = createStyles({
   homepageCard: {
-    height: '15vh',
+    height: '25vh',
   },
 
   profilePicContainer: {
@@ -78,6 +80,7 @@ const ItemCard = (props: any) => {
                 {(props.totalFunded / props.totalCost) * 100}%)
               </Typography>
             </div>
+            <RequestDonationButton id={props.id} />
           </CardContent>
         </CardActionArea>
       </Card>

@@ -7,13 +7,15 @@ import { store } from './state';
 import App from './components/App';
 import { updatePeople, updateRequests } from './state/actions';
 import getPeople from './utilities/getPeople';
-import getRequests from './utilities/getRequests';
 
 // Populate the store
 import MuiThemeProvider from '@material-ui/core/es/styles/MuiThemeProvider';
 import { theme } from './theme';
 import 'typeface-eb-garamond';
 import 'typeface-rubik';
+import getRequests from './utilities/getRequests';
+
+// Populate the store
 
 (async () => {
   const people = await getPeople();

@@ -1,10 +1,11 @@
-import React from 'react';
-import { CircularProgress } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import getRequests from '../utilities/getRequests';
+import { CircularProgress, Paper } from '@material-ui/core';
 import AdminSection from '../components/AdminSection';
 import createStyles from '@material-ui/core/es/styles/createStyles';
 import { connect } from 'react-redux';
 import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
-import { Request } from '../state';
+import { Person, Request } from '../state';
 
 const styles = createStyles({});
 
