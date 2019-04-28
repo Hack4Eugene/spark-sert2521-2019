@@ -14,10 +14,6 @@ interface Person {
   requests: Array<number>;
 }
 
-interface Response {
-  data: object;
-  response: Array<Request>;
-}
 interface Request {
   name: string;
   price: number;
@@ -32,7 +28,6 @@ interface Options {
 const PersonForm: React.SFC<{}> = () => {
   const [requestOptions, setOptions] = React.useState();
   const [success, setSuccess] = React.useState('');
-
   const getOptions = async () => {
     const items = await axios('http://localhost:8080/api/items');
     const mappedItems: Options = items.data.response.map(

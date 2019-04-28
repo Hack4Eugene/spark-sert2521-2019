@@ -5,8 +5,7 @@ import CardContent from '@material-ui/core/es/CardContent';
 import CardActionArea from '@material-ui/core/es/CardActionArea';
 import createStyles from '@material-ui/core/es/styles/createStyles';
 import CardMedia from '@material-ui/core/CardMedia';
-import logo from '../images/CIF+logo.png';
-import withStyles from '@material-ui/core/es/styles/withStyles';
+import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
 import LinearProgress from '@material-ui/core/es/LinearProgress';
 import CircularProgress from '@material-ui/core/es/CircularProgress';
 
@@ -51,7 +50,7 @@ const styles = createStyles({
 
 // Props: <HomepageCard name={'Bill Nye'} pic={''} items={['Pants', 'Hat' ,'dfd', 'dfs']} totalCosts={[10, 50, 23, 34]} totalFunded={[5,40, 3, 3]} isLoaded={true}/>
 
-const HomepageCard = (props: any) => {
+const HomepageCard = (props: HomepageCardProps) => {
   const { classes } = props;
 
   // Display a loading screen if isLoaded is false
@@ -132,6 +131,15 @@ interface personData {
   name: string;
   slug: string;
   id: number;
+}
+
+interface HomepageCardProps extends WithStyles<typeof styles> {
+  items: Array<number>;
+  isLoaded: boolean;
+  totalFunded: Array<number>;
+  totalCosts: Array<number>;
+  pic: string;
+  name: string;
 }
 
 export default withStyles(styles)(HomepageCard);

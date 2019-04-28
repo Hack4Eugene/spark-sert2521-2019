@@ -32,6 +32,8 @@ export interface Person {
   bio: string;
   slug: string;
   funds: number;
+  totalCost: number;
+  totalFunded: number;
 }
 
 export interface Item {
