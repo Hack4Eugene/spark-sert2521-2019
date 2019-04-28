@@ -1,7 +1,6 @@
 package me.andrewda.handlers
 
 import io.ktor.application.call
-import io.ktor.auth.authenticate
 import io.ktor.request.receiveOrNull
 import io.ktor.response.respondRedirect
 import io.ktor.routing.Route
@@ -78,15 +77,18 @@ fun Route.payment() {
             val paymentId = call.request.queryParameters["paymentId"] ?: ""
             val payerId = call.request.queryParameters["PayerID"] ?: ""
 
-            try {
-                PayPal.executePayment(paymentId, payerId)
+            val amount = try {
+                PayPal.executePayment(paymentId, payerId).transactions.firstOrNull()?.amount?.total ?: "0.00"
             } catch (exception: Exception) {
                 throw PaymentFailure()
             }
 
             PaymentController.completePayment(paymentId)
 
-            call.respondRedirect("/payment/success")
+            val payment = PaymentController.findByPaymentId(paymentId) ?: throw PaymentFailure()
+            val person = query { payment.person ?: throw PaymentFailure() }
+
+            call.respondRedirect("/payment/success?amount=$amount&to=${person.name}")
         }
     }
 }

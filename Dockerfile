@@ -1,8 +1,6 @@
-FROM mvpstudio/java-8:v01
+FROM openjdk:11.0-stretch
 
 ADD backend/build/distributions/backend.tar /home/mvp/app/
-
-USER mvp
 
 WORKDIR /home/mvp
 
