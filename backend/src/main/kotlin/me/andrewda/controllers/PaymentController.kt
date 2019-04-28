@@ -56,4 +56,10 @@ object PaymentController {
     suspend fun findByPaymentId(paymentId: String) = query {
         Payment.find { Payments.paymentId eq paymentId }.firstOrNull()
     }
+
+    suspend fun findByPerson(person: Person) = query {
+        Payment.find {
+            Payments.person eq person.id
+        }.toList()
+    }
 }
