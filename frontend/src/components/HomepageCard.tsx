@@ -11,6 +11,23 @@ import ExpansionPanel from '@material-ui/core/es/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/es/ExpansionPanelSummary';
 import { createElement } from 'react';
 import Avatar from '@material-ui/core/es/Avatar';
+import CardActionArea from '@material-ui/core/es/CardActionArea';
+import ButtonBase from '@material-ui/core/es/ButtonBase';
+import Dialog from '@material-ui/core/es/Dialog';
+import Transition from 'react-transition-group/Transition';
+import Slide from '@material-ui/core/es/Slide';
+import Button from '@material-ui/core/es/Button';
+import IconButton from '@material-ui/core/es/IconButton';
+import Toolbar from '@material-ui/core/es/Toolbar';
+import AppBar from '@material-ui/core/es/AppBar';
+import CloseIcon from '@material-ui/icons/Close';
+import logo from '../images/profpic.jpg';
+import ItemCard from './ItemCard';
+
+interface state {
+  fullWidth: boolean;
+  open: boolean;
+}
 
 const styles = createStyles({
   homepageCard: {
@@ -89,11 +106,59 @@ const styles = createStyles({
     textAlign: 'center',
     color: 'gray',
   },
+
+  fullscreenNameContainer: {
+    width: '100%',
+    position: 'relative',
+  },
+
+  fullscreenNameText: {
+    textAlign: 'center',
+    fontSize: '3vh',
+    color: 'white',
+    marginLeft: '-35px',
+  },
+
+  fullscreenImageContainer: {
+    maxWidth: '35vh',
+    margin: 'auto',
+    height: '25vh',
+    marginTop: '65px',
+    marginBottom: '20px',
+  },
+
+  fullscreenImage: {
+    width: '30vh',
+    height: '30vh',
+  },
+
+  bioContainer: {
+    width: '90%',
+    margin: 'auto',
+    maxHeight: '45vh',
+    backgroundColor: '#DCDCDC',
+    borderRadius: '25px',
+  },
+
+  bioText: {
+    padding: '10px',
+    textAlign: 'center',
+  },
 });
 
 // Props: <HomePageCard slug={'scienceguy'} pic={''} totalFunded = {50} totalCost= {65} name={'Bill Nye'} isLoaded={true}
 const HomepageCard = (props: any) => {
   const { classes } = props;
+
+  const [open, setOpen] = React.useState(false);
+
+  function handleClickOpen() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+  }
 
   // Display a loading screen if isLoaded is false
   if (!props.isLoaded) {
@@ -129,10 +194,23 @@ const HomepageCard = (props: any) => {
   //     return itemContainers;
   // };
 
+  const handleClick = () => {
+    console.log('sdads');
+  };
+
+  function Transition(props: any) {
+    return <Slide direction="up" {...props} />;
+  }
+
   return (
     <>
       <ExpansionPanel className={classes.root}>
-        <ExpansionPanelSummary className={classes.homepageCard}>
+        <ExpansionPanelSummary
+          className={classes.homepageCard}
+          onClick={event => {
+            handleClickOpen();
+          }}
+        >
           <div className={classes.profilePicContainer}>
             <div className={classes.inner}>
               <Avatar
@@ -159,6 +237,54 @@ const HomepageCard = (props: any) => {
           </div>
         </ExpansionPanelSummary>
       </ExpansionPanel>
+
+      <Dialog fullScreen open={open} onClose={handleClose}>
+        <AppBar>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              onClick={handleClose}
+              aria-label="Close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <div className={classes.fullscreenNameContainer}>
+              <Typography className={classes.fullscreenNameText}>
+                Sheev
+              </Typography>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.fullscreenImageContainer}>
+          <img className={classes.fullscreenImage} src={logo} />
+        </div>
+
+        <div className={classes.bioContainer}>
+          <Typography className={classes.bioText}>
+            Did you ever hear the Tragedy of Darth Plagueis the wise? I thought
+            not. It's not a story the Jedi would tell you. It's a Sith legend.
+            Darth Plagueis was a Dark Lord of the Sith, so powerful and so wise
+            he could use the Force to influence the midichlorians to create
+            life... He had such a knowledge of the dark side that he could even
+            keep the ones he cared about from dying. The dark side of the Force
+            is a pathway to many abilities some consider to be unnatural. He
+            became so powerful... the only thing he was afraid of was losing his
+            power, which eventually, of course, he did. Unfortunately, he taught
+            his apprentice everything he knew, then his apprentice killed him in
+            his sleep. It's ironic he could save others from death, but not
+            himself.
+          </Typography>
+        </div>
+
+        <div className={classes.itemsContainer}>
+          <ItemCard
+            itemName={'Backpack'}
+            totalCost={50}
+            totalFunded={25}
+            pic={logo}
+          />
+        </div>
+      </Dialog>
     </>
   );
 };
