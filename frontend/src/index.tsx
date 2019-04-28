@@ -10,6 +10,10 @@ import getPeople from './utilities/getPeople';
 import getRequests from './utilities/getRequests';
 
 // Populate the store
+import MuiThemeProvider from '@material-ui/core/es/styles/MuiThemeProvider';
+import { theme } from './theme';
+import 'typeface-eb-garamond';
+import 'typeface-rubik';
 
 (async () => {
   const people = await getPeople();
@@ -24,7 +28,9 @@ import getRequests from './utilities/getRequests';
 const Root = () => (
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
     </BrowserRouter>
   </Provider>
 );

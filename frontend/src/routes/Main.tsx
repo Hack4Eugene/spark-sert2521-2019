@@ -21,6 +21,9 @@ import Home from './Home';
 import isLoggedIn from '../utilities/isLoggedIn';
 import PaymentSuccess from './PaymentSuccess';
 import AdminPage from './Admin';
+import logo from '../images/logo.png';
+import { store } from '../state';
+import { updateUser } from '../state/actions';
 
 const drawerWidth = 240;
 
@@ -56,6 +59,11 @@ const styles = (theme: Theme) =>
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
       }),
+    },
+    logo: {
+      width: '1.3cm',
+      height: '1.3cm',
+      marginRight: theme.spacing.unit * 2,
     },
     menuButton: {
       marginLeft: 12,
@@ -105,13 +113,28 @@ const styles = (theme: Theme) =>
 
 const Main = ({ classes }: WithStyles<typeof styles>) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    if (isLoggedIn()) {
-      setLoggedIn(true);
+  async function checkLogin() {
+    const user: any = await isLoggedIn();
+
+    if (user) {
+      console.log('found log in!', user);
+      store.dispatch(
+        updateUser({
+          username: user.username,
+          email: user.email,
+        })
+      );
+    } else {
+      console.log('not authed');
+      store.dispatch(updateUser(null));
     }
-  }, []);
+  }
+
+  checkLogin();
+
+  const isAuthed = store.getState().user != null;
+
   return (
     <div className={classes.root}>
       <Drawer
@@ -132,7 +155,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
         </div>
         <Divider />
         <List>
-          {!loggedIn ? (
+          {!isAuthed ? (
             <NavigationItem
               icon={PermIdentity}
               text="Login"
@@ -179,6 +202,7 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           >
             <MenuIcon />
           </IconButton>
+          <img src={logo} className={classes.logo} alt="logo" />
           <Typography
             variant="title"
             color="inherit"

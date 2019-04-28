@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { Formik, Field, Form, FormikActions } from 'formik';
-import { TextField } from 'formik-material-ui';
-import { Button, InputLabel } from '@material-ui/core';
-import Select from 'react-select';
+import { Form, Formik, FormikActions } from 'formik';
+import { Button, Typography } from '@material-ui/core';
 import postNewPerson from '../utilities/postNewPerson';
 import getRequestItems from '../utilities/getRequestItems';
+import FormField from '../components/FormField';
+import Select from 'react-select';
 
 export interface Person {
   name: string;
@@ -25,7 +25,7 @@ interface Options {
   label: string;
 }
 
-const PersonForm: React.SFC<{}> = () => {
+const PersonForm: React.SFC<{}> = ({ theme, classes }: any) => {
   const [requestOptions, setOptions] = React.useState();
   const [success, setSuccess] = React.useState('');
   const getOptions = async () => {
@@ -37,8 +37,8 @@ const PersonForm: React.SFC<{}> = () => {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Person Details</h1>
+    <div className="container" style={{ textAlign: 'center' }}>
+      <Typography variant="display1">Create Person</Typography>
       <Formik
         initialValues={{
           name: '',
@@ -67,54 +67,29 @@ const PersonForm: React.SFC<{}> = () => {
               margin: '0 auto',
             }}
           >
-            <InputLabel htmlFor="name">Name</InputLabel>
-            <Field
-              id="name"
-              name="name"
-              placeholder="John"
-              type="text"
-              component={TextField}
-              required
-            />
+            <FormField name="name" type="text" label="Name" required />
 
-            <InputLabel htmlFor="bio">Bio</InputLabel>
-            <Field
-              id="bio"
-              name="bio"
-              placeholder="Doe"
-              type="text"
-              component={TextField}
-              multiline
-              required
-            />
+            <FormField name="bio" type="text" label="Bio" multiline required />
 
-            <InputLabel htmlFor="slug">Nickname</InputLabel>
-            <Field
-              id="slug"
-              name="slug"
-              placeholder="JimmyJohn"
-              type="text"
-              component={TextField}
-              required
-            />
+            <FormField name="slug" type="text" label="Slug" required />
 
-            <InputLabel htmlFor="requests">Requests</InputLabel>
-            <Field
-              id="requests"
-              name="requests"
-              component={Select}
-              isMulti
-              closeMenuOnSelect={false}
-              options={requestOptions}
-              onChange={(value: Array<any>) =>
-                setFieldValue('requests', value.map(v => ({ item: v.value })))
-              }
-              required
-            />
+            <div style={{ marginTop: 20 }}>
+              <FormField
+                name="requests"
+                component={Select}
+                isMulti
+                closeMenuOnSelect={false}
+                options={requestOptions}
+                onChange={(value: Array<any>) =>
+                  setFieldValue('requests', value.map(v => ({ item: v.value })))
+                }
+                required
+              />
+            </div>
             <Button
               type="submit"
               disabled={isSubmitting || !isValid}
-              style={{ display: 'block' }}
+              style={{ display: 'block', marginTop: 20 }}
             >
               Submit
             </Button>

@@ -7,7 +7,8 @@ export enum ActionTypes {
   UPDATE_REQUESTS = 'UPDATE_REQUESTS',
 }
 
-export const updateUser = (user: User) => action(ActionTypes.UPDATE_USER, user);
+export const updateUser = (user: User | null) =>
+  action(ActionTypes.UPDATE_USER, user);
 export const updatePeople = (...people: Array<Person>) => {
   return action(ActionTypes.UPDATE_PEOPLE, people);
 };

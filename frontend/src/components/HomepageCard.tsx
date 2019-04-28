@@ -9,85 +9,87 @@ import ExpansionPanel from '@material-ui/core/es/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/es/ExpansionPanelSummary';
 import { createElement } from 'react';
 import Avatar from '@material-ui/core/es/Avatar';
+import { Theme } from '@material-ui/core/es';
 
-const styles = createStyles({
-  homepageCard: {
-    height: '23vh',
-    paddingRight: '0px',
-  },
+const styles = (theme: Theme) =>
+  createStyles({
+    homepageCard: {
+      height: '23vh',
+      paddingRight: '0px',
+    },
 
-  root: {
-    alignItems: 'center',
-  },
+    root: {
+      alignItems: 'center',
+    },
 
-  profilePicContainer: {
-    width: '40vw',
-    height: '15vh',
-    position: 'relative',
-    marginTop: '7px',
-  },
+    profilePicContainer: {
+      width: '40vw',
+      height: '15vh',
+      position: 'relative',
+      marginTop: '7px',
+    },
 
-  personName: {
-    marginTop: '-6px',
-    textAlign: 'center',
-    fontSize: '5vh',
-    fontWeight: 'bold',
-    lineHeight: '1.2',
-  },
+    personName: {
+      marginTop: '-6px',
+      textAlign: 'center',
+      fontSize: '5vh',
+      fontWeight: 'bold',
+      lineHeight: '1.2',
+    },
 
-  itemContainer: {
-    marginTop: '5px',
-  },
+    itemContainer: {
+      marginTop: '5px',
+    },
 
-  progressBar: {
-    minHeight: '1vh',
-  },
+    progressBar: {
+      minHeight: '1vh',
+    },
 
-  colorPrimary: {
-    // backgroundColor: getColor(.5)
-  },
+    colorPrimary: {
+      // backgroundColor: getColor(.5)
+    },
 
-  loadingContainer: {
-    margin: 'auto',
-  },
+    loadingContainer: {
+      margin: 'auto',
+    },
 
-  profilePic: {
-    width: '14vh',
-    height: '14vh',
-    // margin: 'auto',
-  },
+    profilePic: {
+      width: '14vh',
+      height: '14vh',
+      // margin: 'auto',
+    },
 
-  nameContainer: {
-    position: 'relative',
-    textAlign: 'center',
-    width: '100%',
-  },
+    nameContainer: {
+      position: 'relative',
+      textAlign: 'center',
+      width: '100%',
+    },
 
-  contentContainer: {
-    margin: 'auto',
-    width: '60%',
-  },
+    contentContainer: {
+      margin: 'auto',
+      width: '60%',
+    },
 
-  loadingCircle: {
-    position: 'absolute',
-    margin: 'auto',
-    top: -7,
-    left: -7,
-    textAlign: 'center',
-    color: '#388e3c',
-  },
+    loadingCircle: {
+      position: 'absolute',
+      margin: 'auto',
+      top: 0,
+      left: 0,
+      textAlign: 'center',
+      color: theme.palette.primary.dark,
+    },
 
-  inner: {
-    margin: 'auto',
-  },
+    inner: {
+      margin: 'auto',
+    },
 
-  slug: {
-    marginTop: '1vh',
-    fontSize: '4vh',
-    textAlign: 'center',
-    color: 'gray',
-  },
-});
+    slug: {
+      marginTop: '1vh',
+      fontSize: '4vh',
+      textAlign: 'center',
+      color: 'gray',
+    },
+  });
 
 // Props: <HomePageCard slug={'scienceguy'} pic={''} totalFunded = {50} totalCost= {65} name={'Bill Nye'} isLoaded={true}
 const HomepageCard = ({
@@ -143,7 +145,7 @@ const HomepageCard = ({
               <CircularProgress
                 thickness={3}
                 className={classes.loadingCircle}
-                size={120}
+                size="14vh"
                 variant="static"
                 value={(totalFunded / totalCost) * 100}
               />

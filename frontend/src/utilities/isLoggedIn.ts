@@ -6,10 +6,7 @@ export default async () => {
     const authed = await axios.get('http://localhost:8080/api/auth/me', {
       headers: getAuthHeader(),
     });
-    console.log(authed);
-    if (authed.data.success) {
-      return true;
-    }
+
+    return authed.data.response;
   }
-  return false;
 };
