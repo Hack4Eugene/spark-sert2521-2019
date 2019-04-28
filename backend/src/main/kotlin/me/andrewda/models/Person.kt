@@ -19,7 +19,7 @@ data class NewPerson(
 
 object People : IntIdTable() {
     val name = varchar("name", 20)
-    val image = blob("image").nullable()
+    val image = varchar("image", 40).nullable()
     val bio = text("bio")
     val slug = varchar("slug", 20).uniqueIndex()
     val funds = double("funds").default(0.0)
