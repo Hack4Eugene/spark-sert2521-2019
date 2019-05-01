@@ -1,7 +1,6 @@
-import Popover from '@material-ui/core/Popover';
 import * as React from 'react';
 import createStyles from '@material-ui/core/es/styles/createStyles';
-import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
+import withStyles from '@material-ui/core/es/styles/withStyles';
 import { Field, Form, Formik, FormikActions } from 'formik';
 import axios from 'axios';
 import { Button, CircularProgress, InputLabel } from '@material-ui/core';
@@ -55,15 +54,15 @@ const DonationPopup = (props: any) => {
           <div className={classes.popover}>
             <Formik
               initialValues={{
-                amount: '0',
+                amount: '0.00',
                 type: getType(props.type),
                 identifier: props.id,
               }}
-              onSubmit={async (
+              onSubmit={(
                 form: DonationForm,
                 { setSubmitting }: FormikActions<DonationForm>
               ) => {
-                var amount = parseFloat(form.amount.toString());
+                const amount = parseFloat(form.amount.toString());
 
                 if (isNaN(amount)) {
                   alert('Please enter a number.');
@@ -83,7 +82,7 @@ const DonationPopup = (props: any) => {
                 }
                 if (form.type == DonationType.PERSON) {
                   try {
-                    await axios
+                    axios
                       .post(
                         getHost() + '/api/payments/people/' + form.identifier,
                         { amount: form.amount }
@@ -102,7 +101,7 @@ const DonationPopup = (props: any) => {
                   }
                 } else {
                   try {
-                    await axios
+                    axios
                       .post(
                         getHost() + '/api/payments/requests/' + form.identifier,
                         { amount: form.amount }
@@ -121,7 +120,7 @@ const DonationPopup = (props: any) => {
                   }
                 }
               }}
-              render={({ isSubmitting }) => (
+              render={({ isSubmitting, handleSubmit }) => (
                 <Form
                   style={{
                     display: 'flex',
@@ -139,15 +138,16 @@ const DonationPopup = (props: any) => {
                     id=""
                     name="amount"
                     placeholder=""
-                    type="text"
+                    type="number"
                     component={TextField}
-                    step={'any'}
+                    step={0.01}
                     required
                   />
                   <Button
                     type="submit"
                     disabled={isSubmitting}
                     style={{ display: 'block' }}
+                    onClick={() => handleSubmit()}
                   >
                     {isSubmitting ? (
                       <CircularProgress style={{ margin: 'auto' }} size={20} />
