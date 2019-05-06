@@ -7,6 +7,14 @@ import HomepageCard from '../components/HomepageCard';
 import { CircularProgress, Typography, Grid } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router';
 
+const introduction = `
+Spark is a new program we're implementing to help specific individuals in the community with the
+items and support they need. Every month, Carry It Forward chooses a select few individuals in
+order to tell you their story and what they need to survive and thrive. You can choose to donate
+items directly, give money towards their purchase or offer help in other ways. Please read their
+stories and help in any way you're able.
+`;
+
 const styles = createStyles({
   intro: {
     marginBottom: 30,
@@ -20,6 +28,10 @@ const styles = createStyles({
   innerGrid: {
     width: 'auto',
     margin: '0 auto',
+    flexGrow: 1,
+  },
+  gridItem: {
+    flexGrow: 1,
   },
 });
 
@@ -74,7 +86,7 @@ const Home = ({ people, requests, match, classes }: HomeProps) => {
               key={id}
             >
               {chunk.map((item, id) => (
-                <Grid item key={id}>
+                <Grid className={classes.gridItem} item key={id}>
                   {item}
                 </Grid>
               ))}
@@ -89,14 +101,7 @@ const Home = ({ people, requests, match, classes }: HomeProps) => {
     <div>
       <div className={classes.intro}>
         <Typography variant="headline">Meet Your Neighbors</Typography>
-        <Typography variant="subheading">
-          Spark is a new program we're implementing to help specific individuals
-          in the community with the items and support they need. Every month
-          Carry It Forward chooses five individuals to tell you their story and
-          what they need to survive and thrive. You can choose to donate items
-          directly, give money towards their purchase or offer help in other
-          ways. Please read their stories and help in any way you're able.
-        </Typography>
+        <Typography variant="subheading">{introduction}</Typography>
       </div>
       <div className={classes.people}>{renderPeople()}</div>
     </div>

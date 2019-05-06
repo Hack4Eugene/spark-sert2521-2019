@@ -28,6 +28,7 @@ const styles = createStyles({
   homepageCard: {
     height: '40vh',
     width: '60vh',
+    margin: 'auto',
     paddingRight: '0px',
   },
 
