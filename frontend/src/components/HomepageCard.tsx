@@ -1,13 +1,11 @@
-import { Card } from '@material-ui/core';
 import * as React from 'react';
+import { createElement } from 'react';
 import Typography from '@material-ui/core/es/Typography';
-import CardContent from '@material-ui/core/es/CardContent';
 import createStyles from '@material-ui/core/es/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/es/styles/withStyles';
 import CircularProgress from '@material-ui/core/es/CircularProgress';
-import ExpansionPanel from '@material-ui/core/es/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/es/ExpansionPanelSummary';
-import { createElement } from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/es/Avatar';
 import Dialog from '@material-ui/core/es/Dialog';
 import Slide from '@material-ui/core/es/Slide';
@@ -15,11 +13,8 @@ import IconButton from '@material-ui/core/es/IconButton';
 import Toolbar from '@material-ui/core/es/Toolbar';
 import AppBar from '@material-ui/core/es/AppBar';
 import CloseIcon from '@material-ui/icons/Close';
-import logo from '../images/profpic.jpg';
 import ItemCard from './ItemCard';
-import LinearProgress from '@material-ui/core/es/LinearProgress';
 import { Request } from '../state';
-import RequestDonationButton from './RequestDonationButton';
 import PersonDonationButton from './PersonDonationButton';
 import { Link } from 'react-router-dom';
 import { theme } from '../theme';
@@ -31,7 +26,8 @@ interface state {
 
 const styles = createStyles({
   homepageCard: {
-    height: '23vh',
+    height: '40vh',
+    width: '60vh',
     paddingRight: '0px',
   },
 
@@ -40,10 +36,10 @@ const styles = createStyles({
   },
 
   profilePicContainer: {
-    width: '40vw',
     height: '15vh',
     position: 'relative',
-    marginTop: '7px',
+    marginTop: 7,
+    marginBottom: 25,
   },
 
   personName: {
@@ -73,7 +69,7 @@ const styles = createStyles({
   profilePic: {
     width: '14vh',
     height: '14vh',
-    // margin: 'auto',
+    margin: 'auto',
   },
 
   nameContainer: {
@@ -84,14 +80,13 @@ const styles = createStyles({
 
   contentContainer: {
     margin: 'auto',
-    width: '60%',
   },
 
   loadingCircle: {
     position: 'absolute',
     margin: 'auto',
     top: '-1vh',
-    left: '-1vh',
+    left: '21vh',
     textAlign: 'center',
     color: theme.palette.primary.dark,
   },
@@ -201,8 +196,8 @@ const HomepageCard = ({
 
   return (
     <Link to={`/s/${slug}`} style={{ textDecoration: 'none' }}>
-      <ExpansionPanel className={classes.root} expanded={false}>
-        <ExpansionPanelSummary className={classes.homepageCard}>
+      <Card className={classes.root}>
+        <CardContent className={classes.homepageCard}>
           <div className={classes.profilePicContainer}>
             <div className={classes.inner}>
               <Avatar
@@ -226,8 +221,8 @@ const HomepageCard = ({
             </div>
             <Typography className={classes.slug}>{slug}</Typography>
           </div>
-        </ExpansionPanelSummary>
-      </ExpansionPanel>
+        </CardContent>
+      </Card>
 
       <Dialog fullScreen open={expanded}>
         <AppBar>
