@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: web-server
-          image: mvpstudio/sert2521:ecba91a
+          image: mvpstudio/sert2521:f2edc8f
           resources:
             limits:
               cpu: 0.25
