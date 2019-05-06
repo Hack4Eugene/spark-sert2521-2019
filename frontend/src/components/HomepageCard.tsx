@@ -182,6 +182,11 @@ const HomepageCard = ({
     return <Slide direction="up" {...props} />;
   }
 
+  const percentComplete = Math.min(
+    totalCost > 0 ? (totalFunded / totalCost) * 100 : 0,
+    100
+  );
+
   return (
     <Link to={`/s/${slug}`} style={{ textDecoration: 'none' }}>
       <ExpansionPanel className={classes.root} expanded={false}>
@@ -194,7 +199,7 @@ const HomepageCard = ({
                 className={classes.loadingCircle}
                 size="14vh"
                 variant="static"
-                value={totalCost > 0 ? (totalFunded / totalCost) * 100 : 0}
+                value={percentComplete}
               />
             </div>
           </div>
