@@ -179,7 +179,7 @@ const HomepageCard = ({
   }
 
   const percentComplete = Math.min(
-    totalCost > 0 ? (totalFunded / totalCost) * 100 : 0,
+    Math.max(totalCost > 0 ? (totalFunded / totalCost) * 100 : 0, 1),
     100
   );
 
