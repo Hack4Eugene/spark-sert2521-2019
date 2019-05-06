@@ -220,7 +220,7 @@ const HomepageCard = ({
             <div className={classes.nameContainer}>
               <Typography className={classes.personName}>{name}</Typography>
             </div>
-            <Typography className={classes.slug}>{slug}</Typography>
+            <Typography className={classes.slug}>#{slug}</Typography>
           </div>
         </CardContent>
       </Card>
