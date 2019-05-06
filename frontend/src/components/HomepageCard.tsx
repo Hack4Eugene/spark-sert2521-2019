@@ -90,8 +90,8 @@ const styles = createStyles({
   loadingCircle: {
     position: 'absolute',
     margin: 'auto',
-    top: 0,
-    left: 0,
+    top: '-1vh',
+    left: '-1vh',
     textAlign: 'center',
     color: theme.palette.primary.dark,
   },
@@ -187,17 +187,34 @@ const HomepageCard = ({
     100
   );
 
+  const avatarProps =
+    percentComplete >= 100
+      ? {
+          style: {
+            outlineWidth: 100,
+            outlineOffset: -100,
+            outlineColor: 'rgba(25, 255, 75, 0.4)',
+            outlineStyle: 'solid',
+          },
+        }
+      : {};
+
   return (
     <Link to={`/s/${slug}`} style={{ textDecoration: 'none' }}>
       <ExpansionPanel className={classes.root} expanded={false}>
         <ExpansionPanelSummary className={classes.homepageCard}>
           <div className={classes.profilePicContainer}>
             <div className={classes.inner}>
-              <Avatar className={classes.profilePic} alt={name} src={pic} />
+              <Avatar
+                className={classes.profilePic}
+                alt={name}
+                src={pic}
+                imgProps={avatarProps}
+              />
               <CircularProgress
                 thickness={3}
                 className={classes.loadingCircle}
-                size="14vh"
+                size="16vh"
                 variant="static"
                 value={percentComplete}
               />
