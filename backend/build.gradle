@@ -41,6 +41,6 @@ task cleanStatic(type: Delete) {
 }
 
 task deployStatic(type: Copy, dependsOn: "cleanStatic") {
-    from fileTree("../frontend/build")
+    from fileTree("../frontend/dist/spa")
     into "src/main/resources/frontend"
 }
