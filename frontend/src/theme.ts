@@ -9,17 +9,27 @@ export const theme = createMuiTheme({
       contrastText: '#fff',
     },
     secondary: {
-      main: '#171717',
+      main: '#fafafa',
       light: '#343434',
       dark: '#0d0d0d',
       contrastText: '#fff',
     },
   },
   typography: {
-    fontFamily: 'Rubik',
+    fontFamily: 'serif',
     title: {
-      fontFamily: 'EB Garamond',
       fontSize: 24,
+      fontFamily: 'Roboto',
+      fontWeight: 300,
+    },
+    subtitle1: {
+      fontFamily: 'sans-serif',
+    },
+    headline: {
+      fontFamily: 'sans-serif',
+    },
+    subheading: {
+      fontSize: '1.1rem',
     },
   },
 });

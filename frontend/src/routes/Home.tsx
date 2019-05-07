@@ -71,12 +71,7 @@ const Home = ({ people, requests, match, classes }: HomeProps) => {
       const chunked = chunk(peopleArray, 2);
 
       return (
-        <Grid
-          className={classes.outerGrid}
-          container
-          direction="row"
-          spacing={24}
-        >
+        <Grid className={classes.outerGrid} container direction="row">
           {chunked.map((chunk, id) => (
             <Grid
               className={classes.innerGrid}
@@ -100,7 +95,7 @@ const Home = ({ people, requests, match, classes }: HomeProps) => {
   return (
     <div>
       <div className={classes.intro}>
-        <Typography variant="headline">Meet Your Neighbors</Typography>
+        <Typography variant="headline">Meet Our Neighbors</Typography>
         <Typography variant="subheading">{introduction}</Typography>
       </div>
       <div className={classes.people}>{renderPeople()}</div>

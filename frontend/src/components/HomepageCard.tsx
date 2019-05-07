@@ -113,6 +113,7 @@ const styles = createStyles({
     fontSize: '3vh',
     color: 'white',
     marginLeft: '-35px',
+    fontFamily: 'sans-serif',
   },
 
   fullscreenImageContainer: {
@@ -132,13 +133,12 @@ const styles = createStyles({
     width: '90%',
     margin: 'auto',
     maxHeight: '45vh',
-    backgroundColor: '#DCDCDC',
     borderRadius: '25px',
   },
 
   bioText: {
     padding: '10px',
-    textAlign: 'center',
+    fontSize: '1rem',
   },
 });
 

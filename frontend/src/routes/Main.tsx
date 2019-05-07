@@ -111,6 +111,14 @@ const styles = (theme: Theme) =>
       ...theme.mixins.toolbar,
       flex: '0 1 auto',
     },
+    appBarLinks: {
+      display: 'flex',
+      marginLeft: 'auto',
+    },
+    appBarLink: {
+      textDecoration: 'none',
+      marginRight: 20,
+    },
   });
 
 const Main = ({ classes }: WithStyles<typeof styles>) => {
@@ -188,39 +196,90 @@ const Main = ({ classes }: WithStyles<typeof styles>) => {
           />
         </List>
       </Drawer>
-      <AppBar
-        className={classNames(
-          classes.appBar,
-          drawerOpened && classes.appBarShift
-        )}
-      >
+      <AppBar className={classes.appBar} color="secondary">
         <Toolbar disableGutters={!drawerOpened} className={classes.toolbar}>
-          <IconButton
-            aria-label="Open drawer"
-            color="inherit"
-            onClick={() => setDrawerOpened(true)}
-            className={classNames(
-              classes.menuButton,
-              drawerOpened && classes.menuButtonHidden
-            )}
-          >
-            <MenuIcon />
-          </IconButton>
           <Link
             to="/"
-            style={{ display: 'flex', textDecoration: 'none', color: 'white' }}
+            style={{ display: 'flex', textDecoration: 'none', marginLeft: 20 }}
           >
             <img src={logo} className={classes.logo} alt="logo" />
             <Typography
               variant="title"
-              color="inherit"
+              color="primary"
               component="h1"
               noWrap
               className={classes.title}
             >
-              Spark
+              Spark!
             </Typography>
           </Link>
+          <div className={classes.appBarLinks}>
+            <a
+              href="https://www.carryitforward.net/"
+              className={classes.appBarLink}
+            >
+              <Typography
+                variant="subtitle1"
+                color="primary"
+                noWrap
+                className={classes.title}
+              >
+                Home
+              </Typography>
+            </a>
+            <a
+              href="https://www.carryitforward.net/what-we-do-1"
+              className={classes.appBarLink}
+            >
+              <Typography
+                variant="subtitle1"
+                color="primary"
+                noWrap
+                className={classes.title}
+              >
+                About
+              </Typography>
+            </a>
+            <a
+              href="https://www.carryitforward.net/projects-1"
+              className={classes.appBarLink}
+            >
+              <Typography
+                variant="subtitle1"
+                color="primary"
+                noWrap
+                className={classes.title}
+              >
+                Projects
+              </Typography>
+            </a>
+            <a
+              href="https://www.carryitforward.net/contact-cif"
+              className={classes.appBarLink}
+            >
+              <Typography
+                variant="subtitle1"
+                color="primary"
+                noWrap
+                className={classes.title}
+              >
+                Contact
+              </Typography>
+            </a>
+            <a
+              href="https://www.carryitforward.net/take-action"
+              className={classes.appBarLink}
+            >
+              <Typography
+                variant="subtitle1"
+                color="primary"
+                noWrap
+                className={classes.title}
+              >
+                Take Action
+              </Typography>
+            </a>
+          </div>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
