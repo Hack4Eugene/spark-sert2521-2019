@@ -5,7 +5,8 @@ module.exports = function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     boot: [
-      'axios'
+      'axios',
+      'lineClamp'
     ],
 
     css: [
@@ -22,7 +23,7 @@ module.exports = function (ctx) {
     ],
 
     framework: {
-      // all: true, // --- includes everything; for dev only!
+      all: true, // --- includes everything; for dev only!
 
       components: [
         'QLayout',
