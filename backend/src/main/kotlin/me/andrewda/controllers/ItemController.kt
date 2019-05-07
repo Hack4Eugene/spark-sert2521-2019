@@ -1,23 +1,35 @@
 package me.andrewda.controllers
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import me.andrewda.models.*
 import me.andrewda.utils.query
 import me.andrewda.utils.uploadImage
 
 object ItemController {
     suspend fun create(item: NewItem) = query {
-        val imageUrl = if (item.image != null) {
-            uploadImage(item.image)
-        } else {
-            null
-        }
-
-        Item.new {
+        val newItem = Item.new {
             name = item.name ?: ""
-            image = imageUrl
             price = item.price ?: 0.0
             inventory = item.inventory
         }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val imageUrl = if (item.image != null) {
+                uploadImage(item.image)
+            } else {
+                null
+            }
+
+            query {
+                Item.findById(newItem.id)?.apply {
+                    image = imageUrl
+                }
+            }
+        }
+
+        newItem
     }
 
     suspend fun patch(id: Int, newItem: NewItem) = query {

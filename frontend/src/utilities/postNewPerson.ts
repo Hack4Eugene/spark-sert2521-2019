@@ -12,7 +12,7 @@ const makeFileString = (file: any) => {
       resolve({
         imageStr: (reader.result || '')
           .toString()
-          .replace('data:image/png;base64', ''),
+          .replace(/^data:image\/.*;base64/, ''),
       });
     };
   });

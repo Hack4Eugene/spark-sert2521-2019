@@ -1,5 +1,8 @@
 package me.andrewda.controllers
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import me.andrewda.models.*
 import me.andrewda.utils.MissingFields
 import me.andrewda.utils.query
@@ -7,18 +10,27 @@ import me.andrewda.utils.uploadImage
 
 object PersonController {
     suspend fun create(person: NewPerson) = query {
-        val imageUrl = if (person.image != null) {
-            uploadImage(person.image)
-        } else {
-            null
-        }
-
-        Person.new {
+        val newPerson = Person.new {
             name = person.name ?: throw MissingFields()
-            image = imageUrl
             bio = person.bio ?: ""
             slug = person.slug ?: throw MissingFields()
         }
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val imageUrl = if (person.image != null) {
+                uploadImage(person.image)
+            } else {
+                null
+            }
+
+            query {
+                Person.findById(newPerson.id)?.apply {
+                    image = imageUrl
+                }
+            }
+        }
+
+        newPerson
     }
 
     suspend fun patch(slug: String, newPerson: NewPerson) = query {
