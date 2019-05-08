@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import { openURL } from 'quasar'
-
 export default {
   name: 'DefaultLayout',
   data() {
@@ -32,7 +30,6 @@ export default {
     }
   },
   methods: {
-    openURL,
     navigate(location) {
       this.$router.push(location)
     },
