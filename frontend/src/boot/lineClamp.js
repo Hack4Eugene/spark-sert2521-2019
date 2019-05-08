@@ -1,5 +1,5 @@
-import VueLineClamp from "vue-line-clamp";
+import VueLineClamp from 'vue-line-clamp'
 
 export default ({ Vue }) => {
-  Vue.use(VueLineClamp);
-};
+  Vue.use(VueLineClamp)
+}

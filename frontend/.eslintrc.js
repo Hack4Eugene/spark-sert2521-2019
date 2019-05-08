@@ -14,7 +14,7 @@ module.exports = {
   // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
   extends: [
     'plugin:vue/essential',
-    '@vue/prettier'
+    'airbnb-base'
   ],
 
   // required to lint *.vue files
@@ -31,6 +31,19 @@ module.exports = {
 
   // add your custom rules here
   rules: {
+    'no-param-reassign': 'off',
+    'semi': [2, 'never'],
+    'max-len': [1, 120],
+
+    'import/first': 'off',
+    'import/named': 'error',
+    'import/namespace': 'error',
+    'import/default': 'error',
+    'import/export': 'error',
+    'import/extensions': 'off',
+    'import/no-unresolved': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
     'prefer-promise-reject-errors': 'off',
 
     // allow console.log during development only

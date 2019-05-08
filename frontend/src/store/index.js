@@ -1,25 +1,13 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-// import example from './module-example'
+Vue.use(Vuex)
 
-Vue.use(Vuex);
+const debug = process.env.NODE_ENV !== 'production'
 
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation
- */
+export default new Vuex.Store({
+  modules: {
 
-export default function(/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      // example
-    },
-
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
-  });
-
-  return Store;
-}
+  },
+  strict: debug,
+})

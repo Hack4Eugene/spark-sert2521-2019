@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "Card",
+  name: 'Card',
   props: {
     title: String,
     image: String,
@@ -22,31 +22,31 @@ export default {
     body: String,
     slug: String,
     raised: Number,
-    goal: Number
+    goal: Number,
   },
   computed: {
     capitalizedCity() {
-      return this.city.toUpperCase();
+      return this.city.toUpperCase()
     },
     progress() {
-      return this.raised / this.goal;
+      return this.raised / this.goal
     },
     simpleRaised() {
-      return Math.round(this.raised);
+      return Math.round(this.raised)
     },
     simpleGoal() {
-      return Math.round(this.goal);
+      return Math.round(this.goal)
     },
     url() {
-      return `/s/${this.slug}`;
-    }
+      return `/s/${this.slug}`
+    },
   },
   methods: {
     navigate() {
       this.$router.push(this.url)
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style scoped>

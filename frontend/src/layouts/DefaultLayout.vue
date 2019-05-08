@@ -15,19 +15,19 @@
 </template>
 
 <script>
-import { openURL } from "quasar";
+import { openURL } from 'quasar'
 
 export default {
-  name: "DefaultLayout",
+  name: 'DefaultLayout',
   data() {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
-    };
+      leftDrawerOpen: this.$q.platform.is.desktop,
+    }
   },
   methods: {
-    openURL
-  }
-};
+    openURL,
+  },
+}
 </script>
 
 <style scoped>

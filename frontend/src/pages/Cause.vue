@@ -49,7 +49,8 @@
 
     <q-dialog v-model="card">
       <q-card>
-        <q-img src="https://cdn.shopify.com/s/files/1/1125/0762/products/180005-specialist-1-day-backpack-le-black-isometric_2016.jpg?v=1471390607" />
+        <q-img
+          src="https://cdn.shopify.com/s/files/1/1125/0762/products/180005-specialist-1-day-backpack-le-black-isometric_2016.jpg?v=1471390607" />
 
         <q-card-section>
           <q-btn
@@ -88,14 +89,14 @@
 </template>
 
 <script>
-import marked from "marked";
+import marked from 'marked'
 
 export default {
-  name: "Cause",
+  name: 'Cause',
   data() {
     return {
-      card: false
-    };
+      card: false,
+    }
   },
   props: {
     title: String,
@@ -104,36 +105,44 @@ export default {
     body: String,
     slug: String,
     raised: Number,
-    goal: Number
+    goal: Number,
   },
   computed: {
     compiledMarkdown() {
       const other = `
 My name is Tom and this is my story.
 
-I’m just a regular guy, originally from Missouri but I’ve moved all around. I’ve been homeless off/on for about 6 years. I’ve worked on farms and in construction. I like to work on motorcycles but I had to sell my bike to survive last year. I have a back injury and COPD, which make it hard to work these days. I believe God has a plan, I’m just doing my best to get right.
+I’m just a regular guy, originally from Missouri but I’ve moved all around. I’ve been homeless off/on for about 6 years.
+I’ve worked on farms and in construction. I like to work on motorcycles but I had to sell my bike to survive last year.
+I have a back injury and COPD, which make it hard to work these days. I believe God has a plan, I’m just doing my best
+to get right.
 
 I would really be grateful if I could get a few things:
 - Cold weather sleeping bag
 - Large back pack
 - Boot socks
 
-My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good boot socks would save my feet. I’m grateful for any help. Thank you.
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
 
-My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good boot socks would save my feet. I’m grateful for any help. Thank you.
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
 
-My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good boot socks would save my feet. I’m grateful for any help. Thank you.
-
-      `;
-      return marked(this.body || other);
-    }
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+      `
+      return marked(this.body || other)
+    },
   },
   methods: {
     openCard() {
       this.$set(this, 'card', true)
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style scoped>
