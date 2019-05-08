@@ -6,10 +6,10 @@
           <span class="title" @click="navigate('/')">Spark</span>
         </q-toolbar-title>
 
-        <q-btn flat @click="navigate('/explore')">Explore</q-btn>
-        <q-btn flat @click="navigate('/start')">Start Project</q-btn>
+        <q-btn class="nav-item" flat @click="navigate('/explore')">Explore</q-btn>
+        <q-btn class="nav-item" flat @click="navigate('/start')">Start Project</q-btn>
 
-        <div class="authentication">
+        <div class="nav-item">
           <q-btn flat @click="navigate('/signin')">Sign In</q-btn>
         </div>
       </q-toolbar>
@@ -42,7 +42,7 @@ export default {
   cursor: pointer;
 }
 
-.authentication {
-  margin-left: 20px;
+.nav-item {
+  margin: 0 5px;
 }
 </style>
