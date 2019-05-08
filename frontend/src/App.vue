@@ -1,5 +1,5 @@
 <template>
-  <div id="q-app">
+  <div id="q-app" class="bg-grey-1">
     <router-view />
   </div>
 </template>
@@ -10,4 +10,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+#q-app {
+  /*background-color: #FBFBFA;*/
+}
+</style>

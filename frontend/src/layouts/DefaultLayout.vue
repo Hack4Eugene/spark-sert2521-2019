@@ -2,9 +2,16 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title>Spark</q-toolbar-title>
+        <q-toolbar-title>
+          <span class="title" @click="navigate('/')">Spark</span>
+        </q-toolbar-title>
 
-        <q-btn flat round dense icon="exit_to_app" />
+        <q-btn flat @click="navigate('/explore')">Explore</q-btn>
+        <q-btn flat @click="navigate('/start')">Start Project</q-btn>
+
+        <div class="authentication">
+          <q-btn flat @click="navigate('/signin')">Sign In</q-btn>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -26,12 +33,19 @@ export default {
   },
   methods: {
     openURL,
+    navigate(location) {
+      this.$router.push(location)
+    },
   },
 }
 </script>
 
 <style scoped>
-.main {
-  padding: 0 20px;
+.title {
+  cursor: pointer;
+}
+
+.authentication {
+  margin-left: 20px;
 }
 </style>

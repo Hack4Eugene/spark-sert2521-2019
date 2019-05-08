@@ -2,100 +2,73 @@
   <q-page class="flex flex-center column page">
     <h2 class="title">Tom</h2>
 
-    <div class="flex row justify-between">
-      <q-img class="col image" src="https://carryitforward.trifoia.com/images/tom.png" />
-      <div class="col-6 summary" v-html="compiledMarkdown"></div>
+    <div class="row justify-center header">
+      <div class="col-12 col-md-6 carousel">
+        <Carousel />
+      </div>
+
+      <div class="col-12 col-md-4 data">
+        <Progress :raised="136" :goal="200" />
+
+        <div class="text-h4 text-secondary value">$136</div>
+        <div class="text-subtitle1">raised of $200 goal</div>
+
+        <div class="text-h4 value">22</div>
+        <div class="text-subtitle1">supporters</div>
+
+        <div class="text-h4 value">144</div>
+        <div class="text-subtitle1">social media shares</div>
+      </div>
     </div>
 
-    <q-markup-table class="items">
-      <thead>
-      <tr>
-        <th class="text-center" style="width: 20%;">Item</th>
-        <th class="text-center" style="width: 20%;">Price</th>
-        <th class="text-center">Progress</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr @click="openCard">
-        <td class="text-center">Cupcake</td>
-        <td class="text-center">$20.55</td>
-        <td class="text-center">
-          <q-linear-progress :value="0.2" color="secondary" />
-        </td>
-      </tr>
-      <tr>
-        <td class="text-center">Cupcake</td>
-        <td class="text-center">$20.55</td>
-        <td class="text-center">
-          <q-linear-progress :value="0.2" color="secondary" />
-        </td>
-      </tr>
-      <tr>
-        <td class="text-center">Cupcake</td>
-        <td class="text-center">$20.55</td>
-        <td class="text-center">
-          <q-linear-progress :value="0.2" color="secondary" />
-        </td>
-      </tr>
-      <tr>
-        <td class="text-center">Cupcake</td>
-        <td class="text-center">$20.55</td>
-        <td class="text-center">
-          <q-linear-progress :value="0.2" color="secondary" />
-        </td>
-      </tr>
-      </tbody>
-    </q-markup-table>
+    <q-tabs
+      class="bg-white tabs"
+      v-model="tab"
+      no-caps
+    >
+      <q-tab name="story" label="Story" />
+      <q-tab name="updates" label="Updates" />
+      <q-tab name="comments" label="Comments" />
+      <q-tab name="stats" label="Stats" />
+    </q-tabs>
 
-    <q-dialog v-model="card">
-      <q-card>
-        <q-img
-          src="https://cdn.shopify.com/s/files/1/1125/0762/products/180005-specialist-1-day-backpack-le-black-isometric_2016.jpg?v=1471390607" />
+    <q-tab-panels v-model="tab" animated>
+      <q-tab-panel name="story">
+        <div class="text-h6">Story</div>
+        <div class="summary col" v-html="compiledMarkdown"></div>
+      </q-tab-panel>
 
-        <q-card-section>
-          <q-btn
-            fab
-            color="primary"
-            icon="place"
-            class="absolute"
-            style="top: 0; right: 12px; transform: translateY(-50%);"
-          />
+      <q-tab-panel name="updates">
+        <div class="text-h6">Updates</div>
+        <div class="summary col" v-html="compiledMarkdown"></div>
+      </q-tab-panel>
 
-          <div class="row no-wrap items-center">
-            <div class="col text-h6 ellipsis">Large Backpack</div>
-            <div class="col-auto text-grey q-pt-md">
-              <q-icon name="place" /> 250 ft
-            </div>
-          </div>
-        </q-card-section>
+      <q-tab-panel name="comments">
+        <div class="text-h6">Comments</div>
+        <div class="summary col" v-html="compiledMarkdown"></div>
+      </q-tab-panel>
 
-        <q-card-section>
-          <div class="text-subtitle1">$・Italian, Cafe</div>
-          <div class="text-subtitle2 text-grey">Small plates, salads & sandwiches in an intimate setting.</div>
-        </q-card-section>
-
-        <q-separator />
-
-        <q-card-actions>
-          <q-btn flat round icon="event" v-close-popup />
-          <q-btn flat v-close-popup>5:30PM</q-btn>
-          <q-btn flat v-close-popup>7:30PM</q-btn>
-          <q-btn flat v-close-popup>9:00PM</q-btn>
-          <q-btn flat color="primary" v-close-popup>Reserve</q-btn>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+      <q-tab-panel name="stats">
+        <div class="text-h6">Stats</div>
+        <div class="summary col" v-html="compiledMarkdown"></div>
+      </q-tab-panel>
+    </q-tab-panels>
   </q-page>
 </template>
 
 <script>
 import marked from 'marked'
+import Carousel from '../components/Carousel'
+import Progress from '../components/Progress'
 
 export default {
   name: 'Cause',
+  components: { Progress, Carousel },
   data() {
     return {
       card: false,
+      slide: 1,
+      tab: 'story',
     }
   },
   props: {
@@ -133,6 +106,54 @@ boot socks would save my feet. I’m grateful for any help. Thank you.
 My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
 things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
 boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
+
+My sleeping bag is too light and I am cold most of the time. My backpack got stolen a month ago and I’ve been carrying
+things in small bags. A new backpack would be a great help. In this weather, my feet are always wet and cold. Some good
+boot socks would save my feet. I’m grateful for any help. Thank you.
       `
       return marked(this.body || other)
     },
@@ -149,22 +170,45 @@ boot socks would save my feet. I’m grateful for any help. Thank you.
 .page {
   min-height: auto !important;
 }
-.image {
-  min-width: 350px;
-  border-radius: 10px;
-  flex-grow: 1;
+.title {
+  margin: 30px 0;
+}
+.header {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.value {
+  margin-top: 20px;
+}
+.header .carousel {
+  width: 100%;
+}
+.header .data {
+  text-align: center;
+}
+@media (min-width: 1024px) {
+  .header > * {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .header .carousel {
+    max-width: 50%;
+  }
+  .header .data {
+    text-align: left;
+  }
+}
+.tabs {
+  width: 100%;
+  top: 50px;
+  position: sticky;
+  border-top: 1px solid #DCDEDD;
+  border-bottom: 1px solid #DCDEDD;
+  z-index: 2;
 }
 .summary {
   min-width: 300px;
   margin: 10px;
   flex-grow: 1;
-}
-.items {
-  width: 80%;
-  margin: 20px 0;
-}
-
-tr {
-  cursor: pointer;
 }
 </style>

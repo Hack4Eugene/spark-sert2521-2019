@@ -6,15 +6,18 @@
       <div class="subtitle2 text-secondary">{{ capitalizedCity }}</div>
       <div class="text-h6">{{ title }}</div>
       <p v-line-clamp="3">{{ body }}</p>
-      <q-linear-progress :value="progress" color="secondary" />
+      <Progress :raised="raised" :goal="goal" />
       <strong>${{ simpleRaised }} raised</strong> of ${{ simpleGoal }}
     </q-card-section>
   </q-card>
 </template>
 
 <script>
+import Progress from './Progress'
+
 export default {
   name: 'Card',
+  components: { Progress },
   props: {
     title: String,
     image: String,
@@ -27,9 +30,6 @@ export default {
   computed: {
     capitalizedCity() {
       return this.city.toUpperCase()
-    },
-    progress() {
-      return this.raised / this.goal
     },
     simpleRaised() {
       return Math.round(this.raised)
