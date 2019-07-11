@@ -6447,9 +6447,9 @@ locate-path@^3.0.0:
     path-exists "^3.0.0"
 
 lodash-es@^4.17.11:
-  version "4.17.11"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
-  integrity sha512-DHb1ub+rMjjrxqlB3H56/6MXtm1lSksDp2rA2cNWjG8mlDUYFhUj3Di2Zn5IwSU87xLv8tNIQ7sSwE/YOX/D/Q==
+  version "4.17.14"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.14.tgz#12a95a963cc5955683cee3b74e85458954f37ecc"
+  integrity sha512-7zchRrGa8UZXjD/4ivUWP1867jDkhzTG2c/uj739utSd7O/pFFdxspCemIFKEEjErbcqRzn8nKnGsi7mvTgRPA==
 
 lodash._reinterpolate@~3.0.0:
   version "3.0.0"
@@ -10285,16 +10285,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-typeface-eb-garamond@^0.0.72:
-  version "0.0.72"
-  resolved "https://registry.yarnpkg.com/typeface-eb-garamond/-/typeface-eb-garamond-0.0.72.tgz#31effb6e2529f56cc9af65fe7733af0a044db951"
-  integrity sha512-S0WU5mM+DR/IbOU8/qPCt5PWQ6KLps5YUPAE4EHNipgzB4jftiTjSkUf+ayAFk50uwcAAQXSf1MHgJgdt4cRfw==
-
-typeface-rubik@^0.0.72:
-  version "0.0.72"
-  resolved "https://registry.yarnpkg.com/typeface-rubik/-/typeface-rubik-0.0.72.tgz#85d028dc66e8388a941f8c7ce194fad963d1824e"
-  integrity sha512-dRJrtCEHfY3e39zq/U4JpFPVVbEogpDKCGnS70sXur253gnrwunjai26KCZbwdF3NEdMAYMTBu4CIn3hJp4xSA==
 
 typeface-eb-garamond@^0.0.72:
   version "0.0.72"
