@@ -5,15 +5,15 @@ plugins {
 version "1.0.0"
 
 task build(type: NodeTask, dependsOn: yarn) {
-    script = file("./node_modules/react-scripts/bin/react-scripts.js")
+    script = file("./node_modules/@quasar/app/bin/quasar")
     args = ["build"]
 }
 
 task run(type: NodeTask, dependsOn: yarn) {
-    script = file("./node_modules/react-scripts/bin/react-scripts.js")
-    args = ["start"]
+    script = file("./node_modules/@quasar/app/bin/quasar")
+    args = ["dev"]
 }
 
 task clean(type: Delete) {
-    delete "build"
+    delete "dist"
 }
